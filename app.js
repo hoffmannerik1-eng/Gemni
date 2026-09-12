@@ -11,7 +11,7 @@ if (getPassword()) {
 }
 
 function authHeaders() {
-  return { "Content-Type": "application/json", "x-app-password": getPassword() };
+  return { "Content-Type": "application/json", "x-app-password": getPassword(1234) };
 }
 
 // --- Tabs ---
