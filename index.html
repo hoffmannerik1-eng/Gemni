@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mein KI-Assistent</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #171a21;
+    --border: #2a2e38;
+    --text: #e8e8ea;
+    --muted: #9096a3;
+    --accent: #5b8cff;
+    --accent-text: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  header h1 { font-size: 16px; margin: 0; }
+  .tabs { display: flex; gap: 6px; }
+  .tab-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .tab-btn.active { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+
+  .view { flex: 1; display: none; flex-direction: column; overflow: hidden; }
+  .view.active { display: flex; }
+
+  #chatLog { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .msg { max-width: 80%; padding: 10px 14px; border-radius: 14px; line-height: 1.4; font-size: 14px; white-space: pre-wrap; }
+  .msg.user { align-self: flex-end; background: var(--accent); color: var(--accent-text); }
+  .msg.bot { align-self: flex-start; background: var(--panel); border: 1px solid var(--border); }
+  .msg .sources { display: block; margin-top: 6px; font-size: 11px; color: var(--muted); }
+  .msg .sources a { color: var(--muted); }
+
+  form#chatForm { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--border); }
+  input, textarea { background: var(--panel); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
+  #chatInput { flex: 1; resize: none; }
+  button.send { background: var(--accent); color: var(--accent-text); border: none; border-radius: 10px; padding: 0 18px; font-size: 14px; cursor: pointer; }
+  button.send:disabled { opacity: 0.5; }
+
+  #tasksView { padding: 16px; overflow-y: auto; }
+  #taskForm { display: flex; gap: 8px; margin-bottom: 16px; }
+  #taskInput { flex: 1; }
+  .task { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; background: var(--panel); }
+  .task.done span.txt { text-decoration: line-through; color: var(--muted); }
+  .task span.txt { flex: 1; font-size: 14px; }
+  .task button { background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: 16px; }
+
+  #lockScreen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; z-index: 10; }
+  #lockScreen input { width: 220px; text-align: center; }
+  #lockScreen button { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; }
+  .hint { color: var(--muted); font-size: 12px; text-align: center; max-width: 260px; }
+</style>
+</head>
+<body>
+
+<div id="lockScreen">
+  <h2>🔒 Zugang</h2>
+  <input id="pwInput" type="password" placeholder="Passwort" />
+  <button onclick="unlock()">Öffnen</button>
+  <p class="hint">Das Passwort hast du selbst als APP_PASSWORD beim Deployen festgelegt.</p>
+</div>
+
+<header>
+  <h1>🤖 Mein KI-Assistent</h1>
+  <div class="tabs">
+    <button class="tab-btn active" data-view="chatView">Chat</button>
+    <button class="tab-btn" data-view="tasksView">Aufgaben</button>
+    <button class="tab-btn" data-view="rulesView">Mail-Regeln</button>
+  </div>
+</header>
+
+<div id="chatView" class="view active">
+  <div id="chatLog"></div>
+  <form id="chatForm">
+    <textarea id="chatInput" rows="1" placeholder="Frag mich etwas... (z.B. 'zeig mir das Ergebnis von gestern')"></textarea>
+    <button class="send" type="submit">Senden</button>
+  </form>
+</div>
+
+<div id="tasksView" class="view">
+  <form id="taskForm">
+    <input id="taskInput" type="text" placeholder="Neue Aufgabe hinzufügen..." />
+    <button class="send" type="submit">+</button>
+  </form>
+  <div id="taskList"></div>
+</div>
+
+<div id="rulesView" class="view">
+  <p class="hint" style="max-width:none; text-align:left; margin-bottom:14px;">
+    Trage ein, wann du per Telegram benachrichtigt werden willst — z.B. Absender "chef@firma.de" oder Stichwort "Rechnung".
+  </p>
+  <form id="ruleForm" style="display:flex; gap:8px; margin-bottom:16px; flex-wrap: wrap;">
+    <select id="ruleType" style="background:var(--panel); color:var(--text); border:1px solid var(--border); border-radius:10px; padding:10px;">
+      <option value="sender">Absender enthält</option>
+      <option value="keyword">Wort in Betreff/Text</option>
+    </select>
+    <input id="ruleValue" type="text" placeholder="z.B. chef@firma.de oder Rechnung" style="flex:1; min-width:160px;" />
+    <button class="send" type="submit">+</button>
+  </form>
+  <div id="ruleList"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
