@@ -13,10 +13,9 @@ const PORT = process.env.PORT || 3000;
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
-const APP_PASSWORD = process.env.APP_PASSWORD || ""; // leer = kein Passwortschutz (nur für lokale Tests!)
+const APP_PASSWORD = process.env.APP_PASSWORD || "";
 const TASKS_FILE = path.join(__dirname, "tasks.json");
 
-// --- E-Mail-Überwachung (Gmail) ---
 const GMAIL_CLIENT_ID = process.env.GMAIL_CLIENT_ID;
 const GMAIL_CLIENT_SECRET = process.env.GMAIL_CLIENT_SECRET;
 const GMAIL_REFRESH_TOKEN = process.env.GMAIL_REFRESH_TOKEN;
@@ -25,21 +24,20 @@ const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const EMAIL_CHECK_INTERVAL_MIN = Number(process.env.EMAIL_CHECK_INTERVAL_MIN || 3);
 const RULES_FILE = path.join(__dirname, "rules.json");
 const NOTIFIED_FILE = path.join(__dirname, "notified.json");
-let lastCheckTimestamp = Math.floor(Date.now() / 1000) - 600; // beim Start: letzte 10 Min. mit prüfen
+let lastCheckTimestamp = Math.floor(Date.now() / 1000) - 600;
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-// --- Einfacher Passwortschutz ---
-// Damit nicht jeder Fremde im Internet deine KI (und dein API-Guthaben) benutzen kann.
+app.get("/health", (req, res) => res.status(200).send("ok"));
+
 function checkPassword(req, res, next) {
-  if (!APP_PASSWORD) return next(); // kein Passwort gesetzt -> offen (nur lokal sinnvoll)
+  if (!APP_PASSWORD) return next();
   const given = req.headers["x-app-password"];
   if (given === APP_PASSWORD) return next();
   return res.status(401).json({ error: "Falsches Passwort." });
 }
 
-// --- Hilfsfunktionen für die Aufgabenliste (gespeichert als einfache JSON-Datei) ---
 async function readTasks() {
   try {
     const data = await fs.readFile(TASKS_FILE, "utf-8");
@@ -52,7 +50,6 @@ async function writeTasks(tasks) {
   await fs.writeFile(TASKS_FILE, JSON.stringify(tasks, null, 2), "utf-8");
 }
 
-// --- Chat-Endpoint: fragt Gemini, optional mit Google-Websuche für aktuelle Infos ---
 app.post("/api/chat", checkPassword, async (req, res) => {
   try {
     if (!GEMINI_API_KEY) {
@@ -63,7 +60,6 @@ app.post("/api/chat", checkPassword, async (req, res) => {
       return res.status(400).json({ error: "Feld 'message' fehlt." });
     }
 
-    // Vorherigen Verlauf + neue Nachricht in Gemini-Format bringen
     const contents = [
       ...history.map((h) => ({
         role: h.role === "assistant" ? "model" : "user",
@@ -74,7 +70,7 @@ app.post("/api/chat", checkPassword, async (req, res) => {
 
     const body = {
       contents,
-      tools: [{ google_search: {} }], // ermöglicht aktuelle Infos (z.B. Ergebnisse von gestern)
+      tools: [{ google_search: {} }],
       systemInstruction: {
         parts: [
           {
@@ -122,7 +118,6 @@ app.post("/api/chat", checkPassword, async (req, res) => {
   }
 });
 
-// --- Aufgaben-API ---
 app.get("/api/tasks", checkPassword, async (req, res) => {
   res.json(await readTasks());
 });
@@ -154,7 +149,6 @@ app.delete("/api/tasks/:id", checkPassword, async (req, res) => {
   res.json({ ok: true });
 });
 
-// --- Regeln-API (welche Mails sollen eine Benachrichtigung auslösen?) ---
 async function readJsonFile(file, fallback) {
   try {
     return JSON.parse(await fs.readFile(file, "utf-8"));
@@ -171,7 +165,7 @@ app.get("/api/rules", checkPassword, async (req, res) => {
 });
 
 app.post("/api/rules", checkPassword, async (req, res) => {
-  const { type, value } = req.body; // type: "sender" oder "keyword"
+  const { type, value } = req.body;
   if (!type || !value) return res.status(400).json({ error: "Felder 'type' und 'value' nötig." });
   const rules = await readJsonFile(RULES_FILE, []);
   const rule = { id: Date.now().toString(), type, value, active: true };
@@ -196,7 +190,6 @@ app.delete("/api/rules/:id", checkPassword, async (req, res) => {
   res.json({ ok: true });
 });
 
-// --- Telegram-Benachrichtigung senden ---
 async function sendTelegram(text) {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
     console.warn("Telegram nicht konfiguriert, überspringe Benachrichtigung.");
@@ -213,7 +206,6 @@ async function sendTelegram(text) {
   }
 }
 
-// --- Gmail: Access Token per Refresh Token holen ---
 async function getGmailAccessToken() {
   const r = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
@@ -230,9 +222,8 @@ async function getGmailAccessToken() {
   return data.access_token;
 }
 
-// --- Gmail regelmäßig auf Treffer prüfen ---
 async function checkGmailAgainstRules() {
-  if (!GMAIL_CLIENT_ID || !GMAIL_CLIENT_SECRET || !GMAIL_REFRESH_TOKEN) return; // Gmail nicht konfiguriert
+  if (!GMAIL_CLIENT_ID || !GMAIL_CLIENT_SECRET || !GMAIL_REFRESH_TOKEN) return;
   const rules = (await readJsonFile(RULES_FILE, [])).filter((r) => r.active);
   if (rules.length === 0) return;
 
@@ -243,7 +234,6 @@ async function checkGmailAgainstRules() {
     const newTimestamp = Math.floor(Date.now() / 1000);
 
     for (const rule of rules) {
-      const field = rule.type === "sender" ? "from" : "";
       const query =
         rule.type === "sender"
           ? `after:${lastCheckTimestamp} from:${rule.value}`
@@ -270,7 +260,6 @@ async function checkGmailAgainstRules() {
       }
     }
 
-    // Liste der benachrichtigten IDs begrenzen, damit die Datei nicht endlos wächst
     const trimmed = Array.from(notifiedSet).slice(-500);
     await writeJsonFile(NOTIFIED_FILE, trimmed);
     lastCheckTimestamp = newTimestamp;
@@ -281,7 +270,7 @@ async function checkGmailAgainstRules() {
 
 if (GMAIL_CLIENT_ID && GMAIL_CLIENT_SECRET && GMAIL_REFRESH_TOKEN) {
   setInterval(checkGmailAgainstRules, EMAIL_CHECK_INTERVAL_MIN * 60 * 1000);
-  checkGmailAgainstRules(); // einmal direkt beim Start
+  checkGmailAgainstRules();
   console.log(`Gmail-Überwachung aktiv (alle ${EMAIL_CHECK_INTERVAL_MIN} Min.)`);
 } else {
   console.log("Gmail-Überwachung inaktiv (GMAIL_* Umgebungsvariablen fehlen).");
