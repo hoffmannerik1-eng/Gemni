@@ -11,7 +11,7 @@ if (getPassword()) {
 }
 
 function authHeaders() {
-  return { "Content-Type": "application/json", "x-app-password": getPassword(1234) };
+  return { "Content-Type": "application/json", "x-app-password": getPassword() };
 }
 
 // --- Tabs ---
@@ -44,6 +44,15 @@ function addMessage(role, text, sources = []) {
   chatLog.scrollTop = chatLog.scrollHeight;
 }
 
+async function callChatApi(message, historyForRequest) {
+  const res = await fetch("/api/chat", {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify({ message, history: historyForRequest }),
+  });
+  return res;
+}
+
 chatForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const message = chatInput.value.trim();
@@ -51,6 +60,7 @@ chatForm.addEventListener("submit", async (e) => {
   chatInput.value = "";
   addMessage("user", message);
   history.push({ role: "user", text: message });
+  const historyForRequest = history.slice(0, -1);
 
   const loadingDiv = document.createElement("div");
   loadingDiv.className = "msg bot";
@@ -58,27 +68,32 @@ chatForm.addEventListener("submit", async (e) => {
   chatLog.appendChild(loadingDiv);
   chatLog.scrollTop = chatLog.scrollHeight;
 
-  try {
-    const res = await fetch("/api/chat", {
-      method: "POST",
-      headers: authHeaders(),
-      body: JSON.stringify({ message, history: history.slice(0, -1) }),
-    });
-    const data = await res.json();
-    loadingDiv.remove();
-    if (!res.ok) {
-      addMessage("bot", "Fehler: " + (data.error || "Unbekannter Fehler"));
-      return;
+  const attempts = [0, 4000, 8000];
+  for (let i = 0; i < attempts.length; i++) {
+    if (attempts[i] > 0) {
+      loadingDiv.textContent = "Server wacht auf, einen Moment...";
+      await new Promise((r) => setTimeout(r, attempts[i]));
     }
-    addMessage("bot", data.text, data.sources || []);
-    history.push({ role: "assistant", text: data.text });
-  } catch (err) {
-    loadingDiv.remove();
-    addMessage("bot", "Verbindungsfehler zum Server.");
+    try {
+      const res = await callChatApi(message, historyForRequest);
+      const data = await res.json();
+      loadingDiv.remove();
+      if (!res.ok) {
+        addMessage("bot", "Fehler: " + (data.error || "Unbekannter Fehler"));
+        return;
+      }
+      addMessage("bot", data.text, data.sources || []);
+      history.push({ role: "assistant", text: data.text });
+      return;
+    } catch (err) {
+      if (i === attempts.length - 1) {
+        loadingDiv.remove();
+        addMessage("bot", "Verbindungsfehler zum Server. Bitte kurz warten und nochmal senden.");
+      }
+    }
   }
 });
 
-// Enter zum Senden, Shift+Enter für neue Zeile
 chatInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
