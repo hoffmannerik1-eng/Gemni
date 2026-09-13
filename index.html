@@ -2,1486 +2,2269 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
+>
+
 <title>Nova Family AI</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 :root{
---bg:#050505;
---bg2:#090909;
---panel:#0d0d0d;
---panel2:#111;
---panel3:#171717;
---border:#292929;
---border2:#3b3b3b;
---text:#f5f5f5;
---muted:#888;
---green:#62ef86;
---red:#ff6060;
---blue:#649cff;
---white:#fff;
---shadow:0 25px 100px rgba(0,0,0,.65)
+    --bg:#050505;
+    --bg2:#090909;
+    --panel:#0d0d0d;
+    --panel2:#111;
+    --panel3:#171717;
+    --border:#292929;
+    --border2:#3b3b3b;
+    --text:#f5f5f5;
+    --muted:#888;
+    --green:#62ef86;
+    --red:#ff6060;
+    --blue:#649cff;
+    --white:#fff;
+    --shadow:0 25px 100px rgba(0,0,0,.65);
 }
 
-html,body{
-width:100%;
-height:100%;
-background:#050505;
-color:var(--text);
-font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+html,
+body{
+    width:100%;
+    height:100%;
+    background:#050505;
+    color:var(--text);
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
 }
 
-body{overflow:hidden}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
+body{
+    overflow:hidden;
+}
 
-::-webkit-scrollbar{width:7px;height:7px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:#292929;border-radius:20px}
-::-webkit-scrollbar-thumb:hover{background:#444}
+button,
+input,
+textarea,
+select{
+    font:inherit;
+}
 
-/* LOGIN */
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+::-webkit-scrollbar{
+    width:7px;
+    height:7px;
+}
+
+::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#292929;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#444;
+}
+
+/* =========================================================
+LOGIN
+========================================================= */
 
 #loginScreen{
-position:fixed;
-inset:0;
-z-index:99999;
-display:flex;
-align-items:center;
-justify-content:center;
-overflow:hidden;
-background:
-radial-gradient(circle at 50% 15%,rgba(255,255,255,.10),transparent 28%),
-radial-gradient(circle at 20% 80%,rgba(255,255,255,.035),transparent 25%),
-#050505
+    position:fixed;
+    inset:0;
+    z-index:99999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 15%,
+            rgba(255,255,255,.10),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 20% 80%,
+            rgba(255,255,255,.035),
+            transparent 25%
+        ),
+        #050505;
 }
 
-#loginScreen:before{
-content:"";
-position:absolute;
-inset:-30%;
-background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.025) 50%,transparent 60%);
-transform:rotate(12deg);
-animation:loginSweep 8s linear infinite
+#loginScreen::before{
+    content:"";
+    position:absolute;
+    inset:-30%;
+
+    background:
+        linear-gradient(
+            115deg,
+            transparent 40%,
+            rgba(255,255,255,.025) 50%,
+            transparent 60%
+        );
+
+    transform:rotate(12deg);
+    animation:loginSweep 8s linear infinite;
 }
 
 @keyframes loginSweep{
-from{transform:translateX(-30%) rotate(12deg)}
-to{transform:translateX(30%) rotate(12deg)}
+    from{
+        transform:translateX(-30%) rotate(12deg);
+    }
+    to{
+        transform:translateX(30%) rotate(12deg);
+    }
 }
 
 .loginCard{
-position:relative;
-z-index:2;
-width:min(470px,92vw);
-padding:44px;
-background:linear-gradient(145deg,rgba(25,25,25,.96),rgba(7,7,7,.97));
-border:1px solid #383838;
-border-radius:30px;
-box-shadow:0 35px 120px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.04);
-text-align:center;
-backdrop-filter:blur(25px)
+    position:relative;
+    z-index:2;
+
+    width:min(470px,92vw);
+
+    padding:44px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25,25,25,.96),
+            rgba(7,7,7,.97)
+        );
+
+    border:1px solid #383838;
+    border-radius:30px;
+
+    box-shadow:
+        0 35px 120px rgba(0,0,0,.75),
+        inset 0 1px 0 rgba(255,255,255,.04);
+
+    text-align:center;
+
+    backdrop-filter:blur(25px);
 }
 
 .loginLogo{
-width:84px;
-height:84px;
-margin:0 auto 25px;
-border-radius:25px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#fff;
-color:#000;
-font-size:35px;
-font-weight:1000;
-box-shadow:0 15px 50px rgba(255,255,255,.08)
+    width:84px;
+    height:84px;
+
+    margin:0 auto 25px;
+
+    border-radius:25px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#fff;
+    color:#000;
+
+    font-size:35px;
+    font-weight:1000;
+
+    box-shadow:
+        0 15px 50px rgba(255,255,255,.08);
 }
 
-.loginCard h1{font-size:40px;letter-spacing:-2.5px}
+.loginCard h1{
+    font-size:40px;
+    letter-spacing:-2.5px;
+}
+
 .loginCard p{
-margin-top:12px;
-margin-bottom:28px;
-color:#858585;
-line-height:1.65;
-font-size:13px
+    margin-top:12px;
+    margin-bottom:28px;
+
+    color:#858585;
+
+    line-height:1.65;
+    font-size:13px;
 }
 
 .googleLogin{
-width:100%;
-height:55px;
-border:0;
-border-radius:14px;
-background:#fff;
-color:#000;
-font-weight:900;
-transition:.2s
+    width:100%;
+    height:55px;
+
+    border:0;
+    border-radius:14px;
+
+    background:#fff;
+    color:#000;
+
+    font-weight:900;
+
+    transition:.2s;
 }
 
 .googleLogin:hover{
-transform:translateY(-2px);
-box-shadow:0 12px 35px rgba(255,255,255,.08)
+    transform:translateY(-2px);
+    box-shadow:0 12px 35px rgba(255,255,255,.08);
 }
 
-/* APP */
+.googleLogin:active{
+    transform:translateY(0);
+}
+
+/* =========================================================
+APP
+========================================================= */
 
 #app{
-width:100%;
-height:100%;
-display:flex;
-overflow:hidden
+    width:100%;
+    height:100%;
+
+    display:flex;
+
+    overflow:hidden;
 }
 
-/* SIDEBAR */
+/* =========================================================
+SIDEBAR
+========================================================= */
 
 .sidebar{
-width:290px;
-min-width:290px;
-height:100%;
-display:flex;
-flex-direction:column;
-background:linear-gradient(180deg,#090909,#070707);
-border-right:1px solid var(--border);
-z-index:100
+    width:290px;
+    min-width:290px;
+
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+
+    background:
+        linear-gradient(
+            180deg,
+            #090909,
+            #070707
+        );
+
+    border-right:1px solid var(--border);
+
+    z-index:100;
 }
 
-.sidebarTop{padding:17px;border-bottom:1px solid var(--border)}
+.sidebarTop{
+    padding:17px;
+
+    border-bottom:1px solid var(--border);
+}
 
 .brand{
-display:flex;
-align-items:center;
-gap:12px;
-margin-bottom:18px
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    margin-bottom:18px;
 }
 
 .brandLogo{
-width:43px;
-height:43px;
-border-radius:13px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#fff;
-color:#000;
-font-weight:1000;
-box-shadow:0 8px 30px rgba(255,255,255,.06)
+    width:43px;
+    height:43px;
+
+    border-radius:13px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#fff;
+    color:#000;
+
+    font-weight:1000;
+
+    box-shadow:0 8px 30px rgba(255,255,255,.06);
 }
 
-.brandText strong{display:block;font-size:15px}
+.brandText strong{
+    display:block;
+    font-size:15px;
+}
+
 .brandText span{
-display:block;
-margin-top:3px;
-color:#666;
-font-size:9px;
-letter-spacing:1.2px
+    display:block;
+
+    margin-top:3px;
+
+    color:#666;
+    font-size:9px;
+    letter-spacing:1.2px;
 }
 
 .newChatBtn{
-width:100%;
-height:46px;
-border:1px solid var(--border2);
-border-radius:13px;
-background:#151515;
-color:#fff;
-font-weight:800;
-transition:.18s
+    width:100%;
+    height:46px;
+
+    border:1px solid var(--border2);
+    border-radius:13px;
+
+    background:#151515;
+    color:#fff;
+
+    font-weight:800;
+
+    transition:.18s;
 }
 
 .newChatBtn:hover{
-background:#202020;
-border-color:#4a4a4a;
-transform:translateY(-1px)
+    background:#202020;
+    border-color:#4a4a4a;
+    transform:translateY(-1px);
 }
 
 .chatSearch{
-width:100%;
-height:40px;
-margin-top:10px;
-padding:0 12px;
-border:1px solid var(--border);
-border-radius:11px;
-background:#0e0e0e;
-color:#fff;
-outline:none
+    width:100%;
+    height:40px;
+
+    margin-top:10px;
+
+    padding:0 12px;
+
+    border:1px solid var(--border);
+    border-radius:11px;
+
+    background:#0e0e0e;
+    color:#fff;
+
+    outline:none;
 }
 
-.chatSearch:focus{border-color:#555;background:#111}
+.chatSearch:focus{
+    border-color:#555;
+    background:#111;
+}
 
-.chatList{flex:1;overflow-y:auto;padding:10px}
+.chatList{
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:10px;
+}
 
 .chatItem{
-width:100%;
-min-height:54px;
-display:flex;
-align-items:center;
-gap:8px;
-padding:8px;
-margin-bottom:4px;
-border-radius:12px;
-transition:.15s
+    width:100%;
+    min-height:54px;
+
+    display:flex;
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px;
+
+    margin-bottom:4px;
+
+    border-radius:12px;
+
+    transition:.15s;
 }
 
-.chatItem:hover{background:#151515}
+.chatItem:hover{
+    background:#151515;
+}
+
 .chatItem.active{
-background:#1b1b1b;
-box-shadow:inset 2px 0 0 #fff
+    background:#1b1b1b;
+    box-shadow:inset 2px 0 0 #fff;
 }
 
-.chatItemMain{min-width:0;flex:1;cursor:pointer}
+.chatItemMain{
+    min-width:0;
+    flex:1;
+
+    cursor:pointer;
+}
+
 .chatTitle{
-overflow:hidden;
-white-space:nowrap;
-text-overflow:ellipsis;
-font-size:13px;
-font-weight:700
+    overflow:hidden;
+
+    white-space:nowrap;
+    text-overflow:ellipsis;
+
+    font-size:13px;
+    font-weight:700;
 }
 
-.chatDate{margin-top:3px;color:#666;font-size:9px}
+.chatDate{
+    margin-top:3px;
+
+    color:#666;
+
+    font-size:9px;
+}
 
 .chatMenuBtn{
-width:30px;
-height:30px;
-border:0;
-border-radius:8px;
-background:transparent;
-color:#777
+    width:30px;
+    height:30px;
+
+    border:0;
+    border-radius:8px;
+
+    background:transparent;
+    color:#777;
 }
 
-.chatMenuBtn:hover{background:#292929;color:#fff}
+.chatMenuBtn:hover{
+    background:#292929;
+    color:#fff;
+}
 
-.sidebarBottom{padding:12px;border-top:1px solid var(--border)}
+.sidebarBottom{
+    padding:12px;
 
-.userBox{display:flex;align-items:center;gap:10px;padding:8px}
+    border-top:1px solid var(--border);
+}
+
+.userBox{
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    padding:8px;
+}
 
 .avatar{
-width:37px;
-height:37px;
-border-radius:50%;
-object-fit:cover;
-background:#222
+    width:37px;
+    height:37px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    background:#222;
 }
 
-.userInfo{min-width:0;flex:1}
+.userInfo{
+    min-width:0;
+    flex:1;
+}
+
 .userInfo strong{
-display:block;
-overflow:hidden;
-white-space:nowrap;
-text-overflow:ellipsis;
-font-size:12px
+    display:block;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+    text-overflow:ellipsis;
+
+    font-size:12px;
 }
 
 .userInfo span{
-display:block;
-margin-top:2px;
-overflow:hidden;
-white-space:nowrap;
-text-overflow:ellipsis;
-color:#666;
-font-size:9px
+    display:block;
+
+    margin-top:2px;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+    text-overflow:ellipsis;
+
+    color:#666;
+
+    font-size:9px;
 }
 
 .logoutBtn{
-width:35px;
-height:35px;
-border:1px solid var(--border);
-border-radius:9px;
-background:#111;
-color:#aaa
+    width:35px;
+    height:35px;
+
+    border:1px solid var(--border);
+    border-radius:9px;
+
+    background:#111;
+    color:#aaa;
+
+    transition:.15s;
 }
 
-.logoutBtn:hover{color:#fff;background:#1a1a1a}
+.logoutBtn:hover{
+    color:#fff;
+    background:#1a1a1a;
+}
 
-/* MAIN */
+/* =========================================================
+MAIN
+========================================================= */
 
 .main{
-flex:1;
-min-width:0;
-height:100%;
-display:flex;
-flex-direction:column;
-background:radial-gradient(circle at 50% 0%,#151515 0%,transparent 45%),#050505
+    flex:1;
+    min-width:0;
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #151515 0%,
+            transparent 45%
+        ),
+        #050505;
 }
+
+/* =========================================================
+TOPBAR
+========================================================= */
 
 .topbar{
-height:66px;
-min-height:66px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 20px;
-background:rgba(5,5,5,.86);
-border-bottom:1px solid var(--border);
-backdrop-filter:blur(20px);
-z-index:50
+    height:66px;
+    min-height:66px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 20px;
+
+    background:rgba(5,5,5,.86);
+
+    border-bottom:1px solid var(--border);
+
+    backdrop-filter:blur(20px);
+
+    z-index:50;
 }
 
-.topbarTitle{display:flex;align-items:center;gap:10px;min-width:0}
+.topbarTitle{
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    min-width:0;
+}
 
 .mobileMenu{
-display:none;
-width:40px;
-height:40px;
-border:1px solid var(--border);
-border-radius:10px;
-background:#111;
-color:#fff
+    display:none;
+
+    width:40px;
+    height:40px;
+
+    border:1px solid var(--border);
+    border-radius:10px;
+
+    background:#111;
+    color:#fff;
 }
 
 .currentChatName{
-max-width:450px;
-overflow:hidden;
-white-space:nowrap;
-text-overflow:ellipsis;
-font-size:14px;
-font-weight:900
+    max-width:450px;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+    text-overflow:ellipsis;
+
+    font-size:14px;
+    font-weight:900;
 }
 
-.topActions{display:flex;gap:6px}
+.topActions{
+    display:flex;
+    gap:6px;
+}
 
 .smallBtn{
-min-height:36px;
-padding:0 11px;
-border:1px solid var(--border);
-border-radius:10px;
-background:#101010;
-color:#ddd;
-font-size:11px;
-font-weight:700;
-transition:.15s
+    min-height:36px;
+
+    padding:0 11px;
+
+    border:1px solid var(--border);
+    border-radius:10px;
+
+    background:#101010;
+    color:#ddd;
+
+    font-size:11px;
+    font-weight:700;
+
+    transition:.15s;
 }
 
-.smallBtn:hover{background:#1b1b1b;border-color:#444}
-.dangerBtn{color:#ff7474}
+.smallBtn:hover{
+    background:#1b1b1b;
+    border-color:#444;
+}
 
-/* CONTENT */
+.smallBtn:active{
+    transform:scale(.98);
+}
+
+.dangerBtn{
+    color:#ff7474;
+}
+
+/* =========================================================
+CONTENT
+========================================================= */
 
 .content{
-flex:1;
-min-height:0;
-overflow-y:auto;
-padding:24px
+    flex:1;
+    min-height:0;
+
+    overflow-y:auto;
+
+    padding:24px;
 }
 
 .hero{
-position:relative;
-width:min(1000px,100%);
-margin:0 auto 22px;
-padding:32px;
-border:1px solid var(--border);
-border-radius:24px;
-background:linear-gradient(145deg,#111,#090909);
-overflow:hidden
+    position:relative;
+
+    width:min(1000px,100%);
+
+    margin:0 auto 22px;
+
+    padding:32px;
+
+    border:1px solid var(--border);
+    border-radius:24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #111,
+            #090909
+        );
+
+    overflow:hidden;
 }
 
-.hero:after{
-content:"N";
-position:absolute;
-right:25px;
-bottom:-55px;
-color:rgba(255,255,255,.025);
-font-size:220px;
-font-weight:1000;
-line-height:1;
-pointer-events:none
+.hero::after{
+    content:"N";
+
+    position:absolute;
+
+    right:25px;
+    bottom:-55px;
+
+    color:rgba(255,255,255,.025);
+
+    font-size:220px;
+    font-weight:1000;
+    line-height:1;
+    pointer-events:none;
 }
 
 .hero h1{
-position:relative;
-z-index:1;
-font-size:clamp(44px,7vw,78px);
-letter-spacing:-6px;
-line-height:.9;
-font-weight:1000
+    position:relative;
+    z-index:1;
+
+    font-size:clamp(44px,7vw,78px);
+
+    letter-spacing:-6px;
+
+    line-height:.9;
+
+    font-weight:1000;
 }
 
 .hero p{
-position:relative;
-z-index:1;
-max-width:700px;
-margin-top:15px;
-color:#858585;
-line-height:1.6
+    position:relative;
+    z-index:1;
+
+    max-width:700px;
+
+    margin-top:15px;
+
+    color:#858585;
+
+    line-height:1.6;
 }
 
 .statusRow{
-position:relative;
-z-index:1;
-display:flex;
-flex-wrap:wrap;
-gap:7px;
-margin-top:20px
+    position:relative;
+    z-index:1;
+
+    display:flex;
+    flex-wrap:wrap;
+
+    gap:7px;
+
+    margin-top:20px;
 }
 
 .status{
-padding:7px 11px;
-border:1px solid var(--border);
-border-radius:999px;
-color:#777;
-font-size:10px;
-background:rgba(255,255,255,.015)
+    padding:7px 11px;
+
+    border:1px solid var(--border);
+
+    border-radius:999px;
+
+    color:#777;
+
+    font-size:10px;
+
+    background:rgba(255,255,255,.015);
 }
 
-.status.good{color:#76ff9b}
-.status.bad{color:#ff7373}
+.status.good{
+    color:#76ff9b;
+}
 
-/* SETTINGS */
+.status.bad{
+    color:#ff7373;
+}
+
+/* =========================================================
+SETTINGS
+========================================================= */
 
 .settings{
-width:min(1000px,100%);
-margin:0 auto 20px;
-border:1px solid var(--border);
-border-radius:18px;
-background:#0b0b0b;
-overflow:hidden
+    width:min(1000px,100%);
+
+    margin:0 auto 20px;
+
+    border:1px solid var(--border);
+    border-radius:18px;
+
+    background:#0b0b0b;
+
+    overflow:hidden;
 }
 
 .settingsHeader{
-min-height:59px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:10px;
-padding:11px 15px;
-border-bottom:1px solid var(--border)
+    min-height:59px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+
+    padding:11px 15px;
+
+    border-bottom:1px solid var(--border);
 }
 
-.settingsHeader strong{font-size:12px;letter-spacing:.8px}
+.settingsHeader strong{
+    font-size:12px;
+    letter-spacing:.8px;
+}
 
-.keyPanel{padding:15px}
+.keyPanel{
+    padding:15px;
+}
 
 .keyGrid{
-display:grid;
-grid-template-columns:repeat(2,minmax(0,1fr));
-gap:11px
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:11px;
 }
 
 .keyCard{
-padding:14px;
-border:1px solid var(--border);
-border-radius:14px;
-background:#111
+    padding:14px;
+
+    border:1px solid var(--border);
+    border-radius:14px;
+
+    background:#111;
 }
 
 .keyHeader{
-display:flex;
-justify-content:space-between;
-gap:8px;
-margin-bottom:9px
+    display:flex;
+    justify-content:space-between;
+
+    margin-bottom:9px;
 }
 
-.keyHeader strong{font-size:11px}
-.keyState{color:#666;font-size:9px;text-align:right}
+.keyHeader strong{
+    font-size:11px;
+}
+
+.keyState{
+    color:#666;
+    font-size:9px;
+}
 
 .keyInput{
-width:100%;
-height:40px;
-padding:0 10px;
-border:1px solid #292929;
-border-radius:9px;
-background:#070707;
-color:#fff;
-outline:none
+    width:100%;
+    height:40px;
+
+    padding:0 10px;
+
+    border:1px solid #292929;
+    border-radius:9px;
+
+    background:#070707;
+    color:#fff;
+
+    outline:none;
 }
 
-.keyInput:focus{border-color:#555}
+.keyInput:focus{
+    border-color:#555;
+}
 
-.keyButtons{display:flex;gap:6px;margin-top:8px}
+.keyButtons{
+    display:flex;
+    gap:6px;
+
+    margin-top:8px;
+}
 
 .keyButtons button{
-flex:1;
-height:34px;
-border:1px solid var(--border);
-border-radius:8px;
-background:#171717;
-color:#ddd;
-font-size:10px
+    flex:1;
+
+    height:34px;
+
+    border:1px solid var(--border);
+    border-radius:8px;
+
+    background:#171717;
+    color:#ddd;
+
+    font-size:10px;
 }
 
-.keyButtons button:hover{background:#222}
+.keyButtons button:hover{
+    background:#222;
+}
 
 .keyHelp{
-margin-top:12px;
-color:#777;
-font-size:10px;
-line-height:1.5
+    margin-top:12px;
+
+    color:#777;
+
+    font-size:10px;
+
+    line-height:1.5;
 }
 
 .persistence{
-margin-top:10px;
-padding:10px;
-border-radius:10px;
-background:#101010;
-color:#666;
-font-size:9px;
-line-height:1.5
+    margin-top:10px;
+
+    padding:10px;
+
+    border-radius:10px;
+
+    background:#101010;
+
+    color:#666;
+
+    font-size:9px;
+
+    line-height:1.5;
 }
 
-/* MEMORY */
+/* =========================================================
+MEMORY
+========================================================= */
 
 .memoryBox{
-width:min(1000px,100%);
-margin:0 auto 20px;
-padding:14px;
-border:1px solid var(--border);
-border-radius:17px;
-background:#0b0b0b
+    width:min(1000px,100%);
+
+    margin:0 auto 20px;
+
+    padding:14px;
+
+    border:1px solid var(--border);
+    border-radius:17px;
+
+    background:#0b0b0b;
 }
 
 .memoryTop{
-display:flex;
-justify-content:space-between;
-margin-bottom:9px
+    display:flex;
+    justify-content:space-between;
+
+    margin-bottom:9px;
 }
 
-.memoryTop strong{font-size:11px}
-.memoryList{display:flex;flex-wrap:wrap;gap:6px}
+.memoryTop strong{
+    font-size:11px;
+}
+
+.memoryList{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+}
 
 .memoryTag{
-max-width:100%;
-padding:7px 9px;
-border:1px solid var(--border);
-border-radius:9px;
-background:#121212;
-color:#999;
-font-size:9px
+    max-width:100%;
+
+    padding:7px 9px;
+
+    border:1px solid var(--border);
+    border-radius:9px;
+
+    background:#121212;
+
+    color:#999;
+
+    font-size:9px;
 }
 
-/* CHAT */
+/* =========================================================
+CHAT
+========================================================= */
 
 .chat{
-width:min(1000px,100%);
-margin:0 auto;
-padding-bottom:30px
+    width:min(1000px,100%);
+
+    margin:0 auto;
+
+    padding-bottom:30px;
 }
 
 .emptyChat{
-padding:70px 20px;
-text-align:center;
-color:#666
+    padding:70px 20px;
+
+    text-align:center;
+
+    color:#666;
 }
 
-.emptyChat h2{margin-bottom:8px;color:#aaa}
+.emptyChat h2{
+    margin-bottom:8px;
+
+    color:#aaa;
+}
 
 .message{
-display:flex;
-gap:10px;
-margin:15px 0
+    display:flex;
+
+    gap:10px;
+
+    margin:15px 0;
 }
 
-.message.user{justify-content:flex-end}
-.message.model{justify-content:flex-start}
+.message.user{
+    justify-content:flex-end;
+}
+
+.message.model{
+    justify-content:flex-start;
+}
 
 .messageBubble{
-max-width:min(780px,90%);
-padding:14px 16px;
-border:1px solid var(--border);
-border-radius:18px;
-background:#0f0f0f;
-color:#eee;
-line-height:1.6;
-font-size:13px;
-overflow-wrap:anywhere;
-white-space:normal;
-box-shadow:0 8px 30px rgba(0,0,0,.12)
+    max-width:min(780px,90%);
+
+    padding:14px 16px;
+
+    border:1px solid var(--border);
+    border-radius:18px;
+
+    background:#0f0f0f;
+
+    color:#eee;
+
+    line-height:1.6;
+
+    font-size:13px;
+
+    overflow-wrap:anywhere;
+
+    white-space:normal;
+
+    box-shadow:0 8px 30px rgba(0,0,0,.12);
 }
 
 .message.user .messageBubble{
-background:#fff;
-color:#000;
-border-color:#fff
+    background:#fff;
+    color:#000;
+
+    border-color:#fff;
 }
 
 .messageImage{
-display:block;
-width:auto;
-max-width:100%;
-max-height:550px;
-margin-top:10px;
-border:1px solid var(--border);
-border-radius:13px;
-cursor:pointer
+    display:block;
+
+    width:auto;
+    max-width:100%;
+
+    max-height:550px;
+
+    margin-top:10px;
+
+    border:1px solid var(--border);
+
+    border-radius:13px;
+
+    cursor:pointer;
 }
 
-.messageActions{display:flex;gap:5px;margin-top:9px}
+.messageActions{
+    display:flex;
+
+    gap:5px;
+
+    margin-top:9px;
+}
 
 .messageActions button{
-height:27px;
-padding:0 8px;
-border:1px solid var(--border);
-border-radius:8px;
-background:#111;
-color:#999;
-font-size:9px
+    height:27px;
+
+    padding:0 8px;
+
+    border:1px solid var(--border);
+    border-radius:8px;
+
+    background:#111;
+    color:#999;
+
+    font-size:9px;
 }
 
-.messageActions button:hover{color:#fff}
+.messageActions button:hover{
+    color:#fff;
+}
 
-/* THINKING */
+/* =========================================================
+THINKING
+========================================================= */
 
 .thinking{
-display:flex;
-align-items:center;
-gap:5px;
-width:max-content;
-padding:13px 16px;
-border:1px solid var(--border);
-border-radius:17px;
-background:#101010
+    display:flex;
+    align-items:center;
+
+    gap:5px;
+
+    width:max-content;
+
+    padding:13px 16px;
+
+    border:1px solid var(--border);
+    border-radius:17px;
+
+    background:#101010;
 }
 
 .dot{
-width:6px;
-height:6px;
-border-radius:50%;
-background:#aaa;
-animation:thinkingDot 1.1s infinite
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:#aaa;
+
+    animation:thinkingDot 1.1s infinite;
 }
 
-.dot:nth-child(2){animation-delay:.15s}
-.dot:nth-child(3){animation-delay:.3s}
+.dot:nth-child(2){
+    animation-delay:.15s;
+}
+
+.dot:nth-child(3){
+    animation-delay:.3s;
+}
 
 @keyframes thinkingDot{
-0%,70%,100%{transform:translateY(0);opacity:.35}
-35%{transform:translateY(-5px);opacity:1}
+    0%,
+    70%,
+    100%{
+        transform:translateY(0);
+        opacity:.35;
+    }
+
+    35%{
+        transform:translateY(-5px);
+        opacity:1;
+    }
 }
 
-/* COMPOSER */
+/* =========================================================
+COMPOSER
+========================================================= */
 
 .composerWrap{
-padding:11px 20px 17px;
-border-top:1px solid var(--border);
-background:rgba(5,5,5,.92);
-backdrop-filter:blur(20px);
-z-index:40
+    padding:11px 20px 17px;
+
+    border-top:1px solid var(--border);
+
+    background:rgba(5,5,5,.92);
+
+    backdrop-filter:blur(20px);
+
+    z-index:40;
 }
 
 .composer{
-width:min(1000px,100%);
-margin:auto;
-padding:8px;
-border:1px solid var(--border2);
-border-radius:18px;
-background:#0e0e0e;
-box-shadow:0 15px 50px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.025)
+    width:min(1000px,100%);
+
+    margin:auto;
+
+    padding:8px;
+
+    border:1px solid var(--border2);
+    border-radius:18px;
+
+    background:#0e0e0e;
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,.3),
+        inset 0 1px 0 rgba(255,255,255,.025);
 }
 
 .imagePreview{
-position:relative;
-width:130px;
-margin:2px 2px 8px
+    position:relative;
+
+    width:130px;
+
+    margin:2px 2px 8px;
 }
 
 .imagePreview img{
-width:130px;
-height:90px;
-object-fit:cover;
-border:1px solid var(--border);
-border-radius:11px
+    width:130px;
+    height:90px;
+
+    object-fit:cover;
+
+    border:1px solid var(--border);
+    border-radius:11px;
 }
 
 .removeImage{
-position:absolute;
-top:5px;
-right:5px;
-width:25px;
-height:25px;
-border:0;
-border-radius:50%;
-background:#000;
-color:#fff
+    position:absolute;
+
+    top:5px;
+    right:5px;
+
+    width:25px;
+    height:25px;
+
+    border:0;
+    border-radius:50%;
+
+    background:#000;
+    color:#fff;
 }
 
 .composerRow{
-display:flex;
-align-items:flex-end;
-gap:7px
+    display:flex;
+    align-items:flex-end;
+
+    gap:7px;
 }
 
 #messageInput{
-flex:1;
-min-height:44px;
-max-height:170px;
-padding:11px;
-border:0;
-outline:none;
-resize:none;
-background:transparent;
-color:#fff;
-line-height:1.4
+    flex:1;
+
+    min-height:44px;
+    max-height:170px;
+
+    padding:11px;
+
+    border:0;
+
+    outline:none;
+
+    resize:none;
+
+    background:transparent;
+    color:#fff;
+
+    line-height:1.4;
 }
 
-#messageInput::placeholder{color:#5f5f5f}
+#messageInput::placeholder{
+    color:#5f5f5f;
+}
 
 .composerButton{
-width:43px;
-height:43px;
-flex-shrink:0;
-border:1px solid var(--border);
-border-radius:12px;
-background:#151515;
-color:#bbb;
-transition:.15s
+    width:43px;
+    height:43px;
+
+    flex-shrink:0;
+
+    border:1px solid var(--border);
+    border-radius:12px;
+
+    background:#151515;
+    color:#bbb;
+
+    transition:.15s;
 }
 
 .composerButton:hover{
-background:#222;
-color:#fff;
-border-color:#444
+    background:#222;
+    color:#fff;
+    border-color:#444;
 }
 
 .sendButton{
-background:#fff;
-color:#000;
-border-color:#fff;
-font-weight:1000
+    background:#fff;
+    color:#000;
+
+    border-color:#fff;
+
+    font-weight:1000;
 }
 
-.sendButton:hover{background:#ddd;color:#000}
+.sendButton:hover{
+    background:#ddd;
+    color:#000;
+}
 
 .composerInfo{
-padding:5px 10px 0;
-color:#555;
-font-size:8px
+    padding:5px 10px 0;
+
+    color:#555;
+
+    font-size:8px;
 }
 
-/* MODAL */
+/* =========================================================
+MODAL
+========================================================= */
 
 .modal{
-position:fixed;
-inset:0;
-z-index:10000;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:15px;
-background:rgba(0,0,0,.75);
-backdrop-filter:blur(12px)
+    position:fixed;
+    inset:0;
+
+    z-index:10000;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:15px;
+
+    background:rgba(0,0,0,.75);
+
+    backdrop-filter:blur(12px);
 }
 
 .modalCard{
-width:min(650px,92vw);
-max-height:90vh;
-overflow:auto;
-padding:22px;
-border:1px solid var(--border2);
-border-radius:22px;
-background:#0c0c0c;
-box-shadow:var(--shadow)
+    width:min(650px,92vw);
+    max-height:90vh;
+
+    overflow:auto;
+
+    padding:22px;
+
+    border:1px solid var(--border2);
+    border-radius:22px;
+
+    background:#0c0c0c;
+
+    box-shadow:var(--shadow);
 }
 
 .modalHeader{
-display:flex;
-align-items:center;
-justify-content:space-between;
-margin-bottom:16px
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:16px;
 }
 
-.modalHeader h2{font-size:19px}
+.modalHeader h2{
+    font-size:19px;
+}
 
 .closeModal{
-width:35px;
-height:35px;
-border:1px solid var(--border);
-border-radius:9px;
-background:#111;
-color:#aaa
+    width:35px;
+    height:35px;
+
+    border:1px solid var(--border);
+    border-radius:9px;
+
+    background:#111;
+    color:#aaa;
 }
 
-.generateForm{display:flex;flex-direction:column;gap:10px}
+.generateForm{
+    display:flex;
+    flex-direction:column;
+
+    gap:10px;
+}
 
 .generateInput{
-width:100%;
-min-height:120px;
-padding:13px;
-resize:vertical;
-border:1px solid var(--border);
-border-radius:12px;
-outline:none;
-background:#080808;
-color:#fff
+    width:100%;
+    min-height:120px;
+
+    padding:13px;
+
+    resize:vertical;
+
+    border:1px solid var(--border);
+    border-radius:12px;
+
+    outline:none;
+
+    background:#080808;
+    color:#fff;
 }
 
-.generateInput:focus{border-color:#555}
+.generateInput:focus{
+    border-color:#555;
+}
 
 .generateOptions{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:8px
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:8px;
 }
 
 .generateOptions select{
-width:100%;
-height:42px;
-padding:0 10px;
-border:1px solid var(--border);
-border-radius:10px;
-background:#111;
-color:#fff
+    width:100%;
+    height:42px;
+
+    padding:0 10px;
+
+    border:1px solid var(--border);
+    border-radius:10px;
+
+    background:#111;
+    color:#fff;
 }
 
 .generateButton{
-width:100%;
-height:46px;
-border:0;
-border-radius:11px;
-background:#fff;
-color:#000;
-font-weight:1000;
-transition:.15s
+    width:100%;
+    height:46px;
+
+    border:0;
+    border-radius:11px;
+
+    background:#fff;
+    color:#000;
+
+    font-weight:1000;
+
+    transition:.15s;
 }
 
-.generateButton:hover:not(:disabled){background:#ddd}
-.generateButton:disabled{opacity:.5;cursor:not-allowed}
+.generateButton:hover:not(:disabled){
+    background:#ddd;
+}
 
-.generatedResult{margin-top:15px}
+.generateButton:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.generatedResult{
+    margin-top:15px;
+}
 
 .generatedResult img{
-display:block;
-width:100%;
-border:1px solid var(--border);
-border-radius:15px
+    display:block;
+
+    width:100%;
+
+    border:1px solid var(--border);
+    border-radius:15px;
 }
 
-/* CONTEXT */
+/* =========================================================
+CONTEXT MENU
+========================================================= */
 
 .contextMenu{
-position:fixed;
-z-index:20000;
-width:190px;
-padding:5px;
-border:1px solid var(--border2);
-border-radius:12px;
-background:#111;
-box-shadow:var(--shadow)
+    position:fixed;
+
+    z-index:20000;
+
+    width:190px;
+
+    padding:5px;
+
+    border:1px solid var(--border2);
+    border-radius:12px;
+
+    background:#111;
+
+    box-shadow:var(--shadow);
 }
 
 .contextMenu button{
-width:100%;
-height:36px;
-padding:0 10px;
-border:0;
-border-radius:8px;
-background:transparent;
-color:#ddd;
-text-align:left;
-font-size:11px
+    width:100%;
+    height:36px;
+
+    padding:0 10px;
+
+    border:0;
+    border-radius:8px;
+
+    background:transparent;
+    color:#ddd;
+
+    text-align:left;
+
+    font-size:11px;
 }
 
-.contextMenu button:hover{background:#222}
+.contextMenu button:hover{
+    background:#222;
+}
 
-/* TOAST */
+/* =========================================================
+TOAST
+========================================================= */
 
 #toastContainer{
-position:fixed;
-right:18px;
-bottom:18px;
-z-index:50000;
-display:flex;
-flex-direction:column;
-gap:8px;
-pointer-events:none
+    position:fixed;
+
+    right:18px;
+    bottom:18px;
+
+    z-index:50000;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:8px;
+
+    pointer-events:none;
 }
 
 .toast{
-min-width:220px;
-max-width:350px;
-padding:12px 14px;
-border:1px solid #333;
-border-radius:12px;
-background:#111;
-color:#eee;
-font-size:11px;
-box-shadow:var(--shadow);
-animation:toastIn .2s ease,toastOut .3s ease 3.7s forwards
+    min-width:220px;
+    max-width:350px;
+
+    padding:12px 14px;
+
+    border:1px solid #333;
+    border-radius:12px;
+
+    background:#111;
+    color:#eee;
+
+    font-size:11px;
+
+    box-shadow:var(--shadow);
+
+    animation:
+        toastIn .2s ease,
+        toastOut .3s ease 3.7s forwards;
 }
 
-.toast.good{border-color:#315f3d}
-.toast.bad{border-color:#653535;color:#ff8888}
+.toast.good{
+    border-color:#315f3d;
+}
+
+.toast.bad{
+    border-color:#653535;
+    color:#ff8888;
+}
 
 @keyframes toastIn{
-from{transform:translateY(10px);opacity:0}
-to{transform:translateY(0);opacity:1}
+    from{
+        transform:translateY(10px);
+        opacity:0;
+    }
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
 }
 
 @keyframes toastOut{
-to{transform:translateY(10px);opacity:0}
+    to{
+        transform:translateY(10px);
+        opacity:0;
+    }
 }
 
-/* MOBILE */
+/* =========================================================
+MOBILE
+========================================================= */
 
 @media(max-width:850px){
-.sidebar{
-position:fixed;
-top:0;
-bottom:0;
-left:-310px;
-transition:.25s;
-box-shadow:var(--shadow)
-}
 
-.sidebar.open{left:0}
-.mobileMenu{display:block}
-.content{padding:12px}
-.hero{padding:24px}
-.hero h1{font-size:51px;letter-spacing:-4px}
-.keyGrid{grid-template-columns:1fr}
-.composerWrap{padding:8px 8px 12px}
-.messageBubble{max-width:93%}
-.topbar{padding:0 9px}
+    .sidebar{
+        position:fixed;
+
+        top:0;
+        bottom:0;
+        left:-310px;
+
+        transition:.25s;
+
+        box-shadow:var(--shadow);
+    }
+
+    .sidebar.open{
+        left:0;
+    }
+
+    .mobileMenu{
+        display:block;
+    }
+
+    .content{
+        padding:12px;
+    }
+
+    .hero{
+        padding:24px;
+    }
+
+    .hero h1{
+        font-size:51px;
+        letter-spacing:-4px;
+    }
+
+    .keyGrid{
+        grid-template-columns:1fr;
+    }
+
+    .composerWrap{
+        padding:8px 8px 12px;
+    }
+
+    .messageBubble{
+        max-width:93%;
+    }
+
+    .topbar{
+        padding:0 9px;
+    }
+
 }
 
 @media(max-width:600px){
-.hero:after{font-size:150px;right:5px;bottom:-25px}
-.topActions .smallBtn{display:none}
-.currentChatName{max-width:180px}
+
+    .hero::after{
+        font-size:150px;
+        right:5px;
+        bottom:-25px;
+    }
+
+    .topActions .smallBtn{
+        display:none;
+    }
+
+    .currentChatName{
+        max-width:180px;
+    }
+
 }
 
 @media(max-width:500px){
-.currentChatName{max-width:130px}
-.generateOptions{grid-template-columns:1fr}
-.composerButton{width:39px;height:39px}
-.loginCard{padding:30px 22px}
+
+    .currentChatName{
+        max-width:130px;
+    }
+
+    .generateOptions{
+        grid-template-columns:1fr;
+    }
+
+    .composerButton{
+        width:39px;
+        height:39px;
+    }
+
+    .loginCard{
+        padding:30px 22px;
+    }
+
 }
 
+/* =========================================================
+REDUCED MOTION
+========================================================= */
+
 @media(prefers-reduced-motion:reduce){
-*,*::before,*::after{
-animation-duration:.01ms!important;
-animation-iteration-count:1!important;
-scroll-behavior:auto!important;
-transition-duration:.01ms!important
-}
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        scroll-behavior:auto!important;
+        transition-duration:.01ms!important;
+    }
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<!-- =========================================================
+LOGIN
+========================================================= -->
 
 <div id="loginScreen">
-<div class="loginCard">
 
-<div class="loginLogo">N</div>
+    <div class="loginCard">
 
-<h1>NOVA</h1>
+        <div class="loginLogo">
+            N
+        </div>
 
-<p>
-Deine persönliche KI mit mehreren Chats,
-Erinnerungen, Bildanalyse, Bildgenerierung,
-Sprache und Web-Funktionen.
-</p>
+        <h1>NOVA</h1>
 
-<button id="googleLoginBtn" class="googleLogin">
-Mit Google anmelden
-</button>
+        <p>
+            Deine persönliche KI mit mehreren Chats,
+            Erinnerungen, Bildanalyse,
+            Bildgenerierung, Sprache und Web-Funktionen.
+        </p>
 
-<div id="loginError"
-style="margin-top:15px;color:#ff7070;font-size:11px;"></div>
+        <button
+            id="googleLoginBtn"
+            class="googleLogin">
+
+            Mit Google anmelden
+
+        </button>
+
+        <div
+            id="loginError"
+            style="
+            margin-top:15px;
+            color:#ff7070;
+            font-size:11px;">
+        </div>
+
+    </div>
 
 </div>
-</div>
 
 
-<!-- APP -->
+<!-- =========================================================
+APP
+========================================================= -->
 
 <div id="app" class="hidden">
 
-<aside id="sidebar" class="sidebar">
+    <!-- SIDEBAR -->
 
-<div class="sidebarTop">
+    <aside id="sidebar" class="sidebar">
 
-<div class="brand">
+        <div class="sidebarTop">
 
-<div class="brandLogo">N</div>
+            <div class="brand">
 
-<div class="brandText">
-<strong>Nova Family AI</strong>
-<span>PERSONAL AI SYSTEM</span>
+                <div class="brandLogo">
+                    N
+                </div>
+
+                <div class="brandText">
+
+                    <strong>
+                        Nova Family AI
+                    </strong>
+
+                    <span>
+                        PERSONAL AI SYSTEM
+                    </span>
+
+                </div>
+
+            </div>
+
+            <button
+                id="newChatBtn"
+                class="newChatBtn">
+
+                + Neuer Chat
+
+            </button>
+
+            <input
+                id="chatSearch"
+                class="chatSearch"
+                placeholder="Chats durchsuchen..."
+                autocomplete="off"
+            >
+
+        </div>
+
+        <div
+            id="chatList"
+            class="chatList">
+        </div>
+
+        <div class="sidebarBottom">
+
+            <div class="userBox">
+
+                <img
+                    id="userAvatar"
+                    class="avatar"
+                    src=""
+                    alt=""
+                >
+
+                <div class="userInfo">
+
+                    <strong id="userName">
+                        Benutzer
+                    </strong>
+
+                    <span id="userEmail">
+                        ...
+                    </span>
+
+                </div>
+
+                <button
+                    id="logoutBtn"
+                    class="logoutBtn">
+
+                    ↪
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="topbarTitle">
+
+                <button
+                    id="mobileMenuBtn"
+                    class="mobileMenu">
+
+                    ☰
+
+                </button>
+
+                <div>
+
+                    <div
+                        id="currentChatName"
+                        class="currentChatName">
+
+                        Neuer Chat
+
+                    </div>
+
+                    <div
+                        style="
+                        color:#666;
+                        font-size:8px;
+                        margin-top:2px;">
+
+                        NOVA AI
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="topActions">
+
+                <button
+                    id="renameChatBtn"
+                    class="smallBtn">
+
+                    Umbenennen
+
+                </button>
+
+                <button
+                    id="deleteChatBtn"
+                    class="smallBtn dangerBtn">
+
+                    Chat löschen
+
+                </button>
+
+                <button
+                    id="clearMemoryBtn"
+                    class="smallBtn">
+
+                    Gedanken löschen
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+
+        <section class="content">
+
+            <div class="hero">
+
+                <h1>NOVA</h1>
+
+                <p>
+                    Deine persönliche KI.
+                    Mehrere unabhängige Chats,
+                    dauerhafte Gedanken, Bildanalyse,
+                    Bildgenerierung, Sprache und Web-Aktionen.
+                </p>
+
+                <div class="statusRow">
+
+                    <div
+                        id="connectionStatus"
+                        class="status">
+
+                        Nicht verbunden
+
+                    </div>
+
+                    <div class="status">
+                        F1/F2 AUTO
+                    </div>
+
+                    <div class="status">
+                        MULTI CHAT
+                    </div>
+
+                    <div class="status">
+                        IMAGE AI
+                    </div>
+
+                    <div class="status">
+                        MEMORY
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- API KEYS -->
+
+            <section class="settings">
+
+                <div class="settingsHeader">
+
+                    <strong>
+                        GEMINI ZUGÄNGE
+                    </strong>
+
+                    <button
+                        id="toggleKeysBtn"
+                        class="smallBtn">
+
+                        🔐 API-Keys anzeigen
+
+                    </button>
+
+                </div>
+
+                <div
+                    id="apiKeyPanel"
+                    class="keyPanel hidden">
+
+                    <div class="keyGrid">
+
+                        <!-- F1 -->
+
+                        <div class="keyCard">
+
+                            <div class="keyHeader">
+
+                                <strong>
+                                    F1 – Hauptzugang
+                                </strong>
+
+                                <span
+                                    id="key1State"
+                                    class="keyState">
+
+                                    nicht gesetzt
+
+                                </span>
+
+                            </div>
+
+                            <input
+                                id="key1Input"
+                                class="keyInput"
+                                type="password"
+                                placeholder="Gemini API Key F1"
+                                autocomplete="off"
+                            >
+
+                            <div class="keyButtons">
+
+                                <button id="saveKey1Btn">
+                                    Speichern
+                                </button>
+
+                                <button id="activateKey1Btn">
+                                    Aktivieren
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- F2 -->
+
+                        <div class="keyCard">
+
+                            <div class="keyHeader">
+
+                                <strong>
+                                    F2 – Backup
+                                </strong>
+
+                                <span
+                                    id="key2State"
+                                    class="keyState">
+
+                                    nicht gesetzt
+
+                                </span>
+
+                            </div>
+
+                            <input
+                                id="key2Input"
+                                class="keyInput"
+                                type="password"
+                                placeholder="Gemini API Key F2"
+                                autocomplete="off"
+                            >
+
+                            <div class="keyButtons">
+
+                                <button id="saveKey2Btn">
+                                    Speichern
+                                </button>
+
+                                <button id="activateKey2Btn">
+                                    Aktivieren
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="keyButtons"
+                        style="margin-top:12px;">
+
+                        <button id="toggleKeyVisibilityBtn">
+                            👁 Schlüssel anzeigen
+                        </button>
+
+                    </div>
+
+                    <div class="keyHelp">
+
+                        F1 wird zuerst verwendet.
+                        Wenn F1 fehlschlägt,
+                        versucht Nova automatisch F2.
+                        Das funktioniert auch bei der Bildgenerierung.
+
+                    </div>
+
+                    <div class="persistence">
+
+                        Die Schlüssel werden lokal gespeichert und –
+                        wenn du angemeldet bist – zusätzlich mit deinem
+                        Firebase-Benutzer gespeichert.
+
+                        <br><br>
+
+                        Hinweis: Bei einer reinen GitHub-Pages-Seite
+                        können API-Keys technisch nicht vollständig
+                        vor dem Browser verborgen werden.
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- MEMORY -->
+
+            <section class="memoryBox">
+
+                <div class="memoryTop">
+
+                    <strong>
+                        🧠 GEDANKEN / ERINNERUNGEN
+                    </strong>
+
+                    <span
+                        id="memoryCount"
+                        style="
+                        color:#666;
+                        font-size:9px;">
+                        0
+                    </span>
+
+                </div>
+
+                <div
+                    id="memoryList"
+                    class="memoryList">
+                </div>
+
+            </section>
+
+
+            <!-- CHAT -->
+
+            <section
+                id="chat"
+                class="chat">
+            </section>
+
+        </section>
+
+
+        <!-- COMPOSER -->
+
+        <div class="composerWrap">
+
+            <div class="composer">
+
+                <div
+                    id="imagePreview"
+                    class="imagePreview hidden">
+
+                    <img
+                        id="previewImg"
+                        src=""
+                        alt=""
+                    >
+
+                    <button
+                        id="removeImageBtn"
+                        class="removeImage">
+
+                        ×
+
+                    </button>
+
+                </div>
+
+                <div class="composerRow">
+
+                    <button
+                        id="microphoneBtn"
+                        class="composerButton"
+                        title="Sprache">
+
+                        🎙
+
+                    </button>
+
+                    <button
+                        id="uploadImageBtn"
+                        class="composerButton"
+                        title="Bild hochladen">
+
+                        🖼
+
+                    </button>
+
+                    <button
+                        id="generateImageBtn"
+                        class="composerButton"
+                        title="Bild generieren">
+
+                        ✨
+
+                    </button>
+
+                    <textarea
+                        id="messageInput"
+                        placeholder="Nachricht an Nova..."
+                        rows="1">
+                    </textarea>
+
+                    <button
+                        id="sendBtn"
+                        class="composerButton sendButton">
+
+                        ➤
+
+                    </button>
+
+                </div>
+
+                <div class="composerInfo">
+                    Enter = senden · Shift+Enter = neue Zeile
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
 </div>
 
-</div>
 
-<button id="newChatBtn" class="newChatBtn">
-+ Neuer Chat
-</button>
+<!-- FILE INPUT -->
 
 <input
-id="chatSearch"
-class="chatSearch"
-placeholder="Chats durchsuchen..."
-autocomplete="off"
->
-
-</div>
-
-<div id="chatList" class="chatList"></div>
-
-<div class="sidebarBottom">
-
-<div class="userBox">
-
-<img id="userAvatar" class="avatar" src="" alt="">
-
-<div class="userInfo">
-
-<strong id="userName">Benutzer</strong>
-
-<span id="userEmail">...</span>
-
-</div>
-
-<button id="logoutBtn" class="logoutBtn">↪</button>
-
-</div>
-
-</div>
-
-</aside>
-
-
-<main class="main">
-
-<header class="topbar">
-
-<div class="topbarTitle">
-
-<button id="mobileMenuBtn" class="mobileMenu">☰</button>
-
-<div>
-
-<div id="currentChatName" class="currentChatName">
-Neuer Chat
-</div>
-
-<div style="color:#666;font-size:8px;margin-top:2px;">
-NOVA AI
-</div>
-
-</div>
-
-</div>
-
-<div class="topActions">
-
-<button id="renameChatBtn" class="smallBtn">
-Umbenennen
-</button>
-
-<button id="deleteChatBtn" class="smallBtn dangerBtn">
-Chat löschen
-</button>
-
-<button id="clearMemoryBtn" class="smallBtn">
-Gedanken löschen
-</button>
-
-</div>
-
-</header>
-
-
-<section class="content">
-
-<div class="hero">
-
-<h1>NOVA</h1>
-
-<p>
-Deine persönliche KI. Mehrere unabhängige Chats,
-dauerhafte Gedanken, Bildanalyse, Bildgenerierung,
-Sprache und Web-Aktionen.
-</p>
-
-<div class="statusRow">
-
-<div id="connectionStatus" class="status">
-Nicht verbunden
-</div>
-
-<div class="status">
-F1/F2/F3/F4 AUTO
-</div>
-
-<div class="status">
-MULTI CHAT
-</div>
-
-<div class="status">
-IMAGE AI
-</div>
-
-<div class="status">
-MEMORY
-</div>
-
-</div>
-</div>
-
-
-<!-- API KEYS -->
-
-<section class="settings">
-
-<div class="settingsHeader">
-
-<strong>GEMINI ZUGÄNGE</strong>
-
-<button id="toggleKeysBtn" class="smallBtn">
-🔐 API-Keys anzeigen
-</button>
-
-</div>
-
-<div id="apiKeyPanel" class="keyPanel hidden">
-
-<div class="keyGrid">
-
-<!-- F1 -->
-
-<div class="keyCard">
-
-<div class="keyHeader">
-
-<strong>F1 – Hauptzugang</strong>
-
-<span id="key1State" class="keyState">
-nicht gesetzt
-</span>
-
-</div>
-
-<input
-id="key1Input"
-class="keyInput"
-type="password"
-placeholder="Gemini API Key F1"
-autocomplete="off"
->
-
-<div class="keyButtons">
-
-<button id="saveKey1Btn">Speichern</button>
-<button id="activateKey1Btn">Aktivieren</button>
-
-</div>
-
-</div>
-
-
-<!-- F2 -->
-
-<div class="keyCard">
-
-<div class="keyHeader">
-
-<strong>F2 – Backup</strong>
-
-<span id="key2State" class="keyState">
-nicht gesetzt
-</span>
-
-</div>
-
-<input
-id="key2Input"
-class="keyInput"
-type="password"
-placeholder="Gemini API Key F2"
-autocomplete="off"
->
-
-<div class="keyButtons">
-
-<button id="saveKey2Btn">Speichern</button>
-<button id="activateKey2Btn">Aktivieren</button>
-
-</div>
-
-</div>
-
-
-<!-- F3 -->
-
-<div class="keyCard">
-
-<div class="keyHeader">
-
-<strong>F3 – Backup 2</strong>
-
-<span id="key3State" class="keyState">
-nicht gesetzt
-</span>
-
-</div>
-
-<input
-id="key3Input"
-class="keyInput"
-type="password"
-placeholder="Gemini API Key F3"
-autocomplete="off"
->
-
-<div class="keyButtons">
-
-<button id="saveKey3Btn">Speichern</button>
-<button id="activateKey3Btn">Aktivieren</button>
-
-</div>
-
-</div>
-
-
-<!-- F4 -->
-
-<div class="keyCard">
-
-<div class="keyHeader">
-
-<strong>F4 – Backup 3</strong>
-
-<span id="key4State" class="keyState">
-nicht gesetzt
-</span>
-
-</div>
-
-<input
-id="key4Input"
-class="keyInput"
-type="password"
-placeholder="Gemini API Key F4"
-autocomplete="off"
->
-
-<div class="keyButtons">
-
-<button id="saveKey4Btn">Speichern</button>
-<button id="activateKey4Btn">Aktivieren</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="keyButtons" style="margin-top:12px;">
-
-<button id="toggleKeyVisibilityBtn">
-👁 Schlüssel anzeigen
-</button>
-
-</div>
-
-
-<div class="keyHelp">
-
-Nova verwendet den aktiven Key zuerst.
-Wenn dieser Key fehlschlägt, werden automatisch
-die anderen gespeicherten Keys F1–F4 ausprobiert.
-
-Das gilt sowohl für normale Gemini-Antworten
-als auch für Bildanalyse und Bildgenerierung.
-
-</div>
-
-
-<div class="persistence">
-
-Die vier Schlüssel werden lokal gespeichert und –
-wenn du angemeldet bist – zusätzlich mit deinem
-Firebase-Benutzer gespeichert.
-
-<br><br>
-
-Hinweis: Bei einer reinen GitHub-Pages-Seite
-können API-Keys technisch nicht vollständig
-vor dem Browser verborgen werden.
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- MEMORY -->
-
-<section class="memoryBox">
-
-<div class="memoryTop">
-
-<strong>🧠 GEDANKEN / ERINNERUNGEN</strong>
-
-<span id="memoryCount" style="color:#666;font-size:9px;">
-0
-</span>
-
-</div>
-
-<div id="memoryList" class="memoryList"></div>
-
-</section>
-
-
-<section id="chat" class="chat"></section>
-
-</section>
-
-
-<!-- COMPOSER -->
-
-<div class="composerWrap">
-
-<div class="composer">
-
-<div id="imagePreview" class="imagePreview hidden">
-
-<img id="previewImg" src="" alt="">
-
-<button id="removeImageBtn" class="removeImage">
-×
-</button>
-
-</div>
-
-<div class="composerRow">
-
-<button
-id="microphoneBtn"
-class="composerButton"
-title="Sprache">
-🎙
-</button>
-
-<button
-id="uploadImageBtn"
-class="composerButton"
-title="Bild hochladen">
-🖼
-</button>
-
-<button
-id="generateImageBtn"
-class="composerButton"
-title="Bild generieren">
-✨
-</button>
-
-<textarea
-id="messageInput"
-placeholder="Nachricht an Nova..."
-rows="1"></textarea>
-
-<button
-id="sendBtn"
-class="composerButton sendButton">
-➤
-</button>
-
-</div>
-
-<div class="composerInfo">
-Enter = senden · Shift+Enter = neue Zeile
-</div>
-
-</div>
-
-</div>
-
-</main>
-</div>
-
-
-<input
-id="imageFileInput"
-type="file"
-accept="image/*"
-class="hidden"
+    id="imageFileInput"
+    type="file"
+    accept="image/*"
+    class="hidden"
 >
 
 
-<!-- IMAGE MODAL -->
-
-<div id="imageModal" class="modal hidden">
-
-<div class="modalCard">
-
-<div class="modalHeader">
-
-<h2>✨ Bild generieren</h2>
-
-<button id="closeImageModalBtn" class="closeModal">
-×
-</button>
-
-</div>
-
-<div class="generateForm">
-
-<textarea
-id="imagePrompt"
-class="generateInput"
-placeholder="Beschreibe genau, welches Bild Nova generieren soll..."></textarea>
-
-<div class="generateOptions">
-
-<select id="imageSize">
-
-<option value="1:1">1:1 Quadrat</option>
-<option value="16:9">16:9 Querformat</option>
-<option value="9:16">9:16 Hochformat</option>
-<option value="4:3">4:3</option>
-<option value="3:4">3:4</option>
-
-</select>
-
-<select id="imageQuality">
-
-<option value="1K">1K</option>
-<option value="2K">2K</option>
-<option value="4K">4K</option>
-
-</select>
-
-</div>
-
-<button
-id="startImageGenerationBtn"
-class="generateButton">
-Bild generieren
-</button>
+<!-- IMAGE GENERATION MODAL -->
 
 <div
-id="imageGenerationStatus"
-style="color:#777;font-size:10px;text-align:center;">
-</div>
+    id="imageModal"
+    class="modal hidden">
 
-<div id="generatedResult" class="generatedResult"></div>
+    <div class="modalCard">
 
-</div>
-</div>
+        <div class="modalHeader">
+
+            <h2>
+                ✨ Bild generieren
+            </h2>
+
+            <button
+                id="closeImageModalBtn"
+                class="closeModal">
+
+                ×
+
+            </button>
+
+        </div>
+
+        <div class="generateForm">
+
+            <textarea
+                id="imagePrompt"
+                class="generateInput"
+                placeholder="Beschreibe genau, welches Bild Nova generieren soll...">
+            </textarea>
+
+            <div class="generateOptions">
+
+                <select id="imageSize">
+
+                    <option value="1:1">
+                        1:1 Quadrat
+                    </option>
+
+                    <option value="16:9">
+                        16:9 Querformat
+                    </option>
+
+                    <option value="9:16">
+                        9:16 Hochformat
+                    </option>
+
+                    <option value="4:3">
+                        4:3
+                    </option>
+
+                    <option value="3:4">
+                        3:4
+                    </option>
+
+                </select>
+
+                <select id="imageQuality">
+
+                    <option value="1K">
+                        1K
+                    </option>
+
+                    <option value="2K">
+                        2K
+                    </option>
+
+                    <option value="4K">
+                        4K
+                    </option>
+
+                </select>
+
+            </div>
+
+            <button
+                id="startImageGenerationBtn"
+                class="generateButton">
+
+                Bild generieren
+
+            </button>
+
+            <div
+                id="imageGenerationStatus"
+                style="
+                color:#777;
+                font-size:10px;
+                text-align:center;">
+            </div>
+
+            <div
+                id="generatedResult"
+                class="generatedResult">
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
 
 <!-- CONTEXT MENU -->
 
-<div id="contextMenu" class="contextMenu hidden">
+<div
+    id="contextMenu"
+    class="contextMenu hidden">
 
-<button id="contextRename">
-Umbenennen
-</button>
+    <button id="contextRename">
+        Umbenennen
+    </button>
 
-<button id="contextDelete">
-Chat löschen
-</button>
+    <button id="contextDelete">
+        Chat löschen
+    </button>
 
 </div>
 
+
+<!-- TOAST -->
 
 <div id="toastContainer"></div>
 
@@ -1493,78 +2276,122 @@ FIREBASE
 ========================================================= */
 
 import {
-initializeApp
+    initializeApp
 }
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
-getAuth,
-GoogleAuthProvider,
-signInWithPopup,
-onAuthStateChanged,
-signOut
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    onAuthStateChanged,
+    signOut
 }
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
 import {
-getFirestore,
-doc,
-getDoc,
-setDoc
+    getFirestore,
+    doc,
+    getDoc,
+    setDoc
 }
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 
-const firebaseConfig={
-apiKey:"AIzaSyAKmdUuFEfqmvs5gbcdFhB1RIg9C9EtrE",
-authDomain:"nova-68fc1.firebaseapp.com",
-projectId:"nova-68fc1",
-storageBucket:"nova-68fc1.firebasestorage.app",
-messagingSenderId:"1020069093020",
-appId:"1:1020069093020:web:9be72af9e60af659475759"
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyAKmdUuFEfqmvs5gbjcdFhB1RIg9C9EtrE",
+
+    authDomain:
+        "nova-68fc1.firebaseapp.com",
+
+    projectId:
+        "nova-68fc1",
+
+    storageBucket:
+        "nova-68fc1.firebasestorage.app",
+
+    messagingSenderId:
+        "1020069093020",
+
+    appId:
+        "1:1020069093020:web:9be72af9e60af659475759"
+
 };
 
 
-const firebaseApp=initializeApp(firebaseConfig);
-const auth=getAuth(firebaseApp);
-const db=getFirestore(firebaseApp);
-const googleProvider=new GoogleAuthProvider();
+const firebaseApp =
+    initializeApp(
+        firebaseConfig
+    );
+
+const auth =
+    getAuth(
+        firebaseApp
+    );
+
+const db =
+    getFirestore(
+        firebaseApp
+    );
+
+const googleProvider =
+    new GoogleAuthProvider();
 
 
 /* =========================================================
-MODELLE
+MODELS
 ========================================================= */
 
-const GEMINI_MODEL="gemini-3.6-flash";
+const GEMINI_MODEL =
+    "gemini-3.6-flash";
 
-const IMAGE_MODEL="gemini-3.1-flash-image";
+const IMAGE_MODEL =
+    "gemini-3.1-flash-image";
 
-const IMAGE_API_URL=
-"https://generativelanguage.googleapis.com/v1beta/interactions";
+const IMAGE_API_URL =
+    "https://generativelanguage.googleapis.com/v1beta/interactions";
 
 
 /* =========================================================
 LIMITS
 ========================================================= */
 
-const MAX_IMAGE_SIZE=10*1024*1024;
-const MAX_MEMORIES=100;
-const MAX_MESSAGES_PER_CHAT=500;
+const MAX_IMAGE_SIZE =
+    10 * 1024 * 1024;
+
+const MAX_MEMORIES =
+    100;
+
+const MAX_MESSAGES_PER_CHAT =
+    500;
 
 
 /* =========================================================
-STORAGE V14
+STORAGE
 ========================================================= */
 
-const STORAGE_KEYS={
-keys:"nova_keys_v14",
-active:"nova_active_key_v14",
-chats:"nova_chats_v14",
-currentChat:"nova_current_chat_v14",
-memories:"nova_memories_v14"
+const STORAGE_KEYS = {
+
+    keys:
+        "nova_keys_v13",
+
+    active:
+        "nova_active_key_v13",
+
+    chats:
+        "nova_chats_v13",
+
+    currentChat:
+        "nova_current_chat_v13",
+
+    memories:
+        "nova_memories_v13"
+
 };
 
 
@@ -1572,88 +2399,138 @@ memories:"nova_memories_v14"
 STATE
 ========================================================= */
 
-let currentUser=null;
+let currentUser =
+    null;
 
-let geminiKeys={
-1:"",
-2:"",
-3:"",
-4:""
+let geminiKeys = {
+    1:"",
+    2:""
 };
 
-let activeKeyNumber=1;
+let activeKeyNumber =
+    1;
 
-let chats=[];
+let chats =
+    [];
 
-let currentChatId=null;
+let currentChatId =
+    null;
 
-let memories=[];
+let memories =
+    [];
 
-let selectedImage=null;
+let selectedImage =
+    null;
 
-let recognition=null;
+let recognition =
+    null;
 
-let isListening=false;
+let isListening =
+    false;
 
-let thinking=false;
+let thinking =
+    false;
 
-let speaking=false;
+let speaking =
+    false;
 
-let voiceMode=false;
+let voiceMode =
+    false;
 
-let contextChatId=null;
+let contextChatId =
+    null;
 
-let firebaseSaveTimer=null;
+let firebaseSaveTimer =
+    null;
 
 
 /* =========================================================
 DOM
 ========================================================= */
 
-const $=id=>document.getElementById(id);
+const $ =
+    id =>
+        document.getElementById(id);
 
-const loginScreen=$("loginScreen");
-const app=$("app");
-const chatList=$("chatList");
-const chat=$("chat");
-const messageInput=$("messageInput");
-const sendBtn=$("sendBtn");
-const connectionStatus=$("connectionStatus");
-const imageFileInput=$("imageFileInput");
-const imagePreview=$("imagePreview");
-const previewImg=$("previewImg");
-const imageModal=$("imageModal");
-const contextMenu=$("contextMenu");
+const loginScreen =
+    $("loginScreen");
+
+const app =
+    $("app");
+
+const chatList =
+    $("chatList");
+
+const chat =
+    $("chat");
+
+const messageInput =
+    $("messageInput");
+
+const sendBtn =
+    $("sendBtn");
+
+const connectionStatus =
+    $("connectionStatus");
+
+const imageFileInput =
+    $("imageFileInput");
+
+const imagePreview =
+    $("imagePreview");
+
+const previewImg =
+    $("previewImg");
+
+const imageModal =
+    $("imageModal");
+
+const contextMenu =
+    $("contextMenu");
 
 
 /* =========================================================
 TOAST
 ========================================================= */
 
-function showToast(message,type="normal"){
+function showToast(
+    message,
+    type="normal"
+){
 
-const container=$("toastContainer");
+    const container =
+        $("toastContainer");
 
-const toast=document.createElement("div");
+    const toast =
+        document.createElement(
+            "div"
+        );
 
-toast.className=
-"toast "+
-(
-type==="good"
-?"good"
-:type==="bad"
-?"bad"
-:""
-);
+    toast.className =
+        "toast " +
+        (
+            type === "good"
+                ? "good"
+                : type === "bad"
+                    ? "bad"
+                    : ""
+        );
 
-toast.textContent=message;
+    toast.textContent =
+        message;
 
-container.appendChild(toast);
+    container.appendChild(
+        toast
+    );
 
-setTimeout(
-()=>toast.remove(),
-4100
-);
+    setTimeout(
+        () => {
+
+            toast.remove();
+
+        },
+        4100
+    );
 
 }
 
@@ -1663,467 +2540,510 @@ HELPERS
 ========================================================= */
 
 function now(){
-return Date.now();
+    return Date.now();
 }
 
 
-function makeId(prefix="id"){
+function makeId(
+    prefix="id"
+){
 
-return prefix+
-"_"+Date.now()+
-"_"+Math.random().toString(36).slice(2,9);
-
-}
-
-
-function escapeHtml(text){
-
-return String(text??"")
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
+    return (
+        prefix +
+        "_" +
+        Date.now() +
+        "_" +
+        Math.random()
+            .toString(36)
+            .slice(2,9)
+    );
 
 }
 
 
-function formatDate(timestamp){
+function escapeHtml(
+    text
+){
 
-if(!timestamp)return "";
-
-return new Date(timestamp).toLocaleDateString(
-"de-DE",
-{
-day:"2-digit",
-month:"2-digit",
-year:"2-digit"
-}
-);
-
-}
-
-
-function openNewTab(url){
-
-if(!url)return null;
-
-try{
-
-return window.open(
-url,
-"_blank",
-"noopener,noreferrer"
-);
-
-}catch(error){
-
-console.warn(
-"Neuer Tab konnte nicht geöffnet werden:",
-error
-);
-
-return null;
-
-}
+    return String(
+        text ?? ""
+    )
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
 
 }
 
 
-function setConnection(text,good=true){
+function formatDate(
+    timestamp
+){
 
-connectionStatus.textContent=text;
+    if(!timestamp)
+        return "";
 
-connectionStatus.className=
-"status "+(good?"good":"bad");
+    return new Date(
+        timestamp
+    ).toLocaleDateString(
+        "de-DE",
+        {
+            day:"2-digit",
+            month:"2-digit",
+            year:"2-digit"
+        }
+    );
 
 }
 
 
 /* =========================================================
-STORAGE MIGRATION
+TAB OPENING
 ========================================================= */
 
-function migrateStorage(){
-
-const versions=["v13","v12"];
-
-for(const version of versions){
-
-const oldKeys=[
-`nova_keys_${version}`,
-`nova_active_key_${version}`,
-`nova_chats_${version}`,
-`nova_current_chat_${version}`,
-`nova_memories_${version}`
-];
-
-const newKeys=[
-STORAGE_KEYS.keys,
-STORAGE_KEYS.active,
-STORAGE_KEYS.chats,
-STORAGE_KEYS.currentChat,
-STORAGE_KEYS.memories
-];
-
-for(let i=0;i<oldKeys.length;i++){
-
-const oldValue=
-localStorage.getItem(oldKeys[i]);
-
-const newValue=
-localStorage.getItem(newKeys[i]);
-
-if(oldValue&&!newValue){
-
-localStorage.setItem(
-newKeys[i],
-oldValue
-);
-
-}
-
-}
-
-}
-
-
 /*
-Falls noch alte F1/F2 Daten vorhanden sind,
-werden sie automatisch in das neue 4-Key-Format
-übernommen.
+    Wichtig:
+
+    Hier wird KEINE eigene Fehlermeldung mehr
+    angezeigt, wenn der Browser einen neuen Tab
+    blockiert.
+
+    Wenn der Aufruf direkt durch einen Button
+    ausgelöst wurde, funktioniert window.open
+    normalerweise.
+
+    Wenn der Browser es trotzdem blockiert,
+    wird nichts eingeblendet und Nova läuft weiter.
 */
 
-try{
+function openNewTab(
+    url
+){
 
-const oldKeys=
-JSON.parse(
-localStorage.getItem(
-STORAGE_KEYS.keys
-)||
-"{}"
-);
+    if(!url)
+        return null;
 
-geminiKeys[1]=oldKeys[1]||"";
-geminiKeys[2]=oldKeys[2]||"";
-geminiKeys[3]=oldKeys[3]||"";
-geminiKeys[4]=oldKeys[4]||"";
+    try{
 
-}catch{}
+        const newWindow =
+            window.open(
+                url,
+                "_blank",
+                "noopener,noreferrer"
+            );
+
+        return newWindow || null;
+
+    }catch(error){
+
+        console.warn(
+            "Neuer Tab konnte nicht geöffnet werden:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+function setConnection(
+    text,
+    good=true
+){
+
+    connectionStatus.textContent =
+        text;
+
+    connectionStatus.className =
+        "status " +
+        (
+            good
+                ? "good"
+                : "bad"
+        );
 
 }
 
 
 /* =========================================================
-LOCAL SAVE
+LOCAL STORAGE
 ========================================================= */
 
 function saveLocal(){
 
-try{
+    try{
 
-localStorage.setItem(
-STORAGE_KEYS.keys,
-JSON.stringify(geminiKeys)
-);
+        localStorage.setItem(
+            STORAGE_KEYS.keys,
+            JSON.stringify(
+                geminiKeys
+            )
+        );
 
-localStorage.setItem(
-STORAGE_KEYS.active,
-String(activeKeyNumber)
-);
+        localStorage.setItem(
+            STORAGE_KEYS.active,
+            String(
+                activeKeyNumber
+            )
+        );
 
-localStorage.setItem(
-STORAGE_KEYS.chats,
-JSON.stringify(chats)
-);
+        localStorage.setItem(
+            STORAGE_KEYS.chats,
+            JSON.stringify(
+                chats
+            )
+        );
 
-localStorage.setItem(
-STORAGE_KEYS.currentChat,
-currentChatId||""
-);
+        localStorage.setItem(
+            STORAGE_KEYS.currentChat,
+            currentChatId || ""
+        );
 
-localStorage.setItem(
-STORAGE_KEYS.memories,
-JSON.stringify(memories)
-);
+        localStorage.setItem(
+            STORAGE_KEYS.memories,
+            JSON.stringify(
+                memories
+            )
+        );
 
-}catch(error){
+    }catch(error){
 
-console.error(
-"LocalStorage:",
-error
-);
+        console.error(
+            "LocalStorage:",
+            error
+        );
+
+    }
 
 }
 
-}
-
-
-/* =========================================================
-LOCAL LOAD
-========================================================= */
 
 function loadLocal(){
 
-migrateStorage();
+    try{
+
+        const savedKeys =
+            JSON.parse(
+                localStorage.getItem(
+                    STORAGE_KEYS.keys
+                ) || "{}"
+            );
+
+        geminiKeys = {
+
+            1:
+                savedKeys[1] || "",
+
+            2:
+                savedKeys[2] || ""
+
+        };
+
+    }catch{
+
+        geminiKeys = {
+            1:"",
+            2:""
+        };
+
+    }
 
 
-try{
-
-const savedKeys=
-JSON.parse(
-localStorage.getItem(
-STORAGE_KEYS.keys
-)||"{}"
-);
-
-geminiKeys={
-1:savedKeys[1]||"",
-2:savedKeys[2]||"",
-3:savedKeys[3]||"",
-4:savedKeys[4]||""
-};
-
-}catch{
-
-geminiKeys={
-1:"",
-2:"",
-3:"",
-4:""
-};
-
-}
+    activeKeyNumber =
+        Number(
+            localStorage.getItem(
+                STORAGE_KEYS.active
+            ) || "1"
+        );
 
 
-activeKeyNumber=
-Number(
-localStorage.getItem(
-STORAGE_KEYS.active
-)||"1"
-);
+    if(
+        activeKeyNumber !== 1 &&
+        activeKeyNumber !== 2
+    ){
 
-if(
-!Number.isInteger(activeKeyNumber)||
-activeKeyNumber<1||
-activeKeyNumber>4
-){
+        activeKeyNumber =
+            1;
 
-activeKeyNumber=1;
-
-}
+    }
 
 
-try{
+    try{
 
-chats=
-JSON.parse(
-localStorage.getItem(
-STORAGE_KEYS.chats
-)||"[]"
-);
+        chats =
+            JSON.parse(
+                localStorage.getItem(
+                    STORAGE_KEYS.chats
+                ) || "[]"
+            );
 
-if(!Array.isArray(chats))
-chats=[];
+        if(!Array.isArray(chats))
+            chats = [];
 
-}catch{
+    }catch{
 
-chats=[];
+        chats = [];
 
-}
-
-
-try{
-
-memories=
-JSON.parse(
-localStorage.getItem(
-STORAGE_KEYS.memories
-)||"[]"
-);
-
-if(!Array.isArray(memories))
-memories=[];
-
-}catch{
-
-memories=[];
-
-}
+    }
 
 
-currentChatId=
-localStorage.getItem(
-STORAGE_KEYS.currentChat
-)||null;
+    try{
+
+        memories =
+            JSON.parse(
+                localStorage.getItem(
+                    STORAGE_KEYS.memories
+                ) || "[]"
+            );
+
+        if(!Array.isArray(memories))
+            memories = [];
+
+    }catch{
+
+        memories = [];
+
+    }
+
+
+    currentChatId =
+        localStorage.getItem(
+            STORAGE_KEYS.currentChat
+        ) || null;
 
 }
 
 
 /* =========================================================
-FIREBASE LOAD
+FIREBASE
 ========================================================= */
 
 async function loadUserData(){
 
-if(!currentUser)return;
-
-try{
-
-const ref=
-doc(
-db,
-"users",
-currentUser.uid
-);
-
-const snap=
-await getDoc(ref);
-
-if(!snap.exists())
-return;
-
-const data=snap.data();
+    if(!currentUser)
+        return;
 
 
-if(data.geminiKeys){
+    try{
 
-for(let number=1;number<=4;number++){
+        const ref =
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            );
 
-const value=
-data.geminiKeys[
-`key${number}`
-];
+        const snap =
+            await getDoc(
+                ref
+            );
 
-if(typeof value==="string"&&value){
 
-geminiKeys[number]=value;
+        if(!snap.exists())
+            return;
+
+
+        const data =
+            snap.data();
+
+
+        if(data.geminiKeys){
+
+            /*
+                Firebase wird nur dann übernommen,
+                wenn dort wirklich Keys vorhanden sind.
+            */
+
+            if(
+                typeof data.geminiKeys.key1 ===
+                "string"
+            ){
+
+                geminiKeys[1] =
+                    data.geminiKeys.key1;
+
+            }
+
+            if(
+                typeof data.geminiKeys.key2 ===
+                "string"
+            ){
+
+                geminiKeys[2] =
+                    data.geminiKeys.key2;
+
+            }
+
+        }
+
+
+        if(
+            data.activeKeyNumber === 1 ||
+            data.activeKeyNumber === 2
+        ){
+
+            activeKeyNumber =
+                data.activeKeyNumber;
+
+        }
+
+
+        if(
+            Array.isArray(
+                data.memories
+            )
+        ){
+
+            memories =
+                data.memories;
+
+        }
+
+
+        if(
+            Array.isArray(
+                data.chats
+            )
+        ){
+
+            chats =
+                data.chats;
+
+        }
+
+
+        if(
+            typeof data.currentChatId ===
+            "string" &&
+            data.currentChatId
+        ){
+
+            currentChatId =
+                data.currentChatId;
+
+        }
+
+
+        saveLocal();
+
+    }catch(error){
+
+        console.error(
+            "Firebase load:",
+            error
+        );
+
+    }
 
 }
 
-}
-
-}
-
-
-if(
-[1,2,3,4].includes(
-Number(data.activeKeyNumber)
-)
-){
-
-activeKeyNumber=
-Number(data.activeKeyNumber);
-
-}
-
-
-if(Array.isArray(data.memories))
-memories=data.memories;
-
-if(Array.isArray(data.chats))
-chats=data.chats;
-
-if(
-typeof data.currentChatId==="string"&&
-data.currentChatId
-){
-
-currentChatId=data.currentChatId;
-
-}
-
-
-saveLocal();
-
-}catch(error){
-
-console.error(
-"Firebase load:",
-error
-);
-
-}
-
-}
-
-
-/* =========================================================
-FIREBASE SAVE
-========================================================= */
 
 function scheduleFirebaseSave(){
 
-if(!currentUser)return;
+    if(!currentUser)
+        return;
 
-clearTimeout(firebaseSaveTimer);
+    clearTimeout(
+        firebaseSaveTimer
+    );
 
-firebaseSaveTimer=
-setTimeout(
-saveUserData,
-700
-);
+    firebaseSaveTimer =
+        setTimeout(
+            saveUserData,
+            700
+        );
 
 }
 
 
 async function saveUserData(){
 
-if(!currentUser)return;
+    if(!currentUser)
+        return;
 
-try{
 
-await setDoc(
+    try{
 
-doc(
-db,
-"users",
-currentUser.uid
-),
+        await setDoc(
 
-{
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            ),
 
-geminiKeys:{
-key1:geminiKeys[1]||"",
-key2:geminiKeys[2]||"",
-key3:geminiKeys[3]||"",
-key4:geminiKeys[4]||""
-},
+            {
 
-activeKeyNumber,
+                geminiKeys:{
 
-memories,
+                    key1:
+                        geminiKeys[1] ||
+                        "",
 
-chats,
+                    key2:
+                        geminiKeys[2] ||
+                        ""
 
-currentChatId,
+                },
 
-updatedAt:now()
+                activeKeyNumber:
+                    activeKeyNumber,
 
-},
+                memories:
+                    memories,
 
-{
-merge:true
-}
+                chats:
+                    chats,
 
-);
+                currentChatId:
+                    currentChatId,
 
-}catch(error){
+                updatedAt:
+                    now()
 
-console.error(
-"Firebase save:",
-error
-);
+            },
 
-}
+            {
+                merge:true
+            }
+
+        );
+
+    }catch(error){
+
+        console.error(
+            "Firebase save:",
+            error
+        );
+
+    }
 
 }
 
 
 function saveEverything(){
 
-saveLocal();
-scheduleFirebaseSave();
+    saveLocal();
+
+    scheduleFirebaseSave();
 
 }
 
@@ -2132,52 +3052,81 @@ scheduleFirebaseSave();
 CHAT
 ========================================================= */
 
-function createChat(title="Neuer Chat"){
+function createChat(
+    title="Neuer Chat"
+){
 
-const newChat={
-id:makeId("chat"),
-title:title||"Neuer Chat",
-createdAt:now(),
-updatedAt:now(),
-messages:[]
-};
+    const newChat = {
 
-chats.unshift(newChat);
+        id:
+            makeId(
+                "chat"
+            ),
 
-currentChatId=newChat.id;
+        title:
 
-saveEverything();
-renderChatList();
-renderCurrentChat();
+            title ||
+            "Neuer Chat",
 
-return newChat;
+        createdAt:
+            now(),
+
+        updatedAt:
+            now(),
+
+        messages:[]
+
+    };
+
+
+    chats.unshift(
+        newChat
+    );
+
+    currentChatId =
+        newChat.id;
+
+
+    saveEverything();
+
+    renderChatList();
+
+    renderCurrentChat();
+
+
+    return newChat;
 
 }
 
 
 function getCurrentChat(){
 
-return chats.find(
-c=>c.id===currentChatId
-);
+    return chats.find(
+        c =>
+            c.id ===
+            currentChatId
+    );
 
 }
 
 
 function ensureChat(){
 
-if(!chats.length){
+    if(!chats.length){
 
-createChat();
-return;
+        createChat();
 
-}
+        return;
 
-if(!getCurrentChat()){
+    }
 
-currentChatId=chats[0].id;
 
-}
+    if(!getCurrentChat()){
+
+        currentChatId =
+            chats[0].id;
+
+    }
 
 }
 
@@ -2188,114 +3137,159 @@ CHAT LIST
 
 function renderChatList(){
 
-const search=
-$("chatSearch")
-.value
-.trim()
-.toLowerCase();
-
-chatList.innerHTML="";
-
-const visibleChats=
-chats.filter(
-c=>
-!search||
-String(c.title)
-.toLowerCase()
-.includes(search)
-);
-
-if(!visibleChats.length){
-
-const empty=
-document.createElement("div");
-
-empty.style.cssText=
-"padding:20px;color:#666;font-size:10px;text-align:center;";
-
-empty.textContent=
-"Keine Chats gefunden.";
-
-chatList.appendChild(empty);
-
-return;
-
-}
+    const search =
+        $("chatSearch")
+            .value
+            .trim()
+            .toLowerCase();
 
 
-visibleChats.forEach(current=>{
-
-const item=
-document.createElement("div");
-
-item.className=
-"chatItem "+
-(
-current.id===currentChatId
-?"active"
-:""
-);
+    chatList.innerHTML =
+        "";
 
 
-const main=
-document.createElement("div");
-
-main.className="chatItemMain";
-
-main.innerHTML=`
-
-<div class="chatTitle">
-${escapeHtml(current.title||"Neuer Chat")}
-</div>
-
-<div class="chatDate">
-${formatDate(current.updatedAt)}
-</div>
-
-`;
-
-main.addEventListener(
-"click",
-()=>{
-
-currentChatId=current.id;
-
-saveEverything();
-renderChatList();
-renderCurrentChat();
-closeMobileSidebar();
-
-}
-);
+    const visibleChats =
+        chats.filter(
+            c =>
+                !search ||
+                String(
+                    c.title
+                )
+                .toLowerCase()
+                .includes(
+                    search
+                )
+        );
 
 
-const menu=
-document.createElement("button");
+    if(!visibleChats.length){
 
-menu.className="chatMenuBtn";
-menu.textContent="⋯";
+        const empty =
+            document.createElement(
+                "div"
+            );
 
-menu.addEventListener(
-"click",
-event=>{
+        empty.style.cssText =
+            "padding:20px;color:#666;font-size:10px;text-align:center;";
 
-event.stopPropagation();
+        empty.textContent =
+            "Keine Chats gefunden.";
 
-showContextMenu(
-event.clientX,
-event.clientY,
-current.id
-);
+        chatList.appendChild(
+            empty
+        );
 
-}
-);
+        return;
 
-item.appendChild(main);
-item.appendChild(menu);
+    }
 
-chatList.appendChild(item);
 
-});
+    visibleChats.forEach(
+        current => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+            item.className =
+                "chatItem " +
+                (
+                    current.id ===
+                    currentChatId
+                        ? "active"
+                        : ""
+                );
+
+
+            const main =
+                document.createElement(
+                    "div"
+                );
+
+            main.className =
+                "chatItemMain";
+
+
+            main.innerHTML = `
+
+                <div class="chatTitle">
+                    ${escapeHtml(
+                        current.title ||
+                        "Neuer Chat"
+                    )}
+                </div>
+
+                <div class="chatDate">
+                    ${formatDate(
+                        current.updatedAt
+                    )}
+                </div>
+
+            `;
+
+
+            main.addEventListener(
+                "click",
+                () => {
+
+                    currentChatId =
+                        current.id;
+
+                    saveEverything();
+
+                    renderChatList();
+
+                    renderCurrentChat();
+
+                    closeMobileSidebar();
+
+                }
+            );
+
+
+            const menu =
+                document.createElement(
+                    "button"
+                );
+
+            menu.className =
+                "chatMenuBtn";
+
+            menu.textContent =
+                "⋯";
+
+
+            menu.addEventListener(
+                "click",
+                event => {
+
+                    event.stopPropagation();
+
+                    showContextMenu(
+                        event.clientX,
+                        event.clientY,
+                        current.id
+                    );
+
+                }
+            );
+
+
+            item.appendChild(
+                main
+            );
+
+            item.appendChild(
+                menu
+            );
+
+            chatList.appendChild(
+                item
+            );
+
+        }
+    );
 
 }
 
@@ -2306,52 +3300,79 @@ CURRENT CHAT
 
 function renderCurrentChat(){
 
-ensureChat();
-
-const current=getCurrentChat();
-
-if(!current)return;
-
-$("currentChatName").textContent=
-current.title||"Neuer Chat";
-
-chat.innerHTML="";
-
-if(!Array.isArray(current.messages))
-current.messages=[];
-
-if(!current.messages.length){
-
-chat.innerHTML=`
-
-<div class="emptyChat">
-
-<h2>Wie kann ich helfen?</h2>
-
-<p>
-Schreibe eine Nachricht,
-lade ein Bild hoch
-oder generiere ein Bild.
-</p>
-
-</div>
-
-`;
-
-return;
-
-}
+    ensureChat();
 
 
-current.messages.forEach(
-message=>
-renderMessage(
-message,
-false
-)
-);
+    const current =
+        getCurrentChat();
 
-scrollChatBottom();
+
+    if(!current)
+        return;
+
+
+    $("currentChatName")
+        .textContent =
+        current.title ||
+        "Neuer Chat";
+
+
+    chat.innerHTML =
+        "";
+
+
+    if(
+        !Array.isArray(
+            current.messages
+        )
+    ){
+
+        current.messages =
+            [];
+
+    }
+
+
+    if(
+        !current.messages.length
+    ){
+
+        chat.innerHTML = `
+
+            <div class="emptyChat">
+
+                <h2>
+                    Wie kann ich helfen?
+                </h2>
+
+                <p>
+                    Schreibe eine Nachricht,
+                    lade ein Bild hoch
+                    oder generiere ein Bild.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    current.messages.forEach(
+        message => {
+
+            renderMessage(
+                message,
+                false
+            );
+
+        }
+    );
+
+
+    scrollChatBottom();
 
 }
 
@@ -2361,138 +3382,202 @@ MESSAGE
 ========================================================= */
 
 function renderMessage(
-message,
-shouldScroll=true
+    message,
+    shouldScroll=true
 ){
 
-const wrapper=
-document.createElement("div");
-
-wrapper.className=
-"message "+
-(
-message.role==="user"
-?"user"
-:"model"
-);
-
-const bubble=
-document.createElement("div");
-
-bubble.className="messageBubble";
+    const wrapper =
+        document.createElement(
+            "div"
+        );
 
 
-if(message.text){
-
-const textNode=
-document.createElement("div");
-
-textNode.innerHTML=
-escapeHtml(
-message.text
-)
-.replaceAll(
-"\n",
-"<br>"
-);
-
-bubble.appendChild(textNode);
-
-}
+    wrapper.className =
+        "message " +
+        (
+            message.role ===
+            "user"
+                ? "user"
+                : "model"
+        );
 
 
-if(message.image){
-
-const img=
-document.createElement("img");
-
-img.className="messageImage";
-
-img.src=message.image;
-
-img.alt="Bild";
-
-img.addEventListener(
-"click",
-()=>openNewTab(message.image)
-);
-
-bubble.appendChild(img);
-
-}
+    const bubble =
+        document.createElement(
+            "div"
+        );
 
 
-if(message.role==="model"){
-
-const actions=
-document.createElement("div");
-
-actions.className="messageActions";
+    bubble.className =
+        "messageBubble";
 
 
-const copy=
-document.createElement("button");
+    if(message.text){
 
-copy.textContent="Kopieren";
+        const text =
+            escapeHtml(
+                message.text
+            );
 
-copy.onclick=
-async()=>{
+        const textNode =
+            document.createElement(
+                "div"
+            );
 
-try{
+        textNode.innerHTML =
+            text.replaceAll(
+                "\n",
+                "<br>"
+            );
 
-await navigator.clipboard.writeText(
-message.text||""
-);
+        bubble.appendChild(
+            textNode
+        );
 
-showToast(
-"Antwort kopiert.",
-"good"
-);
-
-}catch{
-
-showToast(
-"Kopieren nicht möglich.",
-"bad"
-);
-
-}
-
-};
+    }
 
 
-const google=
-document.createElement("button");
+    if(message.image){
 
-google.textContent="Google";
+        const img =
+            document.createElement(
+                "img"
+            );
 
-google.onclick=()=>{
+        img.className =
+            "messageImage";
 
-const query=
-encodeURIComponent(
-message.text||""
-);
+        img.src =
+            message.image;
 
-openNewTab(
-"https://www.google.com/search?q="+query
-);
+        img.alt =
+            "Bild";
 
-};
+        img.addEventListener(
+            "click",
+            () => {
+
+                openNewTab(
+                    message.image
+                );
+
+            }
+        );
+
+        bubble.appendChild(
+            img
+        );
+
+    }
 
 
-actions.appendChild(copy);
-actions.appendChild(google);
+    if(
+        message.role ===
+        "model"
+    ){
 
-bubble.appendChild(actions);
+        const actions =
+            document.createElement(
+                "div"
+            );
 
-}
+        actions.className =
+            "messageActions";
 
 
-wrapper.appendChild(bubble);
-chat.appendChild(wrapper);
+        const copy =
+            document.createElement(
+                "button"
+            );
 
-if(shouldScroll)
-scrollChatBottom();
+        copy.textContent =
+            "Kopieren";
+
+
+        copy.onclick =
+            async () => {
+
+                try{
+
+                    await navigator
+                        .clipboard
+                        .writeText(
+                            message.text ||
+                            ""
+                        );
+
+                    showToast(
+                        "Antwort kopiert.",
+                        "good"
+                    );
+
+                }catch{
+
+                    showToast(
+                        "Kopieren nicht möglich.",
+                        "bad"
+                    );
+
+                }
+
+            };
+
+
+        const google =
+            document.createElement(
+                "button"
+            );
+
+        google.textContent =
+            "Google";
+
+
+        google.onclick =
+            () => {
+
+                const query =
+                    encodeURIComponent(
+                        message.text ||
+                        ""
+                    );
+
+                openNewTab(
+                    "https://www.google.com/search?q=" +
+                    query
+                );
+
+            };
+
+
+        actions.appendChild(
+            copy
+        );
+
+        actions.appendChild(
+            google
+        );
+
+        bubble.appendChild(
+            actions
+        );
+
+    }
+
+
+    wrapper.appendChild(
+        bubble
+    );
+
+    chat.appendChild(
+        wrapper
+    );
+
+
+    if(shouldScroll){
+
+        scrollChatBottom();
+
+    }
 
 }
 
@@ -2503,18 +3588,23 @@ SCROLL
 
 function scrollChatBottom(){
 
-requestAnimationFrame(
-()=>{
+    requestAnimationFrame(
+        () => {
 
-const content=
-document.querySelector(".content");
+            const content =
+                document.querySelector(
+                    ".content"
+                );
 
-if(content)
-content.scrollTop=
-content.scrollHeight;
+            if(content){
 
-}
-);
+                content.scrollTop =
+                    content.scrollHeight;
+
+            }
+
+        }
+    );
 
 }
 
@@ -2524,76 +3614,141 @@ ADD MESSAGE
 ========================================================= */
 
 function addMessage(
-role,
-text,
-image=null
+    role,
+    text,
+    image=null
 ){
 
-const current=getCurrentChat();
-
-if(!current)return null;
-
-if(!Array.isArray(current.messages))
-current.messages=[];
+    const current =
+        getCurrentChat();
 
 
-const message={
-id:makeId("msg"),
-role:role==="user"?"user":"model",
-text:text||"",
-image:image||null,
-createdAt:now()
-};
+    if(!current)
+        return null;
 
-current.messages.push(message);
 
-if(
-current.messages.length>
-MAX_MESSAGES_PER_CHAT
-){
+    if(
+        !Array.isArray(
+            current.messages
+        )
+    ){
 
-current.messages=
-current.messages.slice(
--MAX_MESSAGES_PER_CHAT
-);
+        current.messages =
+            [];
+
+    }
+
+
+    const message = {
+
+        id:
+            makeId(
+                "msg"
+            ),
+
+        role:
+            role === "user"
+                ? "user"
+                : "model",
+
+        text:
+            text ||
+            "",
+
+        image:
+            image ||
+            null,
+
+        createdAt:
+            now()
+
+    };
+
+
+    current.messages.push(
+        message
+    );
+
+
+    if(
+        current.messages.length >
+        MAX_MESSAGES_PER_CHAT
+    ){
+
+        current.messages =
+            current.messages.slice(
+                -MAX_MESSAGES_PER_CHAT
+            );
+
+    }
+
+
+    current.updatedAt =
+        now();
+
+
+    if(
+        current.title ===
+        "Neuer Chat" &&
+        role === "user" &&
+        text
+    ){
+
+        current.title =
+            createChatTitle(
+                text
+            );
+
+    }
+
+
+    saveEverything();
+
+    renderChatList();
+
+    renderCurrentChat();
+
+
+    return message;
 
 }
 
-current.updatedAt=now();
 
-
-if(
-current.title==="Neuer Chat"&&
-role==="user"&&
-text
+function createChatTitle(
+    text
 ){
 
-current.title=createChatTitle(text);
-
-}
-
-saveEverything();
-renderChatList();
-renderCurrentChat();
-
-return message;
-
-}
+    let title =
+        String(
+            text || ""
+        )
+        .replace(
+            /\s+/g,
+            " "
+        )
+        .trim();
 
 
-function createChatTitle(text){
+    if(!title)
+        return "Neuer Chat";
 
-let title=
-String(text||"")
-.replace(/\s+/g," ")
-.trim();
 
-if(!title)return"Neuer Chat";
+    if(
+        title.length >
+        35
+    ){
 
-if(title.length>35)
-title=title.slice(0,35)+"…";
+        title =
+            title.slice(
+                0,
+                35
+            ) +
+            "…";
 
-return title;
+    }
+
+
+    return title;
 
 }
 
@@ -2602,33 +3757,60 @@ return title;
 RENAME
 ========================================================= */
 
-function renameChat(id=null){
+function renameChat(
+    id=null
+){
 
-const target=
-chats.find(
-c=>c.id===(id||currentChatId)
-);
+    const target =
+        chats.find(
+            c =>
+                c.id ===
+                (
+                    id ||
+                    currentChatId
+                )
+        );
 
-if(!target)return;
 
-const name=
-prompt(
-"Neuer Name:",
-target.title
-);
+    if(!target)
+        return;
 
-if(name===null)return;
 
-const clean=name.trim();
+    const name =
+        prompt(
+            "Neuer Name:",
+            target.title
+        );
 
-if(!clean)return;
 
-target.title=clean.slice(0,80);
-target.updatedAt=now();
+    if(name === null)
+        return;
 
-saveEverything();
-renderChatList();
-renderCurrentChat();
+
+    const clean =
+        name.trim();
+
+
+    if(!clean)
+        return;
+
+
+    target.title =
+        clean.slice(
+            0,
+            80
+        );
+
+
+    target.updatedAt =
+        now();
+
+
+    saveEverything();
+
+    renderChatList();
+
+    renderCurrentChat();
 
 }
 
@@ -2637,50 +3819,72 @@ renderCurrentChat();
 DELETE
 ========================================================= */
 
-function deleteChat(id=null){
+function deleteChat(
+    id=null
+){
 
-const targetId=id||currentChatId;
-
-const target=
-chats.find(
-c=>c.id===targetId
-);
-
-if(!target)return;
-
-const confirmed=
-confirm(
-`Chat "${target.title}" wirklich löschen?\n\nDeine Gedanken/Erinnerungen bleiben erhalten.`
-);
-
-if(!confirmed)return;
-
-chats=
-chats.filter(
-c=>c.id!==targetId
-);
+    const targetId =
+        id ||
+        currentChatId;
 
 
-if(currentChatId===targetId){
-
-currentChatId=
-chats.length
-?chats[0].id
-:null;
-
-}
+    const target =
+        chats.find(
+            c =>
+                c.id ===
+                targetId
+        );
 
 
-if(!chats.length){
+    if(!target)
+        return;
 
-createChat();
-return;
 
-}
+    const confirmed =
+        confirm(
+            `Chat "${target.title}" wirklich löschen?\n\nDeine Gedanken/Erinnerungen bleiben erhalten.`
+        );
 
-saveEverything();
-renderChatList();
-renderCurrentChat();
+
+    if(!confirmed)
+        return;
+
+
+    chats =
+        chats.filter(
+            c =>
+                c.id !==
+                targetId
+        );
+
+
+    if(
+        currentChatId ===
+        targetId
+    ){
+
+        currentChatId =
+            chats.length
+                ? chats[0].id
+                : null;
+
+    }
+
+
+    if(!chats.length){
+
+        createChat();
+
+        return;
+
+    }
+
+
+    saveEverything();
+
+    renderChatList();
+
+    renderCurrentChat();
 
 }
 
@@ -2689,235 +3893,360 @@ renderCurrentChat();
 MEMORY
 ========================================================= */
 
-function saveMemory(text){
+function saveMemory(
+    text
+){
 
-const clean=
-String(text||"").trim();
+    const clean =
+        String(
+            text || ""
+        ).trim();
 
-if(!clean)return;
 
-const exists=
-memories.some(
-memory=>
-String(memory.text||"")
-.toLowerCase()===
-clean.toLowerCase()
-);
+    if(!clean)
+        return;
 
-if(exists)return;
 
-memories.unshift({
+    const exists =
+        memories.some(
+            memory =>
+                String(
+                    memory.text || ""
+                )
+                .toLowerCase() ===
+                clean.toLowerCase()
+        );
 
-id:makeId("memory"),
-text:clean,
-createdAt:now()
 
-});
+    if(exists)
+        return;
 
-if(memories.length>MAX_MEMORIES){
 
-memories=
-memories.slice(0,MAX_MEMORIES);
+    memories.unshift({
+
+        id:
+            makeId(
+                "memory"
+            ),
+
+        text:
+            clean,
+
+        createdAt:
+            now()
+
+    });
+
+
+    if(
+        memories.length >
+        MAX_MEMORIES
+    ){
+
+        memories =
+            memories.slice(
+                0,
+                MAX_MEMORIES
+            );
+
+    }
+
+
+    renderMemories();
+
+    saveEverything();
 
 }
 
-renderMemories();
-saveEverything();
 
-}
+function detectMemoryCommand(
+    text
+){
+
+    const patterns = [
+
+        /^merke dir[,:\s]+(.+)$/i,
+
+        /^merk dir[,:\s]+(.+)$/i,
+
+        /^speichere[,:\s]+(.+)$/i,
+
+        /^erinnere dich daran[,:\s]+(.+)$/i,
+
+        /^behalte im kopf[,:\s]+(.+)$/i
+
+    ];
 
 
-function detectMemoryCommand(text){
+    for(
+        const pattern of patterns
+    ){
 
-const patterns=[
+        const match =
+            String(
+                text || ""
+            )
+            .match(
+                pattern
+            );
 
-/^merke dir[,:\s]+(.+)$/i,
-/^merk dir[,:\s]+(.+)$/i,
-/^speichere[,:\s]+(.+)$/i,
-/^erinnere dich daran[,:\s]+(.+)$/i,
-/^behalte im kopf[,:\s]+(.+)$/i
 
-];
+        if(match){
 
-for(const pattern of patterns){
+            return match[1]
+                .trim();
 
-const match=
-String(text||"").match(pattern);
+        }
 
-if(match)
-return match[1].trim();
+    }
 
-}
 
-return null;
+    return null;
 
 }
 
 
 function renderMemories(){
 
-$("memoryCount").textContent=
-String(memories.length);
-
-const list=$("memoryList");
-
-list.innerHTML="";
-
-if(!memories.length){
-
-const empty=
-document.createElement("span");
-
-empty.className="memoryTag";
-
-empty.textContent=
-"Noch keine Erinnerungen";
-
-list.appendChild(empty);
-
-return;
-
-}
+    $("memoryCount")
+        .textContent =
+        String(
+            memories.length
+        );
 
 
-memories.slice(0,30).forEach(
-memory=>{
+    const list =
+        $("memoryList");
 
-const tag=
-document.createElement("div");
 
-tag.className="memoryTag";
-tag.textContent=memory.text;
+    list.innerHTML =
+        "";
 
-list.appendChild(tag);
 
-}
-);
+    if(!memories.length){
+
+        const empty =
+            document.createElement(
+                "span"
+            );
+
+        empty.className =
+            "memoryTag";
+
+        empty.textContent =
+            "Noch keine Erinnerungen";
+
+        list.appendChild(
+            empty
+        );
+
+        return;
+
+    }
+
+
+    memories
+        .slice(
+            0,
+            30
+        )
+        .forEach(
+            memory => {
+
+                const tag =
+                    document.createElement(
+                        "div"
+                    );
+
+                tag.className =
+                    "memoryTag";
+
+                tag.textContent =
+                    memory.text;
+
+                list.appendChild(
+                    tag
+                );
+
+            }
+        );
 
 }
 
 
 function clearMemories(){
 
-const confirmed=
-confirm(
-"Alle Gedanken/Erinnerungen löschen?\n\nDie Chats bleiben erhalten."
-);
+    const confirmed =
+        confirm(
+            "Alle Gedanken/Erinnerungen löschen?\n\nDie Chats bleiben erhalten."
+        );
 
-if(!confirmed)return;
 
-memories=[];
+    if(!confirmed)
+        return;
 
-saveEverything();
-renderMemories();
 
-showToast(
-"Gedanken gelöscht.",
-"good"
-);
+    memories =
+        [];
+
+    saveEverything();
+
+    renderMemories();
+
+    showToast(
+        "Gedanken gelöscht.",
+        "good"
+    );
 
 }
 
 
 /* =========================================================
-4 API KEYS
+API KEYS
 ========================================================= */
 
 function renderKeyState(){
 
-for(let number=1;number<=4;number++){
-
-const state=$(`key${number}State`);
-const input=$(`key${number}Input`);
-
-state.textContent=
-geminiKeys[number]
-?(
-activeKeyNumber===number
-?"gespeichert · AKTIV"
-:"gespeichert"
-)
-:"nicht gesetzt";
+    $("key1State")
+        .textContent =
+        geminiKeys[1]
+            ? (
+                activeKeyNumber === 1
+                    ? "gespeichert · AKTIV"
+                    : "gespeichert"
+            )
+            : "nicht gesetzt";
 
 
-if(document.activeElement!==input){
+    $("key2State")
+        .textContent =
+        geminiKeys[2]
+            ? (
+                activeKeyNumber === 2
+                    ? "gespeichert · AKTIV"
+                    : "gespeichert"
+            )
+            : "nicht gesetzt";
 
-input.value=
-geminiKeys[number]||"";
 
-}
+    /*
+        Nur beim Rendern werden die Felder gesetzt.
+        Dadurch bleiben die gespeicherten Keys nach
+        einem Reload erhalten.
+    */
 
-}
+    if(
+        document.activeElement !==
+        $("key1Input")
+    ){
 
-}
+        $("key1Input").value =
+            geminiKeys[1] ||
+            "";
+
+    }
 
 
-function saveKey(number){
+    if(
+        document.activeElement !==
+        $("key2Input")
+    ){
 
-const input=
-$(`key${number}Input`);
+        $("key2Input").value =
+            geminiKeys[2] ||
+            "";
 
-const value=
-input.value.trim();
-
-geminiKeys[number]=value;
-
-saveLocal();
-scheduleFirebaseSave();
-renderKeyState();
-
-if(value){
-
-setConnection(
-`F${number} gespeichert`,
-true
-);
-
-showToast(
-`F${number} dauerhaft gespeichert.`,
-"good"
-);
-
-}else{
-
-showToast(
-`F${number} wurde gelöscht.`,
-"good"
-);
-
-}
+    }
 
 }
 
 
-function activateKey(number){
+function saveKey(
+    number
+){
 
-if(!geminiKeys[number]){
+    const input =
+        number === 1
+            ? $("key1Input")
+            : $("key2Input");
 
-showToast(
-`F${number} wurde noch nicht gespeichert.`,
-"bad"
-);
 
-return;
+    const value =
+        input.value.trim();
+
+
+    geminiKeys[number] =
+        value;
+
+
+    /*
+        Sofort lokal speichern.
+    */
+
+    saveLocal();
+
+
+    /*
+        Zusätzlich Firebase speichern,
+        wenn eingeloggt.
+    */
+
+    scheduleFirebaseSave();
+
+    renderKeyState();
+
+
+    setConnection(
+        `F${number} gespeichert`,
+        true
+    );
+
+
+    showToast(
+        `F${number} dauerhaft gespeichert.`,
+        "good"
+    );
 
 }
 
-activeKeyNumber=number;
 
-saveLocal();
-scheduleFirebaseSave();
-renderKeyState();
+function activateKey(
+    number
+){
 
-setConnection(
-`F${number} aktiv`,
-true
-);
+    if(!geminiKeys[number]){
 
-showToast(
-`F${number} ist jetzt aktiv.`,
-"good"
-);
+        showToast(
+            `F${number} wurde noch nicht gespeichert.`,
+            "bad"
+        );
+
+        return;
+
+    }
+
+
+    activeKeyNumber =
+        number;
+
+
+    saveLocal();
+
+    scheduleFirebaseSave();
+
+    renderKeyState();
+
+
+    setConnection(
+        `F${number} aktiv`,
+        true
+    );
+
+
+    showToast(
+        `F${number} ist jetzt aktiv.`,
+        "good"
+    );
 
 }
 
@@ -2928,37 +4257,44 @@ KEY VISIBILITY
 
 function toggleKeyVisibility(){
 
-const inputs=[
-$("key1Input"),
-$("key2Input"),
-$("key3Input"),
-$("key4Input")
-];
+    const key1 =
+        $("key1Input");
 
-const show=
-inputs[0].type==="password";
+    const key2 =
+        $("key2Input");
 
-inputs.forEach(
-input=>
-input.type=
-show
-?"text"
-:"password"
-);
 
-$("toggleKeyVisibilityBtn").textContent=
-show
-?"🔒 Schlüssel verstecken"
-:"👁 Schlüssel anzeigen";
+    const show =
+        key1.type ===
+        "password";
+
+
+    key1.type =
+        show
+            ? "text"
+            : "password";
+
+
+    key2.type =
+        show
+            ? "text"
+            : "password";
+
+
+    $("toggleKeyVisibilityBtn")
+        .textContent =
+        show
+            ? "🔒 Schlüssel verstecken"
+            : "👁 Schlüssel anzeigen";
 
 }
 
 
 /* =========================================================
-SYSTEM
+SYSTEM PROMPT
 ========================================================= */
 
-const NOVA_SYSTEM_PROMPT=`
+const NOVA_SYSTEM_PROMPT = `
 
 Du bist Nova, eine persönliche KI.
 
@@ -3001,503 +4337,565 @@ MEMORY CONTEXT
 
 function getMemoryContext(){
 
-if(!memories.length)
-return"Keine gespeicherten Erinnerungen.";
+    if(!memories.length){
 
-return memories
-.slice(0,50)
-.map(
-memory=>"- "+memory.text
-)
-.join("\n");
+        return "Keine gespeicherten Erinnerungen.";
+
+    }
+
+
+    return memories
+        .slice(
+            0,
+            50
+        )
+        .map(
+            memory =>
+                "- " +
+                memory.text
+        )
+        .join(
+            "\n"
+        );
 
 }
 
 
 /* =========================================================
-GEMINI TEXT
+GEMINI TEXT API
 ========================================================= */
 
 async function callGeminiApi(
-apiKey,
-currentText,
-imageData=null
+    apiKey,
+    currentText,
+    imageData=null
 ){
 
-const current=getCurrentChat();
+    const current =
+        getCurrentChat();
 
-if(!current){
 
-throw new Error(
-"Kein Chat ausgewählt."
-);
+    if(!current){
 
-}
+        throw new Error(
+            "Kein Chat ausgewählt."
+        );
 
+    }
 
-const previousMessages=
-current.messages
-.slice(0,-1)
-.slice(-30);
 
+    /*
+        Die letzte Nachricht ist bereits
+        die gerade gesendete User-Nachricht.
 
-const history=
-previousMessages.map(
-message=>{
+        Sie wird NICHT in history aufgenommen.
+        Danach wird sie exakt einmal als
+        aktuelle User-Nachricht gesendet.
+    */
 
-const parts=[];
+    const previousMessages =
+        current.messages
+            .slice(
+                0,
+                -1
+            )
+            .slice(
+                -30
+            );
 
 
-if(message.text){
+    const history =
+        previousMessages
+            .map(
+                message => {
 
-parts.push({
-text:message.text
-});
+                    const parts =
+                        [];
 
-}
 
+                    if(message.text){
 
-if(
-message.image&&
-message.image.startsWith("data:image/")
-){
+                        parts.push({
 
-const match=
-message.image.match(
-/^data:(image\/[^;]+);base64,(.+)$/
-);
+                            text:
+                                message.text
 
-if(match){
+                        });
 
-parts.push({
+                    }
 
-inlineData:{
-mimeType:match[1],
-data:match[2]
-}
 
-});
+                    if(
+                        message.image &&
+                        message.image.startsWith(
+                            "data:image/"
+                        )
+                    ){
 
-}
+                        const match =
+                            message.image.match(
+                                /^data:(image\/[^;]+);base64,(.+)$/
+                            );
 
-}
 
+                        if(match){
 
-if(!parts.length){
+                            parts.push({
 
-parts.push({
-text:""
-});
+                                inlineData:{
 
-}
+                                    mimeType:
+                                        match[1],
 
+                                    data:
+                                        match[2]
 
-return{
+                                }
 
-role:
-message.role==="model"
-?"model"
-:"user",
+                            });
 
-parts
+                        }
 
-};
+                    }
 
-}
-);
 
+                    if(!parts.length){
 
-const requestParts=[];
+                        parts.push({
 
+                            text:
+                                ""
 
-if(currentText){
+                        });
 
-requestParts.push({
-text:currentText
-});
+                    }
 
-}
 
+                    return {
 
-if(
-imageData&&
-imageData.startsWith("data:image/")
-){
+                        role:
+                            message.role ===
+                            "model"
+                                ? "model"
+                                : "user",
 
-const match=
-imageData.match(
-/^data:(image\/[^;]+);base64,(.+)$/
-);
+                        parts
 
-if(match){
+                    };
 
-requestParts.push({
+                }
+            );
 
-inlineData:{
-mimeType:match[1],
-data:match[2]
-}
 
-});
+    const requestParts =
+        [];
 
-}
 
-}
+    if(currentText){
 
+        requestParts.push({
 
-if(!requestParts.length){
+            text:
+                currentText
 
-requestParts.push({
-text:"Bitte antworte."
-});
+        });
 
-}
+    }
 
 
-const body={
+    if(
+        imageData &&
+        imageData.startsWith(
+            "data:image/"
+        )
+    ){
 
-systemInstruction:{
-parts:[{
+        const match =
+            imageData.match(
+                /^data:(image\/[^;]+);base64,(.+)$/
+            );
 
-text:
-NOVA_SYSTEM_PROMPT+
-"\n\nGespeicherte Gedanken:\n"+
-getMemoryContext()
 
-}]
-},
+        if(match){
 
-contents:[
-...history,
-{
-role:"user",
-parts:requestParts
-}
-],
+            requestParts.push({
 
-generationConfig:{
-temperature:.7,
-maxOutputTokens:2048
-}
+                inlineData:{
 
-};
+                    mimeType:
+                        match[1],
 
+                    data:
+                        match[2]
 
-const url=
-"https://generativelanguage.googleapis.com/"+
-"v1beta/models/"+
-encodeURIComponent(GEMINI_MODEL)+
-":generateContent?key="+
-encodeURIComponent(apiKey);
+                }
 
+            });
 
-const response=
-await fetch(
-url,
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify(body)
-}
-);
+        }
 
+    }
 
-let data;
 
-try{
+    if(!requestParts.length){
 
-data=await response.json();
+        requestParts.push({
 
-}catch{
+            text:
+                "Bitte antworte."
 
-const error=
-new Error(
-`Ungültige Antwort · HTTP ${response.status}`
-);
+        });
 
-error.status=response.status;
+    }
 
-throw error;
 
-}
+    const body = {
 
+        systemInstruction:{
 
-if(!response.ok){
+            parts:[{
 
-const error=
-new Error(
-data?.error?.message||
-`HTTP ${response.status}`
-);
+                text:
+                    NOVA_SYSTEM_PROMPT +
+                    "\n\nGespeicherte Gedanken:\n" +
+                    getMemoryContext()
 
-error.status=response.status;
+            }]
 
-throw error;
+        },
 
-}
+        contents:[
 
+            ...history,
 
-const text=
-data?.candidates?.[0]
-?.content?.parts
-?.filter(
-part=>
-typeof part.text==="string"
-)
-?.map(
-part=>part.text
-)
-?.join("\n")
-?.trim();
+            {
 
+                role:
+                    "user",
 
-if(!text){
+                parts:
+                    requestParts
 
-throw new Error(
-"Gemini hat keine Textantwort zurückgegeben."
-);
+            }
 
-}
+        ],
 
+        generationConfig:{
 
-return text;
+            temperature:
+                .7,
+
+            maxOutputTokens:
+                2048
+
+        }
+
+    };
+
+
+    const url =
+        "https://generativelanguage.googleapis.com/" +
+        "v1beta/models/" +
+        encodeURIComponent(
+            GEMINI_MODEL
+        ) +
+        ":generateContent?key=" +
+        encodeURIComponent(
+            apiKey
+        );
+
+
+    const response =
+        await fetch(
+            url,
+            {
+
+                method:
+                    "POST",
+
+                headers:{
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body:
+                    JSON.stringify(
+                        body
+                    )
+
+            }
+        );
+
+
+    let data;
+
+    try{
+
+        data =
+            await response.json();
+
+    }catch{
+
+        throw new Error(
+            `Ungültige Antwort · HTTP ${response.status}`
+        );
+
+    }
+
+
+    if(!response.ok){
+
+        throw new Error(
+            data?.error?.message ||
+            `HTTP ${response.status}`
+        );
+
+    }
+
+
+    const text =
+        data
+            ?.candidates?.[0]
+            ?.content?.parts
+            ?.filter(
+                part =>
+                    typeof part.text ===
+                    "string"
+            )
+            ?.map(
+                part =>
+                    part.text
+            )
+            ?.join(
+                "\n"
+            )
+            ?.trim();
+
+
+    if(!text){
+
+        throw new Error(
+            "Gemini hat keine Textantwort zurückgegeben."
+        );
+
+    }
+
+
+    return text;
 
 }
 
 
 /* =========================================================
-KEY FAILOVER ERKENNUNG
-========================================================= */
-
-function isKeyFailure(error){
-
-const status=
-Number(
-error?.status||0
-);
-
-if(
-status===401||
-status===403||
-status===429
-){
-
-return true;
-
-}
-
-
-const message=
-String(
-error?.message||""
-)
-.toLowerCase();
-
-
-return(
-message.includes("quota")||
-message.includes("rate limit")||
-message.includes("rate_limit")||
-message.includes("resource exhausted")||
-message.includes("api key")||
-message.includes("permission")||
-message.includes("unauthorized")||
-message.includes("exceeded")||
-message.includes("too many requests")
-);
-
-}
-
-
-/* =========================================================
-KEY ORDER
+GEMINI FAILOVER
 ========================================================= */
 
 function getKeyOrder(){
 
-const order=[];
+    const keys =
+        [];
 
 
-/*
-Der aktive Key kommt zuerst.
-Danach werden alle anderen vorhandenen
-Keys genau einmal ausprobiert.
-*/
+    if(
+        geminiKeys[
+            activeKeyNumber
+        ]
+    ){
 
-for(let offset=0;offset<4;offset++){
+        keys.push(
+            activeKeyNumber
+        );
 
-const number=
-((activeKeyNumber-1+offset)%4)+1;
+    }
 
-if(geminiKeys[number]){
 
-order.push(number);
+    const backup =
+        activeKeyNumber === 1
+            ? 2
+            : 1;
+
+
+    if(
+        geminiKeys[backup]
+    ){
+
+        keys.push(
+            backup
+        );
+
+    }
+
+
+    return keys;
 
 }
 
-}
-
-return order;
-
-}
-
-
-/* =========================================================
-ASK GEMINI F1-F4
-========================================================= */
 
 async function askGemini(
-text,
-imageData=null
+    text,
+    imageData=null
 ){
 
-const order=getKeyOrder();
-
-if(!order.length){
-
-throw new Error(
-"Kein Gemini API-Key gespeichert."
-);
-
-}
+    const keys =
+        getKeyOrder();
 
 
-let lastError=null;
+    if(!keys.length){
+
+        throw new Error(
+            "Kein Gemini API-Key gespeichert."
+        );
+
+    }
 
 
-for(const number of order){
-
-try{
-
-setConnection(
-`Nova arbeitet mit F${number}...`,
-true
-);
+    let lastError =
+        null;
 
 
-const answer=
-await callGeminiApi(
-geminiKeys[number],
-text,
-imageData
-);
+    for(
+        const keyNumber of keys
+    ){
+
+        try{
+
+            setConnection(
+                `Nova arbeitet mit F${keyNumber}...`,
+                true
+            );
 
 
-activeKeyNumber=number;
-
-saveEverything();
-
-setConnection(
-`Verbunden · F${number}`,
-true
-);
-
-return answer;
-
-}catch(error){
-
-console.error(
-`F${number}:`,
-error
-);
-
-lastError=error;
+            const answer =
+                await callGeminiApi(
+                    geminiKeys[keyNumber],
+                    text,
+                    imageData
+                );
 
 
-/*
-Nur bei Key-/Quota-/Rate-Limit-Fehlern
-zum nächsten Key wechseln.
+            if(
+                keyNumber !==
+                activeKeyNumber
+            ){
 
-Andere Fehler werden nicht sinnlos
-mit allen vier Keys wiederholt.
-*/
+                activeKeyNumber =
+                    keyNumber;
 
-if(!isKeyFailure(error)){
+                saveEverything();
 
-break;
-
-}
-
-}
-
-}
+            }
 
 
-throw(
-lastError||
-new Error(
-"Alle Gemini-Zugänge sind fehlgeschlagen."
-)
-);
+            return answer;
+
+        }catch(error){
+
+            console.error(
+                `F${keyNumber}:`,
+                error
+            );
+
+
+            lastError =
+                error;
+
+        }
+
+    }
+
+
+    throw (
+        lastError ||
+        new Error(
+            "Gemini Anfrage fehlgeschlagen."
+        )
+    );
 
 }
 
 
 /* =========================================================
-ERROR
+ERROR MESSAGE
 ========================================================= */
 
-function friendlyGeminiError(error){
-
-const message=
-String(
-error?.message||
-""
-);
-
-const lower=message.toLowerCase();
-
-
-if(
-lower.includes("quota")||
-lower.includes("resource exhausted")||
-lower.includes("rate limit")||
-lower.includes("429")||
-lower.includes("exceeded")
+function friendlyGeminiError(
+    error
 ){
 
-return(
-"Das Gemini-Kontingent oder Anfrage-Limit wurde erreicht. "+
-"Nova hat automatisch alle gespeicherten Keys F1–F4 ausprobiert. "+
-"Wenn alle vier Keys zum gleichen Google-Projekt gehören, "+
-"teilen sie möglicherweise dasselbe Kontingent."
-);
-
-}
+    const message =
+        String(
+            error?.message ||
+            ""
+        );
 
 
-if(
-message.includes("401")||
-message.includes("403")||
-lower.includes("api key")||
-lower.includes("permission")||
-lower.includes("unauthorized")
-){
+    if(
+        message.includes(
+            "Quota exceeded"
+        )
+    ){
 
-return(
-"Ein Gemini API-Key wurde abgelehnt. "+
-"Bitte F1–F4 überprüfen."
-);
+        return (
+            "Gemini-Kontingent ist für diesen " +
+            "Zugang momentan nicht verfügbar. " +
+            "Falls F2 vorhanden ist, wurde dieser " +
+            "Zugang ebenfalls automatisch versucht."
+        );
 
-}
-
-
-if(message.includes("404")){
-
-return(
-"Das verwendete Gemini-Modell ist für "+
-"diesen API-Zugang nicht verfügbar."
-);
-
-}
+    }
 
 
-return(
-message||
-"Unbekannter Gemini-Fehler."
-);
+    if(
+        message.includes(
+            "429"
+        )
+    ){
+
+        return (
+            "Gemini ist momentan ausgelastet oder " +
+            "das Anfrage-Limit wurde erreicht."
+        );
+
+    }
+
+
+    if(
+        message.includes(
+            "401"
+        ) ||
+        message.includes(
+            "403"
+        )
+    ){
+
+        return (
+            "Der Gemini API-Key wurde abgelehnt. " +
+            "Bitte F1/F2 überprüfen."
+        );
+
+    }
+
+
+    if(
+        message.includes(
+            "404"
+        )
+    ){
+
+        return (
+            "Das verwendete Gemini-Modell ist für " +
+            "diesen API-Zugang nicht verfügbar."
+        );
+
+    }
+
+
+    return (
+        message ||
+        "Unbekannter Gemini-Fehler."
+    );
 
 }
 
@@ -3508,122 +4906,196 @@ THINKING
 
 function showThinking(){
 
-removeThinking();
+    removeThinking();
 
-const wrapper=
-document.createElement("div");
 
-wrapper.id="thinkingMessage";
+    const wrapper =
+        document.createElement(
+            "div"
+        );
 
-wrapper.className="message model";
 
-wrapper.innerHTML=`
+    wrapper.id =
+        "thinkingMessage";
 
-<div class="thinking">
 
-<div class="dot"></div>
-<div class="dot"></div>
-<div class="dot"></div>
+    wrapper.className =
+        "message model";
 
-</div>
 
-`;
+    wrapper.innerHTML = `
 
-chat.appendChild(wrapper);
+        <div class="thinking">
 
-scrollChatBottom();
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+
+        </div>
+
+    `;
+
+
+    chat.appendChild(
+        wrapper
+    );
+
+
+    scrollChatBottom();
 
 }
 
 
 function removeThinking(){
 
-const element=$("thinkingMessage");
+    const element =
+        $("thinkingMessage");
 
-if(element)
-element.remove();
+
+    if(element){
+
+        element.remove();
+
+    }
 
 }
 
 
 /* =========================================================
-WEB
+WEB ACTIONS
 ========================================================= */
 
-function detectWebAction(text){
-
-const lower=
-String(text||"")
-.toLowerCase()
-.trim();
-
-
-if(lower.includes("google bilder")){
-
-return{
-name:"Google Bilder",
-url:"https://www.google.com/imghp"
-};
-
-}
-
-
-if(lower.includes("youtube")){
-
-return{
-name:"YouTube",
-url:"https://www.youtube.com"
-};
-
-}
-
-
-if(lower.includes("wikipedia")){
-
-return{
-name:"Wikipedia",
-url:"https://de.wikipedia.org"
-};
-
-}
-
-
-if(
-lower.includes("google maps")||
-lower.includes("maps öffnen")
+function detectWebAction(
+    text
 ){
 
-return{
-name:"Google Maps",
-url:"https://www.google.com/maps"
-};
+    const lower =
+        String(
+            text || ""
+        )
+        .toLowerCase()
+        .trim();
+
+
+    if(
+        lower.includes(
+            "google bilder"
+        )
+    ){
+
+        return {
+
+            name:
+                "Google Bilder",
+
+            url:
+                "https://www.google.com/imghp"
+
+        };
+
+    }
+
+
+    if(
+        lower.includes(
+            "youtube"
+        )
+    ){
+
+        return {
+
+            name:
+                "YouTube",
+
+            url:
+                "https://www.youtube.com"
+
+        };
+
+    }
+
+
+    if(
+        lower.includes(
+            "wikipedia"
+        )
+    ){
+
+        return {
+
+            name:
+                "Wikipedia",
+
+            url:
+                "https://de.wikipedia.org"
+
+        };
+
+    }
+
+
+    if(
+        lower.includes(
+            "google maps"
+        ) ||
+        lower.includes(
+            "maps öffnen"
+        )
+    ){
+
+        return {
+
+            name:
+                "Google Maps",
+
+            url:
+                "https://www.google.com/maps"
+
+        };
+
+    }
+
+
+    if(
+        lower ===
+        "google öffnen" ||
+        lower ===
+        "google aufmachen"
+    ){
+
+        return {
+
+            name:
+                "Google",
+
+            url:
+                "https://www.google.com"
+
+        };
+
+    }
+
+
+    return null;
 
 }
 
 
-if(
-lower==="google öffnen"||
-lower==="google aufmachen"
+function executeWebAction(
+    action
 ){
 
-return{
-name:"Google",
-url:"https://www.google.com"
-};
-
-}
+    if(!action)
+        return;
 
 
-return null;
+    /*
+        Kein Popup-Fehler mehr.
+    */
 
-}
-
-
-function executeWebAction(action){
-
-if(!action)return;
-
-openNewTab(action.url);
+    openNewTab(
+        action.url
+    );
 
 }
 
@@ -3634,111 +5106,180 @@ SEND
 
 async function sendMessage(){
 
-if(thinking)return;
-
-const text=
-messageInput.value.trim();
-
-if(!text&&!selectedImage)
-return;
-
-ensureChat();
-
-const image=selectedImage;
-
-messageInput.value="";
-
-autoResizeTextarea();
-
-const memory=
-detectMemoryCommand(text);
-
-if(memory)
-saveMemory(memory);
-
-addMessage(
-"user",
-text,
-image
-);
+    if(thinking)
+        return;
 
 
-const webAction=
-detectWebAction(text);
-
-if(webAction)
-executeWebAction(webAction);
-
-clearSelectedImage();
-
-if(!text)
-return;
-
-thinking=true;
-sendBtn.disabled=true;
-
-showThinking();
-
-setConnection(
-`Nova denkt mit F${activeKeyNumber}...`,
-true
-);
+    const text =
+        messageInput
+            .value
+            .trim();
 
 
-try{
+    if(
+        !text &&
+        !selectedImage
+    ){
 
-const answer=
-await askGemini(
-text,
-image
-);
+        return;
 
-removeThinking();
-
-addMessage(
-"model",
-answer
-);
-
-setConnection(
-`Verbunden · F${activeKeyNumber}`,
-true
-);
+    }
 
 
-if(
-voiceMode&&
-"speechSynthesis"in window
-){
-
-speak(answer);
-
-}
-
-}catch(error){
-
-console.error(error);
-
-removeThinking();
-
-const readable=
-friendlyGeminiError(error);
-
-addMessage(
-"model",
-"Fehler: "+readable
-);
-
-setConnection(
-"Gemini Fehler",
-false
-);
-
-}
+    ensureChat();
 
 
-thinking=false;
-sendBtn.disabled=false;
+    const image =
+        selectedImage;
+
+
+    messageInput.value =
+        "";
+
+
+    autoResizeTextarea();
+
+
+    const memory =
+        detectMemoryCommand(
+            text
+        );
+
+
+    if(memory){
+
+        saveMemory(
+            memory
+        );
+
+    }
+
+
+    /*
+        User-Nachricht genau einmal speichern.
+    */
+
+    addMessage(
+        "user",
+        text,
+        image
+    );
+
+
+    const webAction =
+        detectWebAction(
+            text
+        );
+
+
+    if(webAction){
+
+        executeWebAction(
+            webAction
+        );
+
+    }
+
+
+    clearSelectedImage();
+
+
+    if(!text){
+
+        return;
+
+    }
+
+
+    thinking =
+        true;
+
+
+    sendBtn.disabled =
+        true;
+
+
+    showThinking();
+
+
+    setConnection(
+        `Nova denkt mit F${activeKeyNumber}...`,
+        true
+    );
+
+
+    try{
+
+        const answer =
+            await askGemini(
+                text,
+                image
+            );
+
+
+        removeThinking();
+
+
+        addMessage(
+            "model",
+            answer
+        );
+
+
+        setConnection(
+            `Verbunden · F${activeKeyNumber}`,
+            true
+        );
+
+
+        if(
+            voiceMode &&
+            "speechSynthesis" in
+            window
+        ){
+
+            speak(
+                answer
+            );
+
+        }
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+
+        removeThinking();
+
+
+        const readable =
+            friendlyGeminiError(
+                error
+            );
+
+
+        addMessage(
+            "model",
+            "Fehler: " +
+            readable
+        );
+
+
+        setConnection(
+            "Gemini Fehler",
+            false
+        );
+
+    }
+
+
+    thinking =
+        false;
+
+    sendBtn.disabled =
+        false;
 
 }
 
@@ -3747,74 +5288,112 @@ sendBtn.disabled=false;
 IMAGE UPLOAD
 ========================================================= */
 
-function handleImageFile(file){
+function handleImageFile(
+    file
+){
 
-if(!file)return;
-
-if(file.size>MAX_IMAGE_SIZE){
-
-showToast(
-"Das Bild darf maximal 10 MB groß sein.",
-"bad"
-);
-
-return;
-
-}
+    if(!file)
+        return;
 
 
-if(!file.type.startsWith("image/")){
+    if(
+        file.size >
+        MAX_IMAGE_SIZE
+    ){
 
-showToast(
-"Bitte ein Bild auswählen.",
-"bad"
-);
+        showToast(
+            "Das Bild darf maximal 10 MB groß sein.",
+            "bad"
+        );
 
-return;
+        return;
 
-}
+    }
 
 
-const reader=new FileReader();
+    if(
+        !file.type.startsWith(
+            "image/"
+        )
+    ){
 
-reader.onload=event=>{
+        showToast(
+            "Bitte ein Bild auswählen.",
+            "bad"
+        );
 
-selectedImage=event.target.result;
+        return;
 
-previewImg.src=selectedImage;
+    }
 
-imagePreview.classList.remove("hidden");
 
-showToast(
-"Bild bereit zur Analyse.",
-"good"
-);
+    const reader =
+        new FileReader();
 
-};
 
-reader.onerror=()=>{
+    reader.onload =
+        event => {
 
-showToast(
-"Bild konnte nicht geladen werden.",
-"bad"
-);
+            selectedImage =
+                event.target.result;
 
-};
 
-reader.readAsDataURL(file);
+            previewImg.src =
+                selectedImage;
+
+
+            imagePreview
+                .classList
+                .remove(
+                    "hidden"
+                );
+
+
+            showToast(
+                "Bild bereit zur Analyse.",
+                "good"
+            );
+
+        };
+
+
+    reader.onerror =
+        () => {
+
+            showToast(
+                "Bild konnte nicht geladen werden.",
+                "bad"
+            );
+
+        };
+
+
+    reader.readAsDataURL(
+        file
+    );
 
 }
 
 
 function clearSelectedImage(){
 
-selectedImage=null;
+    selectedImage =
+        null;
 
-previewImg.src="";
 
-imagePreview.classList.add("hidden");
+    previewImg.src =
+        "";
 
-imageFileInput.value="";
+
+    imagePreview
+        .classList
+        .add(
+            "hidden"
+        );
+
+
+    imageFileInput.value =
+        "";
 
 }
 
@@ -3825,643 +5404,746 @@ IMAGE MODAL
 
 function openImageModal(){
 
-imageModal.classList.remove("hidden");
+    imageModal
+        .classList
+        .remove(
+            "hidden"
+        );
 
-$("imagePrompt").focus();
+
+    $("imagePrompt")
+        .focus();
 
 }
 
 
 function closeImageModal(){
 
-imageModal.classList.add("hidden");
+    imageModal
+        .classList
+        .add(
+            "hidden"
+        );
 
 }
 
 
 /* =========================================================
-IMAGE PARSER
+IMAGE RESPONSE PARSER
 ========================================================= */
 
-function extractImageFromInteraction(data){
-
-if(data?.output_image?.data){
-
-return{
-data:data.output_image.data,
-mimeType:
-data.output_image.mime_type||
-data.output_image.mimeType||
-"image/png"
-};
-
-}
-
-
-const steps=
-Array.isArray(data?.steps)
-?data.steps
-:[];
-
-
-for(const step of steps){
-
-const content=
-Array.isArray(step?.content)
-?step.content
-:[];
-
-
-for(const block of content){
-
-if(
-(
-block?.type==="image"||
-block?.type==="output_image"
-)&&
-block?.data
+function extractImageFromInteraction(
+    data
 ){
 
-return{
-data:block.data,
-mimeType:
-block.mime_type||
-block.mimeType||
-"image/png"
-};
+    if(
+        data?.output_image?.data
+    ){
+
+        return {
+
+            data:
+                data.output_image.data,
+
+            mimeType:
+                data.output_image.mime_type ||
+                data.output_image.mimeType ||
+                "image/png"
+
+        };
+
+    }
+
+
+    const steps =
+        Array.isArray(
+            data?.steps
+        )
+            ? data.steps
+            : [];
+
+
+    for(
+        const step of steps
+    ){
+
+        const content =
+            Array.isArray(
+                step?.content
+            )
+                ? step.content
+                : [];
+
+
+        for(
+            const block of content
+        ){
+
+            if(
+                (
+                    block?.type === "image" ||
+                    block?.type === "output_image"
+                ) &&
+                block?.data
+            ){
+
+                return {
+
+                    data:
+                        block.data,
+
+                    mimeType:
+                        block.mime_type ||
+                        block.mimeType ||
+                        "image/png"
+
+                };
+
+            }
+
+        }
+
+    }
+
+
+    const output =
+        Array.isArray(
+            data?.output
+        )
+            ? data.output
+            : [];
+
+
+    for(
+        const item of output
+    ){
+
+        if(
+            (
+                item?.type === "image" ||
+                item?.type === "output_image"
+            ) &&
+            item?.data
+        ){
+
+            return {
+
+                data:
+                    item.data,
+
+                mimeType:
+                    item.mime_type ||
+                    item.mimeType ||
+                    "image/png"
+
+                };
+
+        }
+
+    }
+
+
+    return null;
 
 }
 
-}
 
-}
-
-
-const output=
-Array.isArray(data?.output)
-?data.output
-:[];
-
-
-for(const item of output){
-
-if(
-(
-item?.type==="image"||
-item?.type==="output_image"
-)&&
-item?.data
+function extractImageText(
+    data
 ){
 
-return{
-data:item.data,
-mimeType:
-item.mime_type||
-item.mimeType||
-"image/png"
-};
+    if(
+        typeof data?.output_text ===
+        "string"
+    ){
 
-}
+        return data.output_text.trim();
 
-}
+    }
 
 
-return null;
-
-}
-
-
-function extractImageText(data){
-
-if(
-typeof data?.output_text==="string"
-){
-
-return data.output_text.trim();
-
-}
+    let result =
+        "";
 
 
-let result="";
-
-const steps=
-Array.isArray(data?.steps)
-?data.steps
-:[];
-
-
-for(const step of steps){
-
-const content=
-Array.isArray(step?.content)
-?step.content
-:[];
+    const steps =
+        Array.isArray(
+            data?.steps
+        )
+            ? data.steps
+            : [];
 
 
-for(const block of content){
+    for(
+        const step of steps
+    ){
 
-if(
-(
-block?.type==="text"||
-block?.type==="output_text"
-)&&
-typeof block?.text==="string"
-){
-
-result+=block.text+"\n";
-
-}
-
-}
-
-}
+        const content =
+            Array.isArray(
+                step?.content
+            )
+                ? step.content
+                : [];
 
 
-return result.trim();
+        for(
+            const block of content
+        ){
+
+            if(
+                (
+                    block?.type === "text" ||
+                    block?.type === "output_text"
+                ) &&
+                typeof block?.text ===
+                "string"
+            ){
+
+                result +=
+                    block.text +
+                    "\n";
+
+            }
+
+        }
+
+    }
+
+
+    return result.trim();
 
 }
 
 
 /* =========================================================
-IMAGE GENERATION F1-F4
+IMAGE GENERATION
 ========================================================= */
 
 async function generateImage(){
 
-const prompt=
-$("imagePrompt")
-.value
-.trim();
+    const prompt =
+        $("imagePrompt")
+            .value
+            .trim();
 
-if(!prompt){
 
-showToast(
-"Bitte zuerst beschreiben, was generiert werden soll.",
-"bad"
-);
+    if(!prompt){
 
-return;
+        showToast(
+            "Bitte zuerst beschreiben, was generiert werden soll.",
+            "bad"
+        );
 
-}
+        return;
 
+    }
 
-const keyOrder=getKeyOrder();
 
-if(!keyOrder.length){
+    const keyOrder =
+        getKeyOrder();
 
-showToast(
-"Bitte zuerst mindestens einen Gemini API-Key speichern.",
-"bad"
-);
 
-return;
+    if(!keyOrder.length){
 
-}
+        showToast(
+            "Bitte zuerst einen Gemini API-Key speichern.",
+            "bad"
+        );
 
+        return;
 
-const aspectRatio=
-$("imageSize").value;
+    }
 
-const imageSize=
-$("imageQuality").value;
 
-const status=
-$("imageGenerationStatus");
+    const aspectRatio =
+        $("imageSize")
+            .value;
 
-const result=
-$("generatedResult");
 
-const button=
-$("startImageGenerationBtn");
+    const imageSize =
+        $("imageQuality")
+            .value;
 
-button.disabled=true;
 
-result.innerHTML="";
+    const status =
+        $("imageGenerationStatus");
 
-status.textContent=
-"Nova prüft F1–F4 für die Bildgenerierung...";
 
+    const result =
+        $("generatedResult");
 
-let success=false;
 
-let lastError=null;
+    const button =
+        $("startImageGenerationBtn");
 
-const results=[];
 
+    button.disabled =
+        true;
 
-/*
-WICHTIG:
 
-Jeder gespeicherte Key wird höchstens einmal
-für diese Bildgenerierung ausprobiert.
+    result.innerHTML =
+        "";
 
-Dadurch gibt es keine Endlosschleife.
-*/
 
-for(const keyNumber of keyOrder){
+    status.textContent =
+        "Nova generiert das Bild...";
 
-try{
 
-status.textContent=
-`Bildgenerierung mit F${keyNumber}...`;
+    let success =
+        false;
 
-setConnection(
-`Bildgenerierung · F${keyNumber}`,
-true
-);
 
+    let lastError =
+        null;
 
-const body={
 
-model:IMAGE_MODEL,
+    for(
+        const keyNumber of keyOrder
+    ){
 
-input:prompt,
+        try{
 
-response_format:{
-type:"image",
-aspect_ratio:aspectRatio,
-image_size:imageSize
-}
+            setConnection(
+                `Bildgenerierung mit F${keyNumber}...`,
+                true
+            );
 
-};
 
+            const body = {
 
-const response=
-await fetch(
-IMAGE_API_URL,
-{
+                model:
+                    IMAGE_MODEL,
 
-method:"POST",
+                input:
+                    prompt,
 
-headers:{
-"Content-Type":"application/json",
-"x-goog-api-key":
-geminiKeys[keyNumber]
-},
+                response_format:{
 
-body:JSON.stringify(body)
+                    type:
+                        "image",
 
-}
-);
+                    aspect_ratio:
+                        aspectRatio,
 
+                    image_size:
+                        imageSize
 
-let data;
+                }
 
-try{
+            };
 
-data=await response.json();
 
-}catch{
+            const response =
+                await fetch(
+                    IMAGE_API_URL,
+                    {
 
-const error=
-new Error(
-`Ungültige Bild-API-Antwort · HTTP ${response.status}`
-);
+                        method:
+                            "POST",
 
-error.status=response.status;
+                        headers:{
 
-throw error;
+                            "Content-Type":
+                                "application/json",
 
-}
+                            "x-goog-api-key":
+                                geminiKeys[keyNumber]
 
+                        },
 
-if(!response.ok){
+                        body:
+                            JSON.stringify(
+                                body
+                            )
 
-const error=
-new Error(
-data?.error?.message||
-data?.message||
-`HTTP ${response.status}`
-);
+                    }
+                );
 
-error.status=response.status;
 
-throw error;
+            let data;
 
-}
+            try{
 
+                data =
+                    await response.json();
 
-const image=
-extractImageFromInteraction(data);
+            }catch{
 
+                throw new Error(
+                    `Ungültige Bild-API-Antwort · HTTP ${response.status}`
+                );
 
-if(!image){
+            }
 
-throw new Error(
-"Das Bildmodell hat kein Bild zurückgegeben."
-);
 
-}
+            if(!response.ok){
 
+                throw new Error(
+                    data?.error?.message ||
+                    data?.message ||
+                    `HTTP ${response.status}`
+                );
 
-const imageData=
-"data:"+
-image.mimeType+
-";base64,"+
-image.data;
+            }
 
 
-const description=
-extractImageText(data);
+            const image =
+                extractImageFromInteraction(
+                    data
+                );
 
 
-activeKeyNumber=keyNumber;
+            if(!image){
 
-saveEverything();
+                throw new Error(
+                    "Das Bildmodell hat kein Bild zurückgegeben."
+                );
 
+            }
 
-result.innerHTML=`
 
-<img
-id="generatedImage"
-src="${imageData}"
-alt="Generiertes Bild"
->
+            const imageData =
+                "data:" +
+                image.mimeType +
+                ";base64," +
+                image.data;
 
-<div
-style="
-margin-top:10px;
-display:flex;
-gap:7px;
-">
 
-<button
-id="useGeneratedImageBtn"
-class="smallBtn"
-style="flex:1;">
-In Chat übernehmen
-</button>
+            const description =
+                extractImageText(
+                    data
+                );
 
-<button
-id="openGeneratedImageBtn"
-class="smallBtn"
-style="flex:1;">
-Neuer Tab
-</button>
 
-</div>
+            activeKeyNumber =
+                keyNumber;
 
-`;
 
+            saveEverything();
 
-$("generatedImage").addEventListener(
-"click",
-()=>openNewTab(imageData)
-);
 
+            result.innerHTML = `
 
-$("useGeneratedImageBtn").onclick=()=>{
+                <img
+                    id="generatedImage"
+                    src="${imageData}"
+                    alt="Generiertes Bild"
+                >
 
-addMessage(
-"model",
-description||
-"Generiertes Bild:",
-imageData
-);
+                <div
+                    style="
+                    margin-top:10px;
+                    display:flex;
+                    gap:7px;">
 
-closeImageModal();
+                    <button
+                        id="useGeneratedImageBtn"
+                        class="smallBtn"
+                        style="flex:1;">
 
-showToast(
-"Bild in den Chat übernommen.",
-"good"
-);
+                        In Chat übernehmen
 
-};
+                    </button>
 
+                    <button
+                        id="openGeneratedImageBtn"
+                        class="smallBtn"
+                        style="flex:1;">
 
-$("openGeneratedImageBtn").onclick=()=>{
+                        Neuer Tab
 
-openNewTab(imageData);
+                    </button>
 
-};
+                </div>
 
+            `;
 
-status.textContent=
-`Bild erfolgreich generiert · F${keyNumber} · ${imageSize}`;
 
-setConnection(
-`Bild fertig · F${keyNumber}`,
-true
-);
+            $("generatedImage")
+                .addEventListener(
+                    "click",
+                    () => {
 
-success=true;
+                        openNewTab(
+                            imageData
+                        );
 
-break;
+                    }
+                );
 
-}catch(error){
 
-console.error(
-`Bildgenerierung F${keyNumber}:`,
-error
-);
+            $("useGeneratedImageBtn")
+                .onclick =
+                () => {
 
-lastError=error;
+                    addMessage(
+                        "model",
+                        description ||
+                        "Generiertes Bild:",
+                        imageData
+                    );
 
-const reason=
-friendlyGeminiError(error);
 
-results.push(
-`F${keyNumber}: ${reason}`
-);
+                    closeImageModal();
 
+                    showToast(
+                        "Bild in den Chat übernommen.",
+                        "good"
+                    );
 
-/*
-Wenn der Fehler ein Kontingent-, Key-
-oder Rate-Limit-Fehler ist, geht es weiter.
+                };
 
-Bei einem anderen Fehler macht es keinen Sinn,
-denselben Fehler mit den anderen Keys zu wiederholen.
-*/
 
-if(!isKeyFailure(error)){
+            $("openGeneratedImageBtn")
+                .onclick =
+                () => {
 
-break;
+                    openNewTab(
+                        imageData
+                    );
 
-}
+                };
 
-}
 
-}
+            status.textContent =
+                `Bild erfolgreich generiert · F${keyNumber} · ${imageSize}`;
 
 
-if(!success){
+            setConnection(
+                `Bild fertig · F${keyNumber}`,
+                true
+            );
 
-status.textContent=
-"Bildgenerierung fehlgeschlagen.";
 
+            success =
+                true;
 
-result.innerHTML=`
 
-<div
-style="
-padding:13px;
-border:1px solid #292929;
-border-radius:12px;
-color:#ff7373;
-font-size:10px;
-line-height:1.6;
-">
+            break;
 
-<strong>
-Bild konnte nicht generiert werden
-</strong>
+        }catch(error){
 
-<br><br>
+            console.error(
+                `Bildgenerierung F${keyNumber}:`,
+                error
+            );
 
-${results
-.map(
-text=>escapeHtml(text)
-)
-.join("<br><br>")}
 
-<br><br>
+            lastError =
+                error;
 
-<span style="color:#777;">
+        }
 
-Nova hat automatisch alle gespeicherten
-Keys F1–F4 ausprobiert.
+    }
 
-<br><br>
 
-Wenn F1–F4 alle zum gleichen Google-Projekt
-gehören, können sie dasselbe Bild-Kontingent teilen.
-Dann hilft auch ein Wechsel des Keys nicht,
-bis Google das Kontingent wieder freigibt.
+    if(!success){
 
-</span>
+        const readable =
+            friendlyGeminiError(
+                lastError
+            );
 
-</div>
 
-`;
+        status.textContent =
+            "Bildgenerierung fehlgeschlagen.";
 
 
-setConnection(
-"Bildgenerierung nicht verfügbar",
-false
-);
+        result.innerHTML = `
 
-}
+            <div
+                style="
+                padding:13px;
+                border:1px solid #292929;
+                border-radius:12px;
+                color:#ff7373;
+                font-size:10px;
+                line-height:1.5;">
 
+                <strong>
+                    Bild konnte nicht generiert werden
+                </strong>
 
-button.disabled=false;
+                <br><br>
+
+                ${escapeHtml(
+                    readable
+                )}
+
+                <br><br>
+
+                <span style="color:#777;">
+                    Nova hat automatisch F1 und F2
+                    versucht, sofern beide Keys gespeichert sind.
+                </span>
+
+            </div>
+
+        `;
+
+
+        setConnection(
+            "Bildgenerierung nicht verfügbar",
+            false
+        );
+
+    }
+
+
+    button.disabled =
+        false;
 
 }
 
 
 /* =========================================================
-SPEECH
+SPEECH RECOGNITION
 ========================================================= */
 
 function setupSpeech(){
 
-const SpeechRecognition=
-window.SpeechRecognition||
-window.webkitSpeechRecognition;
-
-if(!SpeechRecognition){
-
-$("microphoneBtn").title=
-"Sprache wird von diesem Browser nicht unterstützt";
-
-return;
-
-}
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
 
 
-recognition=
-new SpeechRecognition();
+    if(!SpeechRecognition){
 
-recognition.lang="de-DE";
-recognition.continuous=false;
-recognition.interimResults=true;
+        $("microphoneBtn")
+            .title =
+            "Sprache wird von diesem Browser nicht unterstützt";
 
+        return;
 
-recognition.onstart=()=>{
-
-isListening=true;
-
-$("microphoneBtn").textContent="⏹";
-
-};
+    }
 
 
-recognition.onresult=event=>{
-
-let result="";
-
-for(
-let i=event.resultIndex;
-i<event.results.length;
-i++
-){
-
-result+=
-event.results[i][0].transcript;
-
-}
-
-messageInput.value=result;
-
-autoResizeTextarea();
-
-};
+    recognition =
+        new SpeechRecognition();
 
 
-recognition.onerror=error=>{
-
-console.error(
-"Speech:",
-error
-);
-
-};
+    recognition.lang =
+        "de-DE";
 
 
-recognition.onend=()=>{
+    recognition.continuous =
+        false;
 
-isListening=false;
 
-$("microphoneBtn").textContent="🎙";
+    recognition.interimResults =
+        true;
 
-};
+
+    recognition.onstart =
+        () => {
+
+            isListening =
+                true;
+
+
+            $("microphoneBtn")
+                .textContent =
+                "⏹";
+
+        };
+
+
+    recognition.onresult =
+        event => {
+
+            let result =
+                "";
+
+
+            for(
+                let i =
+                    event.resultIndex;
+
+                i <
+                    event.results.length;
+
+                i++
+            ){
+
+                result +=
+                    event
+                        .results[i][0]
+                        .transcript;
+
+            }
+
+
+            messageInput.value =
+                result;
+
+
+            autoResizeTextarea();
+
+        };
+
+
+    recognition.onerror =
+        error => {
+
+            console.error(
+                "Speech:",
+                error
+            );
+
+        };
+
+
+    recognition.onend =
+        () => {
+
+            isListening =
+                false;
+
+
+            $("microphoneBtn")
+                .textContent =
+                "🎙";
+
+        };
 
 }
 
 
 function toggleListening(){
 
-if(!recognition){
+    if(!recognition){
 
-showToast(
-"Dieser Browser unterstützt keine Spracheingabe.",
-"bad"
-);
+        showToast(
+            "Dieser Browser unterstützt keine Spracheingabe.",
+            "bad"
+        );
 
-return;
+        return;
 
-}
-
-
-if(isListening){
-
-recognition.stop();
-return;
-
-}
+    }
 
 
-try{
+    if(isListening){
 
-recognition.start();
+        recognition.stop();
 
-}catch(error){
+        return;
 
-console.warn(
-"Speech start:",
-error
-);
+    }
 
-}
+
+    try{
+
+        recognition.start();
+
+    }catch(error){
+
+        console.warn(
+            "Speech start:",
+            error
+        );
+
+    }
 
 }
 
@@ -4470,31 +6152,65 @@ error
 TEXT TO SPEECH
 ========================================================= */
 
-function speak(text){
+function speak(
+    text
+){
 
-if(!("speechSynthesis"in window))
-return;
+    if(
+        !("speechSynthesis" in
+        window)
+    )
+        return;
 
-window.speechSynthesis.cancel();
 
-const utterance=
-new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.cancel();
 
-utterance.lang="de-DE";
-utterance.rate=.95;
 
-utterance.onstart=
-()=>speaking=true;
+    const utterance =
+        new SpeechSynthesisUtterance(
+            text
+        );
 
-utterance.onend=
-()=>speaking=false;
 
-utterance.onerror=
-()=>speaking=false;
+    utterance.lang =
+        "de-DE";
 
-window.speechSynthesis.speak(
-utterance
-);
+
+    utterance.rate =
+        .95;
+
+
+    utterance.onstart =
+        () => {
+
+            speaking =
+                true;
+
+        };
+
+
+    utterance.onend =
+        () => {
+
+            speaking =
+                false;
+
+        };
+
+
+    utterance.onerror =
+        () => {
+
+            speaking =
+                false;
+
+        };
+
+
+    window.speechSynthesis
+        .speak(
+            utterance
+        );
 
 }
 
@@ -4505,13 +6221,16 @@ TEXTAREA
 
 function autoResizeTextarea(){
 
-messageInput.style.height="auto";
+    messageInput.style.height =
+        "auto";
 
-messageInput.style.height=
-Math.min(
-messageInput.scrollHeight,
-170
-)+"px";
+
+    messageInput.style.height =
+        Math.min(
+            messageInput.scrollHeight,
+            170
+        ) +
+        "px";
 
 }
 
@@ -4522,9 +6241,11 @@ MOBILE
 
 function closeMobileSidebar(){
 
-$("sidebar")
-.classList
-.remove("open");
+    $("sidebar")
+        .classList
+        .remove(
+            "open"
+        );
 
 }
 
@@ -4535,118 +6256,158 @@ LOGIN
 
 async function login(){
 
-try{
+    try{
 
-$("loginError").textContent="";
+        $("loginError")
+            .textContent =
+            "";
 
-await signInWithPopup(
-auth,
-googleProvider
-);
 
-}catch(error){
+        await signInWithPopup(
+            auth,
+            googleProvider
+        );
 
-console.error(error);
+    }catch(error){
 
-$("loginError").textContent=
-error?.message||
-"Anmeldung fehlgeschlagen.";
+        console.error(
+            error
+        );
 
-}
+
+        $("loginError")
+            .textContent =
+            error?.message ||
+            "Anmeldung fehlgeschlagen.";
+
+    }
 
 }
 
 
 async function logout(){
 
-try{
+    try{
 
-saveLocal();
+        saveLocal();
 
-if(currentUser)
-await saveUserData();
+        if(currentUser){
 
-await signOut(auth);
+            await saveUserData();
 
-}catch(error){
+        }
 
-console.error(error);
+        await signOut(
+            auth
+        );
 
-}
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+    }
 
 }
 
 
 /* =========================================================
-AUTH
+AUTH STATE
 ========================================================= */
 
 onAuthStateChanged(
-auth,
-async user=>{
+    auth,
+    async user => {
 
-currentUser=user||null;
-
-
-if(!user){
-
-app.classList.add("hidden");
-loginScreen.classList.remove("hidden");
-
-return;
-
-}
+        currentUser =
+            user ||
+            null;
 
 
-loginScreen.classList.add("hidden");
-app.classList.remove("hidden");
+        if(!user){
+
+            app.classList.add(
+                "hidden"
+            );
+
+            loginScreen.classList.remove(
+                "hidden"
+            );
+
+            return;
+
+        }
 
 
-$("userName").textContent=
-user.displayName||
-"Benutzer";
+        loginScreen.classList.add(
+            "hidden"
+        );
 
-$("userEmail").textContent=
-user.email||"";
-
-$("userAvatar").src=
-user.photoURL||"";
+        app.classList.remove(
+            "hidden"
+        );
 
 
-loadLocal();
-
-await loadUserData();
-
-ensureChat();
-
-renderKeyState();
-renderMemories();
-renderChatList();
-renderCurrentChat();
+        $("userName")
+            .textContent =
+            user.displayName ||
+            "Benutzer";
 
 
-if(
-geminiKeys[1]||
-geminiKeys[2]||
-geminiKeys[3]||
-geminiKeys[4]
-){
+        $("userEmail")
+            .textContent =
+            user.email ||
+            "";
 
-setConnection(
-`Bereit · F${activeKeyNumber}`,
-true
-);
 
-}else{
+        $("userAvatar").src =
+            user.photoURL ||
+            "";
 
-setConnection(
-"API-Key benötigt",
-false
-);
 
-}
+        /*
+            Zuerst lokale Daten laden.
+            Danach Firebase-Daten ergänzen.
+        */
 
-}
+        loadLocal();
+
+        await loadUserData();
+
+
+        ensureChat();
+
+
+        renderKeyState();
+
+        renderMemories();
+
+        renderChatList();
+
+        renderCurrentChat();
+
+
+        if(
+            geminiKeys[1] ||
+            geminiKeys[2]
+        ){
+
+            setConnection(
+                `Bereit · F${activeKeyNumber}`,
+                true
+            );
+
+        }else{
+
+            setConnection(
+                "API-Key benötigt",
+                false
+            );
+
+        }
+
+    }
 );
 
 
@@ -4655,57 +6416,60 @@ EVENTS
 ========================================================= */
 
 $("googleLoginBtn")
-.addEventListener(
-"click",
-login
-);
+    .addEventListener(
+        "click",
+        login
+    );
 
 
 $("logoutBtn")
-.addEventListener(
-"click",
-logout
-);
+    .addEventListener(
+        "click",
+        logout
+    );
 
 
 $("newChatBtn")
-.addEventListener(
-"click",
-()=>{
+    .addEventListener(
+        "click",
+        () => {
 
-createChat();
-closeMobileSidebar();
+            createChat();
 
-}
-);
+            closeMobileSidebar();
+
+        }
+    );
 
 
 $("renameChatBtn")
-.addEventListener(
-"click",
-()=>renameChat()
-);
+    .addEventListener(
+        "click",
+        () =>
+            renameChat()
+    );
 
 
 $("deleteChatBtn")
-.addEventListener(
-"click",
-()=>deleteChat()
-);
+    .addEventListener(
+        "click",
+        () =>
+            deleteChat()
+    );
 
 
 $("clearMemoryBtn")
-.addEventListener(
-"click",
-clearMemories
-);
+    .addEventListener(
+        "click",
+        clearMemories
+    );
 
 
 $("chatSearch")
-.addEventListener(
-"input",
-renderChatList
-);
+    .addEventListener(
+        "input",
+        renderChatList
+    );
 
 
 /* =========================================================
@@ -4713,78 +6477,123 @@ KEY PANEL
 ========================================================= */
 
 $("toggleKeysBtn")
-.addEventListener(
-"click",
-()=>{
+    .addEventListener(
+        "click",
+        () => {
 
-const panel=$("apiKeyPanel");
+            const panel =
+                $("apiKeyPanel");
 
-const hidden=
-panel.classList.contains("hidden");
 
-if(hidden){
+            const hidden =
+                panel.classList.contains(
+                    "hidden"
+                );
 
-panel.classList.remove("hidden");
 
-$("toggleKeysBtn").textContent=
-"🔒 API-Keys ausblenden";
+            if(hidden){
 
-}else{
+                panel.classList.remove(
+                    "hidden"
+                );
 
-panel.classList.add("hidden");
 
-$("toggleKeysBtn").textContent=
-"🔐 API-Keys anzeigen";
+                $("toggleKeysBtn")
+                    .textContent =
+                    "🔒 API-Keys ausblenden";
 
-}
+            }else{
 
-}
-);
+                panel.classList.add(
+                    "hidden"
+                );
+
+
+                $("toggleKeysBtn")
+                    .textContent =
+                    "🔐 API-Keys anzeigen";
+
+            }
+
+        }
+    );
 
 
 $("toggleKeyVisibilityBtn")
-.addEventListener(
-"click",
-toggleKeyVisibility
-);
+    .addEventListener(
+        "click",
+        toggleKeyVisibility
+    );
+
+
+$("saveKey1Btn")
+    .addEventListener(
+        "click",
+        () =>
+            saveKey(1)
+    );
+
+
+$("saveKey2Btn")
+    .addEventListener(
+        "click",
+        () =>
+            saveKey(2)
+    );
+
+
+$("activateKey1Btn")
+    .addEventListener(
+        "click",
+        () =>
+            activateKey(1)
+    );
+
+
+$("activateKey2Btn")
+    .addEventListener(
+        "click",
+        () =>
+            activateKey(2)
+    );
 
 
 /*
-F1-F4 speichern
+    Enter im API-Key-Feld speichert direkt.
 */
 
-for(let number=1;number<=4;number++){
+$("key1Input")
+    .addEventListener(
+        "keydown",
+        event => {
 
-$(`saveKey${number}Btn`)
-.addEventListener(
-"click",
-()=>saveKey(number)
-);
+            if(event.key === "Enter"){
 
-$(`activateKey${number}Btn`)
-.addEventListener(
-"click",
-()=>activateKey(number)
-);
+                event.preventDefault();
+
+                saveKey(1);
+
+            }
+
+        }
+    );
 
 
-$(`key${number}Input`)
-.addEventListener(
-"keydown",
-event=>{
+$("key2Input")
+    .addEventListener(
+        "keydown",
+        event => {
 
-if(event.key==="Enter"){
+            if(event.key === "Enter"){
 
-event.preventDefault();
+                event.preventDefault();
 
-saveKey(number);
+                saveKey(2);
 
-}
+            }
 
-}
-);
-
-}
+        }
+    );
 
 
 /* =========================================================
@@ -4792,93 +6601,103 @@ VOICE / IMAGE
 ========================================================= */
 
 $("microphoneBtn")
-.addEventListener(
-"click",
-toggleListening
-);
+    .addEventListener(
+        "click",
+        toggleListening
+    );
 
 
 $("uploadImageBtn")
-.addEventListener(
-"click",
-()=>imageFileInput.click()
-);
+    .addEventListener(
+        "click",
+        () =>
+            imageFileInput.click()
+    );
 
 
-imageFileInput.addEventListener(
-"change",
-event=>{
+imageFileInput
+    .addEventListener(
+        "change",
+        event => {
 
-const file=
-event.target.files?.[0];
+            const file =
+                event.target
+                    .files?.[0];
 
-handleImageFile(file);
 
-}
-);
+            handleImageFile(
+                file
+            );
+
+        }
+    );
 
 
 $("removeImageBtn")
-.addEventListener(
-"click",
-clearSelectedImage
-);
+    .addEventListener(
+        "click",
+        clearSelectedImage
+    );
 
 
 $("generateImageBtn")
-.addEventListener(
-"click",
-openImageModal
-);
+    .addEventListener(
+        "click",
+        openImageModal
+    );
 
 
 $("closeImageModalBtn")
-.addEventListener(
-"click",
-closeImageModal
-);
+    .addEventListener(
+        "click",
+        closeImageModal
+    );
 
 
 $("startImageGenerationBtn")
-.addEventListener(
-"click",
-generateImage
-);
+    .addEventListener(
+        "click",
+        generateImage
+    );
 
 
 /* =========================================================
 SEND
 ========================================================= */
 
-sendBtn.addEventListener(
-"click",
-sendMessage
-);
+sendBtn
+    .addEventListener(
+        "click",
+        sendMessage
+    );
 
 
-messageInput.addEventListener(
-"input",
-autoResizeTextarea
-);
+messageInput
+    .addEventListener(
+        "input",
+        autoResizeTextarea
+    );
 
 
-messageInput.addEventListener(
-"keydown",
-event=>{
+messageInput
+    .addEventListener(
+        "keydown",
+        event => {
 
-if(
-event.key==="Enter"&&
-!event.shiftKey
-){
+            if(
+                event.key ===
+                "Enter" &&
+                !event.shiftKey
+            ){
 
-event.preventDefault();
+                event.preventDefault();
 
-sendMessage();
+                sendMessage();
 
-}
+            }
 
-}
-);
+        }
+    );
 
 
 /* =========================================================
@@ -4886,56 +6705,69 @@ MOBILE
 ========================================================= */
 
 $("mobileMenuBtn")
-.addEventListener(
-"click",
-()=>
-$("sidebar")
-.classList
-.toggle("open")
-);
+    .addEventListener(
+        "click",
+        () => {
+
+            $("sidebar")
+                .classList
+                .toggle(
+                    "open"
+                );
+
+        }
+    );
 
 
 /* =========================================================
-CONTEXT
+CONTEXT MENU
 ========================================================= */
 
 $("contextRename")
-.addEventListener(
-"click",
-()=>{
+    .addEventListener(
+        "click",
+        () => {
 
-renameChat(contextChatId);
-hideContextMenu();
+            renameChat(
+                contextChatId
+            );
 
-}
-);
+            hideContextMenu();
+
+        }
+    );
 
 
 $("contextDelete")
-.addEventListener(
-"click",
-()=>{
+    .addEventListener(
+        "click",
+        () => {
 
-deleteChat(contextChatId);
-hideContextMenu();
+            deleteChat(
+                contextChatId
+            );
 
-}
-);
+            hideContextMenu();
+
+        }
+    );
 
 
 document.addEventListener(
-"click",
-event=>{
+    "click",
+    event => {
 
-if(
-!contextMenu.contains(event.target)
-){
+        if(
+            !contextMenu.contains(
+                event.target
+            )
+        ){
 
-hideContextMenu();
+            hideContextMenu();
 
-}
+        }
 
-}
+    }
 );
 
 
@@ -4943,94 +6775,121 @@ hideContextMenu();
 IMAGE MODAL CLOSE
 ========================================================= */
 
-imageModal.addEventListener(
-"click",
-event=>{
+imageModal
+    .addEventListener(
+        "click",
+        event => {
 
-if(event.target===imageModal)
-closeImageModal();
+            if(
+                event.target ===
+                imageModal
+            ){
 
-}
-);
+                closeImageModal();
+
+            }
+
+        }
+    );
 
 
 /* =========================================================
-CONTEXT MENU
+CONTEXT MENU FUNCTIONS
 ========================================================= */
 
 function showContextMenu(
-x,
-y,
-id
+    x,
+    y,
+    id
 ){
 
-contextChatId=id;
+    contextChatId =
+        id;
 
-contextMenu.style.left=
-Math.min(
-x,
-window.innerWidth-200
-)+"px";
 
-contextMenu.style.top=
-Math.min(
-y,
-window.innerHeight-100
-)+"px";
+    contextMenu.style.left =
+        Math.min(
+            x,
+            window.innerWidth - 200
+        ) +
+        "px";
 
-contextMenu.classList.remove("hidden");
+
+    contextMenu.style.top =
+        Math.min(
+            y,
+            window.innerHeight - 100
+        ) +
+        "px";
+
+
+    contextMenu
+        .classList
+        .remove(
+            "hidden"
+        );
 
 }
 
 
 function hideContextMenu(){
 
-contextMenu.classList.add("hidden");
+    contextMenu
+        .classList
+        .add(
+            "hidden"
+        );
 
 }
 
 
 /* =========================================================
-KEYBOARD
+KEYBOARD SHORTCUTS
 ========================================================= */
 
 document.addEventListener(
-"keydown",
-event=>{
+    "keydown",
+    event => {
 
-if(
-event.ctrlKey&&
-event.key.toLowerCase()==="k"
-){
+        if(
+            event.ctrlKey &&
+            event.key.toLowerCase() ===
+            "k"
+        ){
 
-event.preventDefault();
+            event.preventDefault();
 
-messageInput.focus();
+            messageInput.focus();
 
-}
-
-
-if(
-event.ctrlKey&&
-event.shiftKey&&
-event.key.toLowerCase()==="n"
-){
-
-event.preventDefault();
-
-createChat();
-
-}
+        }
 
 
-if(event.key==="Escape"){
+        if(
+            event.ctrlKey &&
+            event.shiftKey &&
+            event.key.toLowerCase() ===
+            "n"
+        ){
 
-hideContextMenu();
-closeImageModal();
+            event.preventDefault();
 
-}
+            createChat();
 
-}
+        }
+
+
+        if(
+            event.key ===
+            "Escape"
+        ){
+
+            hideContextMenu();
+
+            closeImageModal();
+
+        }
+
+    }
 );
 
 
@@ -5047,21 +6906,23 @@ renderMemories();
 renderKeyState();
 
 
-if(chats.length){
-
 if(
-!currentChatId||
-!getCurrentChat()
+    chats.length
 ){
 
-currentChatId=
-chats[0].id;
+    if(
+        !currentChatId ||
+        !getCurrentChat()
+    ){
 
-}
+        currentChatId =
+            chats[0].id;
+
+    }
 
 }else{
 
-createChat();
+    createChat();
 
 }
 
@@ -5076,15 +6937,19 @@ AUTO SAVE
 ========================================================= */
 
 setInterval(
-()=>{
+    () => {
 
-saveLocal();
+        saveLocal();
 
-if(currentUser)
-scheduleFirebaseSave();
 
-},
-30000
+        if(currentUser){
+
+            scheduleFirebaseSave();
+
+        }
+
+    },
+    30000
 );
 
 
@@ -5093,12 +6958,12 @@ BEFORE UNLOAD
 ========================================================= */
 
 window.addEventListener(
-"beforeunload",
-()=>{
+    "beforeunload",
+    () => {
 
-saveLocal();
+        saveLocal();
 
-}
+    }
 );
 
 
@@ -5106,72 +6971,106 @@ saveLocal();
 PUBLIC NOVA API
 ========================================================= */
 
-window.Nova={
+window.Nova = {
 
-newChat(){
-createChat();
-},
+    newChat(){
 
-openGoogle(){
-openNewTab(
-"https://www.google.com"
-);
-},
+        createChat();
 
-openYouTube(){
-openNewTab(
-"https://www.youtube.com"
-);
-},
+    },
 
-openWikipedia(){
-openNewTab(
-"https://de.wikipedia.org"
-);
-},
 
-openMaps(){
-openNewTab(
-"https://www.google.com/maps"
-);
-},
+    openGoogle(){
 
-getChats(){
-return chats;
-},
+        openNewTab(
+            "https://www.google.com"
+        );
 
-getMemories(){
-return memories;
-},
+    },
 
-generateImage(){
-openImageModal();
-},
 
-send(){
-sendMessage();
-},
+    openYouTube(){
 
-speak(text){
-speak(text);
-},
+        openNewTab(
+            "https://www.youtube.com"
+        );
 
-saveMemory(text){
-saveMemory(text);
-},
+    },
 
-getActiveKey(){
-return activeKeyNumber;
-},
 
-getKeys(){
-return{
-F1:!!geminiKeys[1],
-F2:!!geminiKeys[2],
-F3:!!geminiKeys[3],
-F4:!!geminiKeys[4]
-};
-}
+    openWikipedia(){
+
+        openNewTab(
+            "https://de.wikipedia.org"
+        );
+
+    },
+
+
+    openMaps(){
+
+        openNewTab(
+            "https://www.google.com/maps"
+        );
+
+    },
+
+
+    getChats(){
+
+        return chats;
+
+    },
+
+
+    getMemories(){
+
+        return memories;
+
+    },
+
+
+    generateImage(){
+
+        openImageModal();
+
+    },
+
+
+    send(){
+
+        sendMessage();
+
+    },
+
+
+    speak(
+        text
+    ){
+
+        speak(
+            text
+        );
+
+    },
+
+
+    saveMemory(
+        text
+    ){
+
+        saveMemory(
+            text
+        );
+
+    },
+
+
+    getActiveKey(){
+
+        return activeKeyNumber;
+
+    }
 
 };
 
