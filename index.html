@@ -5122,138 +5122,121 @@ function removeThinking(){
 WEB ACTIONS
 ========================================================= */
 
-function detectWebAction(
-    text
-){
+function detectWebAction(text){
 
-    const lower =
-        String(
-            text || ""
-        )
-        .toLowerCase()
-        .trim();
+    const raw = String(text || '').trim();
+    const lower = raw.toLowerCase();
+    if(!raw) return null;
 
+    // Direkte Befehle wie: "öffne Google", "öffne YouTube", "öffne github.com"
+    const openMatch = raw.match(/^(?:jarvis[ ,]*)?(?:öffne|oeffne|open|geh zu|gehe zu|mach auf|aufmachen)\s+(.+)$/i);
+    if(openMatch){
+        const target = openMatch[1].trim();
+        const targetLower = target.toLowerCase();
 
-    if(
-        lower.includes(
-            "google bilder"
-        )
-    ){
-
-        return {
-
-            name:
-                "Google Bilder",
-
-            url:
-                "https://www.google.com/imghp"
-
+        const known = {
+            'google':'https://www.google.com',
+            'google.de':'https://www.google.de',
+            'youtube':'https://www.youtube.com',
+            'youtube.com':'https://www.youtube.com',
+            'google bilder':'https://www.google.com/imghp',
+            'google maps':'https://www.google.com/maps',
+            'maps':'https://www.google.com/maps',
+            'wikipedia':'https://de.wikipedia.org',
+            'wikipedia.de':'https://de.wikipedia.org',
+            'github':'https://github.com',
+            'github.com':'https://github.com',
+            'gmail':'https://mail.google.com',
+            'google drive':'https://drive.google.com',
+            'google kalender':'https://calendar.google.com',
+            'google docs':'https://docs.google.com',
+            'google translate':'https://translate.google.com',
+            'instagram':'https://www.instagram.com',
+            'tiktok':'https://www.tiktok.com',
+            'discord':'https://discord.com',
+            'reddit':'https://www.reddit.com',
+            'spotify':'https://open.spotify.com',
+            'amazon':'https://www.amazon.de',
+            'ebay':'https://www.ebay.de'
         };
 
-    }
+        if(known[targetLower]){
+            return {name: target, url: known[targetLower]};
+        }
 
+        // "öffne github.com/user/repo" oder "öffne https://..."
+        let urlTarget = target.replace(/^<|>$/g,'').trim();
+        if(/^https?:\/\//i.test(urlTarget)){
+            return {name: target, url: urlTarget};
+        }
+        if(/^www\./i.test(urlTarget) || /^[a-z0-9-]+\.[a-z]{2,}(?:\/.*)?$/i.test(urlTarget)){
+            return {name: target, url: 'https://' + urlTarget};
+        }
 
-    if(
-        lower.includes(
-            "youtube"
-        )
-    ){
-
+        // Unbekannte Seite: über Google suchen, statt eine falsche URL zu erfinden.
         return {
-
-            name:
-                "YouTube",
-
-            url:
-                "https://www.youtube.com"
-
+            name: 'Google-Suche',
+            url: 'https://www.google.com/search?q=' + encodeURIComponent(target)
         };
-
     }
 
-
-    if(
-        lower.includes(
-            "wikipedia"
-        )
-    ){
-
+    // "Google nach ...", "google ..." oder "such nach ..."
+    const googleMatch = raw.match(/^(?:jarvis[ ,]*)?(?:google(?:e)?|google suche|such(?:e)?|suche|such nach|google nach)\s+(.+)$/i);
+    if(googleMatch){
+        const query = googleMatch[1].trim();
         return {
-
-            name:
-                "Wikipedia",
-
-            url:
-                "https://de.wikipedia.org"
-
+            name: 'Google-Suche',
+            url: 'https://www.google.com/search?q=' + encodeURIComponent(query)
         };
-
     }
 
-
-    if(
-        lower.includes(
-            "google maps"
-        ) ||
-        lower.includes(
-            "maps öffnen"
-        )
-    ){
-
+    // Google-Bilder-Suche
+    const imageMatch = raw.match(/^(?:jarvis[ ,]*)?(?:google bilder|bilder suchen|bilder von)\s*(.*)$/i);
+    if(imageMatch){
+        const query = imageMatch[1].trim();
         return {
-
-            name:
-                "Google Maps",
-
-            url:
-                "https://www.google.com/maps"
-
+            name: 'Google Bilder',
+            url: query
+                ? 'https://www.google.com/search?tbm=isch&q=' + encodeURIComponent(query)
+                : 'https://www.google.com/imghp'
         };
-
     }
 
-
-    if(
-        lower ===
-        "google öffnen" ||
-        lower ===
-        "google aufmachen"
-    ){
-
+    // YouTube: "youtube" öffnet YouTube, "youtube minecraft" sucht direkt nach Videos.
+    const ytMatch = raw.match(/^(?:jarvis[ ,]*)?youtube(?:\s+nach|\s+suche)?\s*(.*)$/i);
+    if(ytMatch){
+        const query = ytMatch[1].trim();
         return {
-
-            name:
-                "Google",
-
-            url:
-                "https://www.google.com"
-
+            name: query ? 'YouTube-Suche' : 'YouTube',
+            url: query
+                ? 'https://www.youtube.com/results?search_query=' + encodeURIComponent(query)
+                : 'https://www.youtube.com'
         };
-
     }
 
+    // "öffne die Seite ..." / "website ..."
+    const siteMatch = raw.match(/^(?:jarvis[ ,]*)?(?:website|seite)\s+(.+)$/i);
+    if(siteMatch){
+        const target = siteMatch[1].trim();
+        const url = /^https?:\/\//i.test(target)
+            ? target
+            : (/^www\./i.test(target) || /^[a-z0-9-]+\.[a-z]{2,}(?:\/.*)?$/i.test(target)
+                ? 'https://' + target
+                : 'https://www.google.com/search?q=' + encodeURIComponent(target));
+        return {name: target, url};
+    }
 
     return null;
-
 }
 
-
-function executeWebAction(
-    action
-){
-
-    if(!action)
-        return;
-
-
-    /*
-        Kein Popup-Fehler mehr.
-    */
-
-    openNewTab(
-        action.url
-    );
-
+function executeWebAction(action){
+    if(!action) return false;
+    const opened = openNewTab(action.url);
+    if(opened){
+        setConnection('JARVIS geöffnet: ' + action.name, true);
+        if($('voiceStatusText')) $('voiceStatusText').textContent = 'Geöffnet · ' + action.name;
+    }
+    return !!opened;
 }
 
 
@@ -5330,11 +5313,10 @@ async function sendMessage(fromVoice=false){
 
 
     if(webAction){
-
-        executeWebAction(
-            webAction
-        );
-
+        const opened = executeWebAction(webAction);
+        if(opened){
+            addMessage('model', 'Ich habe **' + webAction.name.replace(/\*/g,'') + '** in einem neuen Tab geöffnet.');
+        }
     }
 
 
