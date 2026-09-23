@@ -1774,6 +1774,37 @@ body::before{
 @keyframes orbRing{0%{transform:scale(.9);opacity:.7}100%{transform:scale(1.25);opacity:0}}
 @media(max-width:850px){.hero{min-height:280px}.hero::before{width:210px;height:210px}}
 
+
+/* =========================================================
+JARVIS CINEMATIC HUD / ANIMATION LAYER
+========================================================= */
+#jarvisFx{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden;opacity:.9}
+#jarvisFx:before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(70,160,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(70,160,255,.035) 1px,transparent 1px);background-size:46px 46px;mask-image:linear-gradient(to bottom,transparent,black 18%,black 82%,transparent);animation:gridMove 12s linear infinite}
+.jarvis-scan{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(70,190,255,.0),rgba(100,180,255,.75),rgba(70,190,255,0),transparent);box-shadow:0 0 18px rgba(80,180,255,.6);animation:scanDown 6s linear infinite}
+.jarvis-corner{position:absolute;width:90px;height:90px;border-color:rgba(85,175,255,.5);border-style:solid;filter:drop-shadow(0 0 8px rgba(70,160,255,.35))}
+.jarvis-corner.tl{top:18px;left:18px;border-width:2px 0 0 2px}.jarvis-corner.tr{top:18px;right:18px;border-width:2px 2px 0 0}.jarvis-corner.bl{bottom:18px;left:18px;border-width:0 0 2px 2px}.jarvis-corner.br{bottom:18px;right:18px;border-width:0 2px 2px 0}
+.jarvis-particle{position:absolute;width:3px;height:3px;border-radius:50%;background:#8bd7ff;box-shadow:0 0 10px #58baff;opacity:.2;animation:particleFloat var(--d) linear infinite;animation-delay:var(--delay);left:var(--x);top:var(--y)}
+#jarvisCore{position:absolute;left:50%;top:46%;width:280px;height:280px;transform:translate(-50%,-50%);opacity:.16;transition:opacity .35s,transform .35s;filter:drop-shadow(0 0 18px rgba(70,170,255,.5))}
+#jarvisCore.active{opacity:.72;transform:translate(-50%,-50%) scale(1.06)}
+.jc-ring{position:absolute;inset:0;border:1px solid rgba(95,190,255,.45);border-radius:50%;animation:spin 18s linear infinite}
+.jc-ring:nth-child(2){inset:20px;border-style:dashed;animation:spinReverse 11s linear infinite}
+.jc-ring:nth-child(3){inset:45px;border-color:rgba(120,215,255,.65);animation:spin 7s linear infinite}
+.jc-ring:nth-child(4){inset:78px;border-width:2px;border-color:rgba(115,220,255,.8);box-shadow:0 0 25px rgba(70,180,255,.4) inset;animation:pulseCore 2s ease-in-out infinite}
+.jc-core{position:absolute;inset:103px;border-radius:50%;background:radial-gradient(circle,#eaffff 0,#8edcff 8%,#278dca 26%,rgba(22,88,140,.6) 48%,transparent 72%);box-shadow:0 0 35px #54c7ff,0 0 85px rgba(70,180,255,.65);animation:coreBeat 1.7s ease-in-out infinite}
+.jc-tick{position:absolute;left:50%;top:50%;width:145px;height:1px;background:linear-gradient(90deg,transparent,#9be2ff,transparent);transform-origin:left;animation:tickSpin 4s linear infinite}
+.jarvis-status{position:absolute;left:50%;top:calc(46% + 155px);transform:translateX(-50%);font:600 10px/1.2 ui-monospace,SFMono-Regular,monospace;letter-spacing:4px;color:rgba(160,220,255,.7);text-shadow:0 0 12px rgba(80,190,255,.7);white-space:nowrap}
+.jarvis-status:after{content:"";display:inline-block;width:6px;height:6px;margin-left:8px;border-radius:50%;background:#69d6ff;box-shadow:0 0 10px #69d6ff;animation:statusBlink 1s infinite}
+@keyframes gridMove{from{transform:translateY(0)}to{transform:translateY(46px)}}
+@keyframes scanDown{from{top:-4px}to{top:100%}}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes spinReverse{to{transform:rotate(-360deg)}}
+@keyframes pulseCore{0%,100%{transform:scale(.96);opacity:.55}50%{transform:scale(1.05);opacity:1}}
+@keyframes coreBeat{0%,100%{transform:scale(.88);filter:brightness(.8)}50%{transform:scale(1.12);filter:brightness(1.45)}}
+@keyframes tickSpin{to{transform:rotate(360deg)}}
+@keyframes statusBlink{50%{opacity:.25}}
+@keyframes particleFloat{0%{transform:translate3d(0,25px,0) scale(.4);opacity:0}20%{opacity:.55}80%{opacity:.25}100%{transform:translate3d(var(--dx),-120px,0) scale(1);opacity:0}}
+@media(max-width:700px){#jarvisCore{width:190px;height:190px;top:40%;}.jarvis-status{top:calc(40% + 110px)}.jarvis-corner{width:55px;height:55px}}
+@media(prefers-reduced-motion:reduce){#jarvisFx *{animation:none!important}.jarvis-scan{display:none}}
+
 </style>
 </head>
 
@@ -1823,6 +1854,18 @@ LOGIN
 <!-- =========================================================
 APP
 ========================================================= -->
+
+
+<div id="jarvisFx" aria-hidden="true">
+  <div class="jarvis-scan"></div>
+  <div class="jarvis-corner tl"></div><div class="jarvis-corner tr"></div>
+  <div class="jarvis-corner bl"></div><div class="jarvis-corner br"></div>
+  <div id="jarvisCore">
+    <div class="jc-ring"></div><div class="jc-ring"></div><div class="jc-ring"></div><div class="jc-ring"></div>
+    <div class="jc-core"></div><div class="jc-tick"></div>
+  </div>
+  <div class="jarvis-status">JARVIS SYSTEM ONLINE</div>
+</div>
 
 <div id="app" class="hidden">
 
@@ -7170,5 +7213,31 @@ window.JARVIS = {
 
 </script>
 
+
+<script>
+/* Cinematic JARVIS animation controller */
+(function(){
+  const fx=document.getElementById('jarvisFx');
+  const core=document.getElementById('jarvisCore');
+  if(!fx||!core)return;
+  for(let i=0;i<34;i++){
+    const p=document.createElement('i');p.className='jarvis-particle';
+    p.style.setProperty('--x',Math.random()*100+'%');p.style.setProperty('--y',(45+Math.random()*50)+'%');
+    p.style.setProperty('--dx',((Math.random()-.5)*180)+'px');p.style.setProperty('--d',(5+Math.random()*9)+'s');
+    p.style.setProperty('--delay',(Math.random()*-12)+'s');fx.appendChild(p);
+  }
+  function pulse(){
+    core.classList.add('active');
+    clearTimeout(window.__jarvisPulseTimer);
+    window.__jarvisPulseTimer=setTimeout(()=>core.classList.remove('active'),1100);
+  }
+  window.JARVISVisual={pulse};
+  const oldSend=window.sendMessage;
+  if(typeof oldSend==='function'){
+    window.sendMessage=async function(){pulse();return oldSend.apply(this,arguments)};
+  }
+  document.addEventListener('click',e=>{if(e.target.closest('button'))pulse()},{passive:true});
+})();
+</script>
 </body>
 </html>
