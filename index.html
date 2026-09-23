@@ -8,7 +8,7 @@
     content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
 >
 
-<title>Nova Family AI</title>
+<title>JARVIS · Personal AI</title>
 
 <style>
 *{
@@ -1603,6 +1603,177 @@ REDUCED MOTION
     }
 
 }
+
+/* =========================================================
+JARVIS PREMIUM HUD OVERRIDE
+========================================================= */
+:root{
+ --jarvis:#6ee7ff;
+ --jarvis2:#2f9fff;
+ --jarvisGlow:rgba(74,198,255,.34);
+ --glass:rgba(12,18,24,.72);
+}
+body{
+ background:
+   radial-gradient(circle at 50% 0%,rgba(54,163,255,.10),transparent 35%),
+   radial-gradient(circle at 90% 90%,rgba(0,255,220,.05),transparent 30%),
+   #020508;
+}
+body::before{
+ content:"";
+ position:fixed; inset:0; pointer-events:none; z-index:0;
+ background:
+   linear-gradient(rgba(100,220,255,.025) 1px,transparent 1px),
+   linear-gradient(90deg,rgba(100,220,255,.025) 1px,transparent 1px);
+ background-size:42px 42px;
+ mask-image:linear-gradient(to bottom,black,transparent 85%);
+}
+#app{position:relative;z-index:1}
+.sidebar{
+ background:linear-gradient(180deg,rgba(4,10,15,.96),rgba(2,6,10,.98));
+ border-right:1px solid rgba(91,202,255,.15);
+ box-shadow:15px 0 70px rgba(0,0,0,.3);
+}
+.brandLogo,.loginLogo{
+ background:radial-gradient(circle,#bdf4ff 0,#4bd5ff 38%,#1262a0 70%,#06111b 100%);
+ color:#001018;
+ border:1px solid rgba(152,235,255,.7);
+ box-shadow:0 0 25px rgba(68,204,255,.28),inset 0 0 18px rgba(255,255,255,.25);
+}
+.brandText strong,.loginCard h1{letter-spacing:3px}
+.newChatBtn,.smallBtn,.composerButton,.keyCard,.memoryBox,.settings,.hero,.modalCard{
+ background:linear-gradient(145deg,rgba(16,25,33,.86),rgba(5,10,14,.86));
+ border-color:rgba(96,190,230,.16);
+ box-shadow:inset 0 1px rgba(255,255,255,.035),0 15px 50px rgba(0,0,0,.18);
+}
+.newChatBtn:hover,.smallBtn:hover,.composerButton:hover{
+ border-color:rgba(104,220,255,.5);
+ box-shadow:0 0 22px rgba(56,181,255,.10);
+}
+.main{
+ background:
+  radial-gradient(circle at 50% 8%,rgba(50,165,255,.13),transparent 34%),
+  radial-gradient(circle at 50% 55%,rgba(0,255,225,.035),transparent 30%),
+  #020609;
+}
+.topbar{
+ background:rgba(2,7,11,.76);
+ border-color:rgba(100,200,240,.13);
+}
+.currentChatName{color:#dff8ff}
+.hero{
+ min-height:330px;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ overflow:hidden;
+ position:relative;
+ background:
+   radial-gradient(circle at 50% 48%,rgba(66,205,255,.10),transparent 23%),
+   linear-gradient(145deg,rgba(8,22,32,.96),rgba(3,9,14,.92));
+ border-color:rgba(92,207,255,.18);
+}
+.hero::before{
+ content:"";
+ position:absolute;
+ width:270px;height:270px;
+ left:50%;top:50%;
+ transform:translate(-50%,-50%);
+ border:1px solid rgba(88,214,255,.22);
+ border-radius:50%;
+ box-shadow:0 0 70px rgba(31,181,255,.13),inset 0 0 55px rgba(31,181,255,.08);
+ animation:jarvisPulse 4s ease-in-out infinite;
+}
+.hero::after{
+ content:"J";
+ color:rgba(100,220,255,.025);
+ font-size:270px;
+ right:10px;bottom:-70px;
+}
+.hero h1{
+ z-index:2;
+ text-align:center;
+ width:100%;
+ font-size:clamp(55px,9vw,105px);
+ letter-spacing:14px;
+ text-shadow:0 0 35px rgba(70,208,255,.25);
+ background:linear-gradient(180deg,#f3fdff,#78ddff 55%,#248bc3);
+ -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p{
+ z-index:2;
+ margin:24px auto 0;
+ text-align:center;
+ max-width:650px;
+ color:#8ea7b5;
+}
+.statusRow{justify-content:center;z-index:3}
+.status{border-color:rgba(88,205,255,.18);background:rgba(47,150,200,.05)}
+.status.good{color:#78e7ff;text-shadow:0 0 12px rgba(80,210,255,.45)}
+.chatItem.active{
+ background:linear-gradient(90deg,rgba(56,173,229,.12),rgba(255,255,255,.025));
+ box-shadow:inset 2px 0 #6ee7ff,0 0 20px rgba(44,184,255,.06);
+}
+.message.model .messageBubble{
+ background:linear-gradient(145deg,rgba(11,24,31,.88),rgba(7,12,16,.92));
+ border-color:rgba(79,194,239,.16);
+}
+.message.user .messageBubble{
+ background:linear-gradient(135deg,#dffaff,#7edfff);
+ box-shadow:0 8px 30px rgba(54,190,255,.10);
+}
+.composerWrap{
+ background:rgba(2,7,11,.78);
+ border-color:rgba(96,202,240,.14);
+}
+.composer{
+ background:rgba(8,17,23,.88);
+ border-color:rgba(92,202,242,.24);
+ box-shadow:0 0 45px rgba(34,165,230,.08),inset 0 1px rgba(255,255,255,.04);
+}
+.composerButton{
+ color:#9fdcf0;
+}
+.sendButton{
+ background:linear-gradient(135deg,#dffaff,#61d8ff);
+ color:#001018;
+ border-color:#8ce7ff;
+ box-shadow:0 0 20px rgba(63,203,255,.18);
+}
+#microphoneBtn.voice-active{
+ background:linear-gradient(135deg,#8ff3ff,#1a91d4);
+ color:#001018;
+ border-color:#9beeff;
+ box-shadow:0 0 25px rgba(63,207,255,.45);
+ animation:micPulse 1.3s infinite;
+}
+.voicePanel{
+ width:min(1000px,100%);
+ margin:0 auto 18px;
+ padding:16px 18px;
+ border:1px solid rgba(91,206,255,.18);
+ border-radius:18px;
+ background:linear-gradient(145deg,rgba(8,22,30,.84),rgba(3,9,13,.84));
+ display:flex;align-items:center;gap:14px;
+}
+.voiceOrb{
+ width:48px;height:48px;flex:none;border-radius:50%;
+ background:radial-gradient(circle at 35% 30%,#e9fdff,#64ddff 30%,#0a5f94 65%,#03121d);
+ box-shadow:0 0 28px rgba(56,204,255,.28);
+ position:relative;
+}
+.voiceOrb::after{
+ content:"";position:absolute;inset:-7px;border:1px solid rgba(98,218,255,.28);border-radius:50%;
+ animation:orbRing 2.2s infinite;
+}
+.voiceText strong{display:block;font-size:11px;letter-spacing:1.5px}
+.voiceText span{display:block;color:#6f8996;font-size:9px;margin-top:4px}
+#voiceStatusText.speaking{color:#78e7ff}
+@keyframes jarvisPulse{0%,100%{transform:translate(-50%,-50%) scale(.94);opacity:.65}50%{transform:translate(-50%,-50%) scale(1.05);opacity:1}}
+@keyframes micPulse{0%,100%{box-shadow:0 0 18px rgba(63,207,255,.3)}50%{box-shadow:0 0 35px rgba(63,207,255,.7)}}
+@keyframes orbRing{0%{transform:scale(.9);opacity:.7}100%{transform:scale(1.25);opacity:0}}
+@media(max-width:850px){.hero{min-height:280px}.hero::before{width:210px;height:210px}}
+
 </style>
 </head>
 
@@ -1620,10 +1791,10 @@ LOGIN
             N
         </div>
 
-        <h1>NOVA</h1>
+        <h1>JARVIS</h1>
 
         <p>
-            Deine persönliche KI mit mehreren Chats,
+            Dein persönlicher KI-Assistent mit mehreren Chats,
             Erinnerungen, Bildanalyse,
             Bildgenerierung, Sprache und Web-Funktionen.
         </p>
@@ -1670,7 +1841,7 @@ APP
                 <div class="brandText">
 
                     <strong>
-                        Nova Family AI
+                        JARVIS
                     </strong>
 
                     <span>
@@ -1775,7 +1946,7 @@ APP
                         font-size:8px;
                         margin-top:2px;">
 
-                        NOVA AI
+                        JARVIS AI
 
                     </div>
 
@@ -1820,11 +1991,11 @@ APP
 
             <div class="hero">
 
-                <h1>NOVA</h1>
+                <h1>JARVIS</h1>
 
                 <p>
-                    Deine persönliche KI.
-                    Mehrere unabhängige Chats,
+                    Dein persönlicher KI-Assistent.
+                    Sprachchat, Textchat und mehrere unabhängige Chats,
                     dauerhafte Gedanken, Bildanalyse,
                     Bildgenerierung, Sprache und Web-Aktionen.
                 </p>
@@ -1985,9 +2156,9 @@ APP
 
                     <div class="keyHelp">
 
-                        F1 wird zuerst verwendet.
+                        JARVIS verwendet F1 zuerst.
                         Wenn F1 fehlschlägt,
-                        versucht Nova automatisch F2.
+                        versucht JARVIS automatisch F2.
                         Das funktioniert auch bei der Bildgenerierung.
 
                     </div>
@@ -2018,7 +2189,7 @@ APP
                 <div class="memoryTop">
 
                     <strong>
-                        🧠 GEDANKEN / ERINNERUNGEN
+                        ◉ JARVIS MEMORY
                     </strong>
 
                     <span
@@ -2038,6 +2209,15 @@ APP
 
             </section>
 
+
+            <!-- JARVIS VOICE PANEL -->
+            <section class="voicePanel">
+                <div class="voiceOrb"></div>
+                <div class="voiceText">
+                    <strong>JARVIS VOICE LINK</strong>
+                    <span id="voiceStatusText">Bereit · Mikrofon drücken und sprechen</span>
+                </div>
+            </section>
 
             <!-- CHAT -->
 
@@ -2080,7 +2260,7 @@ APP
                     <button
                         id="microphoneBtn"
                         class="composerButton"
-                        title="Sprache">
+                        title="JARVIS Sprachchat starten">
 
                         🎙
 
@@ -2106,7 +2286,7 @@ APP
 
                     <textarea
                         id="messageInput"
-                        placeholder="Nachricht an Nova..."
+                        placeholder="Nachricht an JARVIS..."
                         rows="1">
                     </textarea>
 
@@ -2172,7 +2352,7 @@ APP
             <textarea
                 id="imagePrompt"
                 class="generateInput"
-                placeholder="Beschreibe genau, welches Bild Nova generieren soll...">
+                placeholder="Beschreibe genau, welches Bild JARVIS generieren soll...">
             </textarea>
 
             <div class="generateOptions">
@@ -2629,7 +2809,7 @@ TAB OPENING
     normalerweise.
 
     Wenn der Browser es trotzdem blockiert,
-    wird nichts eingeblendet und Nova läuft weiter.
+    wird nichts eingeblendet und JARVIS läuft weiter.
 */
 
 function openNewTab(
@@ -4295,39 +4475,16 @@ SYSTEM PROMPT
 ========================================================= */
 
 const NOVA_SYSTEM_PROMPT = `
-
-Du bist Nova, eine persönliche KI.
-
-Antworte grundsätzlich auf Deutsch,
-außer der Benutzer möchte ausdrücklich
-eine andere Sprache.
-
-Sei direkt, hilfreich und verständlich.
-
-Erfinde keine Fakten.
-
-Wenn du etwas nicht sicher weißt,
-sage es ehrlich.
-
-Nutze gespeicherte Erinnerungen nur,
-wenn sie für die aktuelle Frage relevant sind.
-
-Der Benutzer kann mehrere unabhängige Chats
-haben. Behandle den aktuellen Chat als eigenen
-Gesprächskontext.
-
-Wenn der Benutzer nach Webseiten fragt,
-kann die Anwendung passende Webseiten
-in einem neuen Browser-Tab öffnen.
-
-Wenn der Benutzer nach Bildern fragt,
-kann die Anwendung die separate
-Bildgenerierung verwenden.
-
-Du kannst den Benutzer bei normalen Aufgaben
-unterstützen und sollst Antworten klar und
-verständlich formulieren.
-
+Du bist JARVIS, ein persönlicher KI-Assistent.
+Antworte grundsätzlich auf Deutsch, außer der Benutzer möchte ausdrücklich eine andere Sprache.
+Sei ruhig, präzise, hilfreich und natürlich.
+Antworte nicht unnötig lang.
+Erfinde keine Fakten. Wenn du etwas nicht sicher weißt, sage es ehrlich.
+Der Benutzer kann mehrere unabhängige Chats haben. Behandle den aktuellen Chat als eigenen Kontext.
+Gespeicherte Erinnerungen dürfen nur verwendet werden, wenn sie für die aktuelle Frage relevant sind.
+Wenn der Benutzer nach einer Webseite fragt, kann die Anwendung passende Webseiten in einem neuen Browser-Tab öffnen.
+Wenn der Benutzer Sprache verwendet, antworte so, dass die Antwort auch natürlich vorgelesen werden kann.
+Du bist ein Assistent, kein Rollenspielcharakter: behaupte nicht, tatsächlich ein reales System oder Gerät zu steuern, wenn die Anwendung diese Funktion nicht besitzt.
 `;
 
 
@@ -4762,7 +4919,7 @@ async function askGemini(
         try{
 
             setConnection(
-                `Nova arbeitet mit F${keyNumber}...`,
+                `JARVIS arbeitet mit F${keyNumber}...`,
                 true
             );
 
@@ -5104,7 +5261,7 @@ function executeWebAction(
 SEND
 ========================================================= */
 
-async function sendMessage(){
+async function sendMessage(fromVoice=false){
 
     if(thinking)
         return;
@@ -5203,7 +5360,7 @@ async function sendMessage(){
 
 
     setConnection(
-        `Nova denkt mit F${activeKeyNumber}...`,
+        `JARVIS denkt mit F${activeKeyNumber}...`,
         true
     );
 
@@ -5227,13 +5384,13 @@ async function sendMessage(){
 
 
         setConnection(
-            `Verbunden · F${activeKeyNumber}`,
+            `JARVIS online · F${activeKeyNumber}`,
             true
         );
 
 
         if(
-            voiceMode &&
+            (fromVoice || voiceMode) &&
             "speechSynthesis" in
             window
         ){
@@ -5268,9 +5425,11 @@ async function sendMessage(){
 
 
         setConnection(
-            "Gemini Fehler",
+            "JARVIS Fehler",
             false
         );
+        $("voiceStatusText").textContent =
+            "Bereit · Mikrofon drücken und sprechen";
 
     }
 
@@ -5686,7 +5845,7 @@ async function generateImage(){
 
 
     status.textContent =
-        "Nova generiert das Bild...";
+        "JARVIS generiert das Bild...";
 
 
     let success =
@@ -5973,7 +6132,7 @@ async function generateImage(){
                 <br><br>
 
                 <span style="color:#777;">
-                    Nova hat automatisch F1 und F2
+                    JARVIS hat automatisch F1 und F2
                     versucht, sofern beide Keys gespeichert sind.
                 </span>
 
@@ -6006,214 +6165,167 @@ function setupSpeech(){
         window.SpeechRecognition ||
         window.webkitSpeechRecognition;
 
-
     if(!SpeechRecognition){
-
-        $("microphoneBtn")
-            .title =
-            "Sprache wird von diesem Browser nicht unterstützt";
-
+        $("microphoneBtn").title =
+            "Dieser Browser unterstützt keine Spracheingabe";
+        $("voiceStatusText").textContent =
+            "Spracheingabe wird von diesem Browser nicht unterstützt";
         return;
-
     }
 
+    recognition = new SpeechRecognition();
+    recognition.lang = "de-DE";
+    recognition.continuous = false;
+    recognition.interimResults = true;
 
-    recognition =
-        new SpeechRecognition();
+    recognition.onstart = () => {
+        isListening = true;
+        $("microphoneBtn").textContent = "■";
+        $("microphoneBtn").classList.add("voice-active");
+        $("voiceStatusText").textContent = "Ich höre zu …";
+        $("voiceStatusText").classList.remove("speaking");
+        setConnection("JARVIS hört zu", true);
+    };
 
+    recognition.onresult = event => {
+        let finalText = "";
+        let interimText = "";
 
-    recognition.lang =
-        "de-DE";
+        for(let i=event.resultIndex;i<event.results.length;i++){
+            const part = event.results[i][0]?.transcript || "";
+            if(event.results[i].isFinal) finalText += part;
+            else interimText += part;
+        }
 
+        messageInput.value = (finalText || interimText).trim();
+        autoResizeTextarea();
+    };
 
-    recognition.continuous =
-        false;
+    recognition.onerror = event => {
+        console.warn("Speech:", event);
+        isListening = false;
+        $("voiceStatusText").textContent =
+            event.error === "not-allowed"
+                ? "Mikrofonzugriff wurde nicht erlaubt"
+                : "Sprachaufnahme konnte nicht gestartet werden";
+    };
 
+    recognition.onend = async () => {
+        const spokenText = messageInput.value.trim();
 
-    recognition.interimResults =
-        true;
+        isListening = false;
+        $("microphoneBtn").textContent = "🎙";
+        $("microphoneBtn").classList.remove("voice-active");
 
-
-    recognition.onstart =
-        () => {
-
-            isListening =
-                true;
-
-
-            $("microphoneBtn")
-                .textContent =
-                "⏹";
-
-        };
-
-
-    recognition.onresult =
-        event => {
-
-            let result =
-                "";
-
-
-            for(
-                let i =
-                    event.resultIndex;
-
-                i <
-                    event.results.length;
-
-                i++
-            ){
-
-                result +=
-                    event
-                        .results[i][0]
-                        .transcript;
-
-            }
-
-
-            messageInput.value =
-                result;
-
-
-            autoResizeTextarea();
-
-        };
-
-
-    recognition.onerror =
-        error => {
-
-            console.error(
-                "Speech:",
-                error
-            );
-
-        };
-
-
-    recognition.onend =
-        () => {
-
-            isListening =
-                false;
-
-
-            $("microphoneBtn")
-                .textContent =
-                "🎙";
-
-        };
-
+        if(spokenText){
+            $("voiceStatusText").textContent = "Verstanden · JARVIS antwortet …";
+            voiceMode = true;
+            await sendMessage(true);
+        }else{
+            $("voiceStatusText").textContent =
+                "Bereit · Mikrofon drücken und sprechen";
+        }
+    };
 }
-
 
 function toggleListening(){
 
     if(!recognition){
-
         showToast(
             "Dieser Browser unterstützt keine Spracheingabe.",
             "bad"
         );
-
         return;
-
     }
-
 
     if(isListening){
-
         recognition.stop();
-
         return;
-
     }
 
+    if(speaking){
+        window.speechSynthesis?.cancel();
+        speaking = false;
+    }
+
+    // Start a fresh voice turn.
+    messageInput.value = "";
+    autoResizeTextarea();
 
     try{
-
+        window.speechSynthesis?.cancel();
         recognition.start();
-
     }catch(error){
-
-        console.warn(
-            "Speech start:",
-            error
-        );
-
+        console.warn("Speech start:", error);
     }
-
 }
-
 
 /* =========================================================
 TEXT TO SPEECH
 ========================================================= */
 
-function speak(
-    text
-){
+function speak(text){
 
-    if(
-        !("speechSynthesis" in
-        window)
-    )
-        return;
-
+    if(!("speechSynthesis" in window) || !text) return;
 
     window.speechSynthesis.cancel();
 
+    const cleanText = String(text)
+        .replace(/```[\s\S]*?```/g,"")
+        .replace(/[*_#>`]/g,"")
+        .trim();
+
+    if(!cleanText) return;
 
     const utterance =
-        new SpeechSynthesisUtterance(
-            text
-        );
+        new SpeechSynthesisUtterance(cleanText);
 
+    utterance.lang = "de-DE";
+    utterance.rate = 0.90;
+    utterance.pitch = 0.78;
+    utterance.volume = 1;
 
-    utterance.lang =
-        "de-DE";
+    const voices = window.speechSynthesis.getVoices();
+    const german = voices.filter(v =>
+        /^de(-|_)/i.test(v.lang)
+    );
 
+    // Prefer a lower/masculine-sounding German system voice when available.
+    const preferred = german.find(v =>
+        /male|mann|markus|hans|thomas|stefan|daniel|martin|german/i.test(v.name)
+    ) || german.find(v =>
+        /premium|enhanced|neural/i.test(v.name)
+    ) || german[0];
 
-    utterance.rate =
-        .95;
+    if(preferred) utterance.voice = preferred;
 
+    utterance.onstart = () => {
+        speaking = true;
+        $("voiceStatusText").textContent = "JARVIS spricht …";
+        $("voiceStatusText").classList.add("speaking");
+        setConnection("JARVIS spricht", true);
+    };
 
-    utterance.onstart =
-        () => {
+    utterance.onend = () => {
+        speaking = false;
+        $("voiceStatusText").textContent =
+            "Bereit · Mikrofon drücken und sprechen";
+        $("voiceStatusText").classList.remove("speaking");
+    };
 
-            speaking =
-                true;
+    utterance.onerror = () => {
+        speaking = false;
+        $("voiceStatusText").textContent =
+            "Bereit · Mikrofon drücken und sprechen";
+        $("voiceStatusText").classList.remove("speaking");
+    };
 
-        };
-
-
-    utterance.onend =
-        () => {
-
-            speaking =
-                false;
-
-        };
-
-
-    utterance.onerror =
-        () => {
-
-            speaking =
-                false;
-
-        };
-
-
-    window.speechSynthesis
-        .speak(
-            utterance
-        );
-
+    window.speechSynthesis.speak(utterance);
 }
 
+if("speechSynthesis" in window){
+    window.speechSynthesis.onvoiceschanged = () => {};
+}
 
 /* =========================================================
 TEXTAREA
@@ -6971,7 +7083,7 @@ window.addEventListener(
 PUBLIC NOVA API
 ========================================================= */
 
-window.Nova = {
+window.JARVIS = {
 
     newChat(){
 
